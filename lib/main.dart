@@ -18,7 +18,7 @@ import 'package:sbselector/firebase/firebase_options.dart';
 // }
 
 void main() {
-  runZonedGuarded(() async {
+  runZonedGuarded<Future<void>>(() async {
     WidgetsFlutterBinding.ensureInitialized();
     await Firebase.initializeApp(
       options: DefaultFirebaseOptions.currentPlatform,
