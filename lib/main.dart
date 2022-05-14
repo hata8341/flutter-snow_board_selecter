@@ -1,22 +1,28 @@
 import 'dart:async';
 
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:sbselector/firebase/firebase_analytics_config.dart';
 import 'package:sbselector/firebase/firebase_crashlytics_config.dart';
+import 'package:sbselector/firebase/firebase_options.dart';
 
 // void main() async {
 //   WidgetsFlutterBinding.ensureInitialized();
-//   await Firebase.initializeApp(
-//     options: DefaultFirebaseOptions.currentPlatform,
-//   );
+// await Firebase.initializeApp(
+//   options: DefaultFirebaseOptions.currentPlatform,
+// );
 //   runApp(const MyApp());
 // }
 
 void main() {
   runZonedGuarded(() async {
     WidgetsFlutterBinding.ensureInitialized();
+    await Firebase.initializeApp(
+      options: DefaultFirebaseOptions.currentPlatform,
+    );
     await CrashReporter.instance.initialize();
 
     FlutterError.onError = (FlutterErrorDetails details) {
@@ -101,6 +107,7 @@ class _MyHomePageState extends State<MyHomePage> {
     setState(() {
       _counter++;
     });
+    FirebaseCrashlytics.instance.crash();
   }
 
   @override
