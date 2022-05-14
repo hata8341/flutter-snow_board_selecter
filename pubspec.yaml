@@ -36,7 +36,7 @@ dependencies:
   firebase_core: ^1.16.0
   firebase_analytics: ^9.1.7
   firebase_crashlytics: ^2.7.2
-  hooks_riverpod: ^1.0.3
+  hooks_riverpod: ^1.0.4
   sqflite: ^2.0.2+1
   freezed: ^2.0.3
   path_provider: ^2.0.10
