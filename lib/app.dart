@@ -44,7 +44,8 @@ class MyApp extends HookConsumerWidget {
       initialRoute: '/diagnoseTop',
       routes: {
         '/diagnoseTop': (context) => DiagnoseTopPage(),
-        '/diagnoseContent': (context) => DiagnoseContentPage(),
+        '/diagnoseContent': (context) => const DiagnoseContentPage(),
+        
       },
     );
   }
