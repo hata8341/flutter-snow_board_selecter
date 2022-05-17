@@ -69,11 +69,6 @@ class DiagnoseTopPage extends HookConsumerWidget {
                                 fit: BoxFit.cover,
                               ),
                             ),
-
-                            // const Placeholder(
-                            //   fallbackHeight: 250,
-                            //   color: Colors.yellow,
-                            // ),
                             Container(
                               height: screenSize.height * 0.2,
                               padding: const EdgeInsets.all(16),
@@ -137,57 +132,6 @@ class DiagnoseTopPage extends HookConsumerWidget {
                     ),
                   ],
                 ),
-                // Center(
-                //   child: Column(
-                //     mainAxisAlignment: MainAxisAlignment.center,
-                //     children: <Widget>[
-                //       const Placeholder(
-                //         fallbackHeight: 132,
-                //         color: Colors.yellow,
-                //       ),
-                //       Container(
-                //         height: 120,
-                //         padding: const EdgeInsets.all(16),
-                //         decoration: const ShapeDecoration(
-                //           color: Colors.white,
-                //           shadows: [
-                //             BoxShadow(
-                //               color: Color(0x80000000),
-                //               offset: Offset(0, 2),
-                //               blurRadius: 2,
-                //             ),
-                //           ],
-                //           shape: BubbleBorder(),
-                //         ),
-                //         child: Column(
-                //           mainAxisAlignment: MainAxisAlignment.center,
-                //           children: const <Widget>[
-                //             Text(
-                //               '自分の思うスノーボードを',
-                //               style: TextStyle(
-                //                 fontSize: 20.0,
-                //                 fontWeight: FontWeight.bold,
-                //               ),
-                //             ),
-                //             Text(
-                //               'イメージしてね!!',
-                //               style: TextStyle(
-                //                 fontSize: 20.0,
-                //                 fontWeight: FontWeight.bold,
-                //               ),
-                //             ),
-                //           ],
-                //         ),
-                //       ),
-                //       ElevatedButton(
-                //         onPressed: () {
-                //           Navigator.pushNamed(context, '/diagnoseContent');
-                //         },
-                //         child: const Text('診断画面へ'),
-                //       ),
-                //     ],
-                //   ),
-                // ),
               ],
             )
           : bottomBarIndex.state == 0

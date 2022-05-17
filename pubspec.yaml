@@ -45,6 +45,7 @@ dependencies:
   json_serializable: ^6.2.0
   flutter_weather_bg_null_safety: ^1.0.0
   bubble: ^1.2.1
+  gap: ^2.0.0
 
 dev_dependencies:
   flutter_test:
