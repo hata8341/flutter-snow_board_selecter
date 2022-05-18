@@ -3,6 +3,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:sbselector/firebase/firebase_analytics_config.dart';
 import 'package:sbselector/views/diagnose/diagnose_content.dart';
+import 'package:sbselector/views/diagnose/diagnose_result.dart';
 
 import 'firebase/firebase_crashlytics_config.dart';
 import 'views/diagnose/diagnose_top.dart';
@@ -45,7 +46,7 @@ class MyApp extends HookConsumerWidget {
       routes: {
         '/diagnoseTop': (context) => DiagnoseTopPage(),
         '/diagnoseContent': (context) => const DiagnoseContentPage(),
-        
+        '/diagnoseResult': (context) => DiagnoseResultPage(),
       },
     );
   }

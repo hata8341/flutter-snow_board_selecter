@@ -26,47 +26,6 @@ class DiagnoseContentPage extends HookConsumerWidget {
       print('新しい値$newValue');
       if (newValue == 1.0) {
         print('5です');
-        // AwesomeDialog(
-        //   context: context,
-        //   dialogType: DialogType.INFO_REVERSED,
-        //   borderSide: const BorderSide(
-        //     color: Colors.green,
-        //     width: 2,
-        //   ),
-        //   width: 280,
-        //   buttonsBorderRadius: const BorderRadius.all(
-        //     Radius.circular(2),
-        //   ),
-        //   dismissOnTouchOutside: true,
-        //   dismissOnBackKeyPress: false,
-        //   onDissmissCallback: (type) {
-        //     ScaffoldMessenger.of(context).showSnackBar(
-        //       SnackBar(
-        //         content: Text('Dismissed by $type'),
-        //       ),
-        //     );
-        //   },
-        //   headerAnimationLoop: false,
-        //   animType: AnimType.BOTTOMSLIDE,
-        //   title: 'INFO',
-        //   desc: 'This Dialog can be dismissed touching outside',
-        //   showCloseIcon: true,
-        //   btnCancelOnPress: () {},
-        //   btnOkOnPress: () {},
-        // ).show();
-        // AwesomeDialog(
-        //   context: context,
-        //   animType: AnimType.SCALE,
-        //   dialogType: DialogType.INFO,
-        //   body: const Center(
-        //     child: Text(
-        //       'If the body is specified, then title and description will be ignored, this allows to further customize the dialogue.',
-        //       style: TextStyle(fontStyle: FontStyle.italic),
-        //     ),
-        //   ),
-        //   title: 'This is Ignored',
-        //   desc: 'This is also Ignored',
-        // ).show();
         AwesomeDialog(
           context: context,
           animType: AnimType.SCALE,
@@ -80,6 +39,7 @@ class DiagnoseContentPage extends HookConsumerWidget {
           btnOkText: "結果画面へ",
           btnOkOnPress: () {
             debugPrint('OnClcik');
+            Navigator.pushNamed(context, '/diagnoseResult');
           },
           btnOkIcon: Icons.check_circle,
           onDissmissCallback: (type) {

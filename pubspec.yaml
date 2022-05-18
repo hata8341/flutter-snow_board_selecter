@@ -47,6 +47,7 @@ dependencies:
   bubble: ^1.2.1
   gap: ^2.0.0
   awesome_dialog: ^2.2.1
+  fl_chart: ^0.50.6
 
 dev_dependencies:
   flutter_test:
