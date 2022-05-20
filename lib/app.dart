@@ -4,6 +4,8 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:sbselector/firebase/firebase_analytics_config.dart';
 import 'package:sbselector/views/diagnose/diagnose_content.dart';
 import 'package:sbselector/views/diagnose/diagnose_result.dart';
+import 'package:sbselector/views/history/history_detail.dart';
+import 'package:sbselector/views/history/history_top.dart';
 
 import 'firebase/firebase_crashlytics_config.dart';
 import 'views/diagnose/diagnose_top.dart';
@@ -47,6 +49,8 @@ class MyApp extends HookConsumerWidget {
         '/diagnoseTop': (context) => DiagnoseTopPage(),
         '/diagnoseContent': (context) => const DiagnoseContentPage(),
         '/diagnoseResult': (context) => DiagnoseResultPage(),
+        '/historyTop': (context) => HistoryTopPage(),
+        '/historyDetail': (context) => HistoryDetailPage(),
       },
     );
   }

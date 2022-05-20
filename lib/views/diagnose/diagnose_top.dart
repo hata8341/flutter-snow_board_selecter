@@ -13,6 +13,49 @@ class DiagnoseTopPage extends HookConsumerWidget {
   String title = "診断";
   final WeatherType sunny = WeatherType.sunny;
 
+  String switchTitle(int bottomIndex) {
+    String title = '';
+    switch (bottomIndex) {
+      case 1:
+        title = '診断';
+        break;
+      case 0:
+        title = "履歴";
+        break;
+      case 2:
+        title = "設定";
+        break;
+      default:
+        '';
+    }
+    return title;
+  }
+
+  Icon switchIcon(int bottomIndex) {
+    Icon icon = const Icon(Icons.abc);
+    switch (bottomIndex) {
+      case 1:
+        icon = const Icon(Icons.search);
+        break;
+      case 0:
+        icon = const Icon(Icons.list);
+        break;
+      case 2:
+        icon = const Icon(Icons.settings);
+        break;
+      default:
+        '';
+    }
+    return icon;
+  }
+
+  List<Widget> appBariconTitle(int bottomIndex) {
+    List<Widget> iconTitle = [];
+    iconTitle.add(switchIcon(bottomIndex));
+    iconTitle.add(Text(switchTitle(bottomIndex)));
+    return iconTitle;
+  }
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final bottomBarIndex = ref.watch(bottomBarIndexProvider.state);
@@ -21,10 +64,7 @@ class DiagnoseTopPage extends HookConsumerWidget {
       appBar: AppBar(
         title: Row(
           mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const Icon(Icons.search),
-            Text(title),
-          ],
+          children: appBariconTitle(bottomBarIndex.state),
         ),
       ),
       body: bottomBarIndex.state == 1
@@ -136,8 +176,8 @@ class DiagnoseTopPage extends HookConsumerWidget {
             )
           : bottomBarIndex.state == 0
               ? Column(
-                  children: const [
-                    HistoryList(),
+                  children:  [
+                    HistoryTopPage(),
                   ],
                 )
               : Column(
