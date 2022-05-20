@@ -43,6 +43,13 @@ dependencies:
   path_provider: ^2.0.10
   http: ^0.13.4
   json_serializable: ^6.2.0
+  flutter_weather_bg_null_safety: ^1.0.0
+  bubble: ^1.2.1
+  gap: ^2.0.0
+  awesome_dialog: ^2.2.1
+  fl_chart: ^0.50.6
+  share_plus: ^4.0.4
+  screenshot: ^1.2.3
 
 dev_dependencies:
   flutter_test:
@@ -66,8 +73,8 @@ flutter:
   uses-material-design: true
 
   # To add assets to your application, add an assets section, like this:
-  # assets:
-  #   - images/a_dot_burr.jpeg
+  assets:
+    - images/
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see
