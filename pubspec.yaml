@@ -48,6 +48,8 @@ dependencies:
   gap: ^2.0.0
   awesome_dialog: ^2.2.1
   fl_chart: ^0.50.6
+  share_plus: ^4.0.4
+  screenshot: ^1.2.3
 
 dev_dependencies:
   flutter_test:
