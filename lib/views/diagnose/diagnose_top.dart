@@ -176,12 +176,12 @@ class DiagnoseTopPage extends HookConsumerWidget {
             )
           : bottomBarIndex.state == 0
               ? Column(
-                  children:  [
+                  children: [
                     HistoryTopPage(),
                   ],
                 )
               : Column(
-                  children: const [
+                  children: [
                     SettingList(),
                   ],
                 ),
