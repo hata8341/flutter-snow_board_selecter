@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_weather_bg_null_safety/flutter_weather_bg.dart';
 import 'package:gap/gap.dart';
@@ -12,10 +13,10 @@ import 'package:share_plus/share_plus.dart';
 class HistoryDetailPage extends HookConsumerWidget {
   HistoryDetailPage({Key? key}) : super(key: key);
 
-  String title = "診断結果";
+  final String title = "診断結果";
   final WeatherType sunny = WeatherType.sunny;
-  bool cute = false;
-  bool beautiful = false;
+  final bool cute = false;
+  final bool beautiful = false;
   final _screenShotController = ScreenshotController();
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -36,6 +37,23 @@ class HistoryDetailPage extends HookConsumerWidget {
             icon: const Icon(Icons.delete),
             onPressed: () {
               print('削除の実装$args');
+              AwesomeDialog(
+                context: context,
+                dialogType: DialogType.INFO,
+                animType: AnimType.TOPSLIDE,
+                title: 'Dialog Title',
+                desc: 'Dialog description here.............',
+                btnCancelOnPress: () {},
+                btnOkOnPress: () {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text('$argsを削除しました'),
+                    ),
+                  );
+                  Navigator.of(context).pop();
+                },
+                onDissmissCallback: (type) {},
+              ).show();
             },
           )
         ],
@@ -287,19 +305,5 @@ class HistoryDetailPage extends HookConsumerWidget {
       await Share.shareFiles([imagePath.path], text: _shareText);
       await imagePath.delete();
     }
-  }
-
-  void _saveResult() async {
-    try {
-      final _screenshot = await _screenShotController.capture(
-        delay: const Duration(milliseconds: 10),
-      );
-      if (_screenshot != null) {
-        print('保存する');
-      }
-    } catch (e) {
-      print(e);
-    }
-    print('test');
   }
 }
