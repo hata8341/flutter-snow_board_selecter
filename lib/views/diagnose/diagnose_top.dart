@@ -90,7 +90,7 @@ class DiagnoseTopPage extends HookConsumerWidget {
                     ),
                     Container(
                       constraints: BoxConstraints.expand(
-                          height: screenSize.height * 0.61),
+                          height: screenSize.height * 0.61,),
                       decoration: BoxDecoration(
                         border: Border.all(
                           color: Colors.red,
