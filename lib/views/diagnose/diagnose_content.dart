@@ -1,13 +1,12 @@
-import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_weather_bg_null_safety/flutter_weather_bg.dart';
 import 'package:gap/gap.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:sbselector/model/question.dart';
+import 'package:sbselector/view_model/diagnose_view_model.dart';
+import 'package:sbselector/view_model/question_view_model.dart';
 import 'package:sbselector/widgets/bubble.dart';
 
-final indicatorProvider = StateProvider<double>((ref) {
-  return 0;
-});
 
 class DiagnoseContentPage extends HookConsumerWidget {
   const DiagnoseContentPage({Key? key}) : super(key: key);
@@ -18,36 +17,14 @@ class DiagnoseContentPage extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final Size screenSize = MediaQuery.of(context).size;
-    final StateController<double> indicatorController =
-        ref.read(indicatorProvider.state);
-    final double indicatorValue = ref.watch(indicatorProvider);
-    ref.listen(indicatorProvider, (preValue, newValue) {
-      print('もとの値$preValue');
-      print('新しい値$newValue');
-      if (newValue == 1.0) {
-        print('5です');
-        AwesomeDialog(
-          context: context,
-          animType: AnimType.SCALE,
-          headerAnimationLoop: false,
-          dialogType: DialogType.SUCCES,
-          showCloseIcon: true,
-          // dismissOnTouchOutside: false,
-          title: 'お疲れさまでした！',
-          // desc:
-          //     'Dialog description here..................................................',
-          btnOkText: "結果画面へ",
-          btnOkOnPress: () {
-            debugPrint('OnClcik');
-            Navigator.pushNamed(context, '/diagnoseResult');
-          },
-          btnOkIcon: Icons.check_circle,
-          onDissmissCallback: (type) {
-            debugPrint('Dialog Dissmiss from callback $type');
-          },
-        ).show();
-      }
-    });
+    final diagnoseState = ref.watch(diagnoseStateNotifierProvider);
+    final indicatorValue = diagnoseState.indicatorValue;
+    final String questionNum = ref.watch(questionNumProvider);
+    final Question question = ref.watch(questionProvider);
+    final bool misIconState = ref.watch(misIconStateProvider);
+
+    checkEndDialog(ref, context);
+
     return Scaffold(
       backgroundColor: Colors.blue,
       appBar: AppBar(
@@ -75,25 +52,13 @@ class DiagnoseContentPage extends HookConsumerWidget {
                     constraints: BoxConstraints.expand(
                       height: screenSize.height * 0.17,
                     ),
-                    decoration: BoxDecoration(
-                      border: Border.all(
-                        color: Colors.green,
-                        width: 2,
-                      ),
-                    ),
                   ),
                 ),
                 Expanded(
-                  flex: 4,
+                  flex: 8,
                   child: Container(
                     constraints:
                         BoxConstraints.expand(height: screenSize.height * 0.7),
-                    decoration: BoxDecoration(
-                      border: Border.all(
-                        color: Colors.red,
-                        width: 2,
-                      ),
-                    ),
                     child: Center(
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -108,7 +73,7 @@ class DiagnoseContentPage extends HookConsumerWidget {
                           ),
                           Container(
                             width: screenSize.width * 0.9,
-                            height: screenSize.height * 0.2,
+                            height: screenSize.height * 0.22,
                             padding: const EdgeInsets.all(16),
                             decoration: const ShapeDecoration(
                               color: Colors.white,
@@ -121,32 +86,71 @@ class DiagnoseContentPage extends HookConsumerWidget {
                               ],
                               shape: BubbleBorder(),
                             ),
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: const <Widget>[
-                                Icon(
-                                  Icons.live_help,
-                                  color: Colors.grey,
-                                ),
-                                Text(
-                                  '質問１',
-                                  style: TextStyle(
-                                    fontSize: 20.0,
-                                    fontWeight: FontWeight.bold,
-                                    height: 2.0,
+                            child: Stack(
+                              children: [
+                                AnimatedOpacity(
+                                  opacity: misIconState ? 1.0 : 0.0,
+                                  duration: const Duration(milliseconds: 200),
+                                  child: Visibility(
+                                    visible: misIconState,
+                                    child: IconButton(
+                                      icon: const Icon(
+                                        Icons.arrow_back,
+                                        color: Colors.grey,
+                                      ),
+                                      onPressed: () {
+                                        mistake(ref);
+                                      },
+                                    ),
                                   ),
                                 ),
-                                Text(
-                                  'スノーボードを滑りながら、回ったり、\nジャンプしたりしたいですか？',
-                                  style: TextStyle(
-                                    fontSize: 18.0,
-                                  ),
+                                Column(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: <Widget>[
+                                    const Icon(
+                                      Icons.live_help,
+                                      color: Colors.grey,
+                                    ),
+                                    AnimatedSwitcher(
+                                      duration: const Duration(
+                                        seconds: 1,
+                                      ),
+                                      transitionBuilder: (child, animation) {
+                                        return FadeTransition(
+                                          opacity: animation.drive(CurveTween(
+                                              curve: const Interval(0.6, 1))),
+                                          child: child,
+                                        );
+                                      },
+                                      child: SizedBox(
+                                        key: ValueKey(questionNum),
+                                        height: screenSize.height / 7,
+                                        child: Column(
+                                          // 戻るアイコンの作成
+                                          children: [
+                                            Text(
+                                              '質問$questionNum',
+                                              style: const TextStyle(
+                                                fontSize: 20.0,
+                                                fontWeight: FontWeight.bold,
+                                                height: 2.0,
+                                              ),
+                                            ),
+                                            Text(
+                                              question.content,
+                                              style: const TextStyle(
+                                                fontSize: 18.0,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                  ],
                                 ),
                               ],
                             ),
                           ),
-                          // インジケーターを実装する
-                          // valueを動的に表示させみる
                           LinearProgressIndicator(
                             backgroundColor: Colors.grey,
                             minHeight: 10,
@@ -158,7 +162,6 @@ class DiagnoseContentPage extends HookConsumerWidget {
                           Container(
                             width: screenSize.width,
                             padding: const EdgeInsets.symmetric(
-                              // vertical: 10,
                               horizontal: 10,
                             ),
                             child: Column(
@@ -172,17 +175,8 @@ class DiagnoseContentPage extends HookConsumerWidget {
                                       height: screenSize.height * 0.05,
                                       child: ElevatedButton(
                                         onPressed: () {
-                                          // print(5);
                                           print('はい');
-                                          var progressValue =
-                                              indicatorValue + 0.1;
-
-                                          progressValue = (progressValue * 10)
-                                                  .roundToDouble() /
-                                              10;
-                                          indicatorController
-                                              .update((state) => progressValue);
-                                          print(indicatorController.state);
+                                          respond(ref, question.category, 5.0);
                                         },
                                         style: ElevatedButton.styleFrom(
                                           primary: Colors.yellow[700],
@@ -205,17 +199,7 @@ class DiagnoseContentPage extends HookConsumerWidget {
                                       height: screenSize.height * 0.05,
                                       child: ElevatedButton(
                                         onPressed: () {
-                                          print(1);
-                                          print('いいえ');
-                                          var progressValue =
-                                              indicatorValue - 0.1;
-
-                                          progressValue = (progressValue * 10)
-                                                  .roundToDouble() /
-                                              10;
-                                          indicatorController
-                                              .update((state) => progressValue);
-                                          print(indicatorController.state);
+                                          respond(ref, question.category, 1.0);
                                         },
                                         style: ElevatedButton.styleFrom(
                                           primary: Colors.yellow[700],
@@ -245,8 +229,8 @@ class DiagnoseContentPage extends HookConsumerWidget {
                                       height: screenSize.height * 0.05,
                                       child: ElevatedButton(
                                         onPressed: () {
-                                          print(4);
                                           print('たぶんそう');
+                                          respond(ref, question.category, 4.0);
                                         },
                                         style: ElevatedButton.styleFrom(
                                           primary: Colors.yellow[700],
@@ -269,8 +253,8 @@ class DiagnoseContentPage extends HookConsumerWidget {
                                       height: screenSize.height * 0.05,
                                       child: ElevatedButton(
                                         onPressed: () {
-                                          print(3);
                                           print('わからない');
+                                          respond(ref, question.category, 3.0);
                                         },
                                         style: ElevatedButton.styleFrom(
                                           primary: Colors.yellow[700],
@@ -293,8 +277,8 @@ class DiagnoseContentPage extends HookConsumerWidget {
                                       height: screenSize.height * 0.05,
                                       child: ElevatedButton(
                                         onPressed: () {
-                                          print(2);
                                           print('たぶん違う');
+                                          respond(ref, question.category, 2.0);
                                         },
                                         style: ElevatedButton.styleFrom(
                                           primary: Colors.yellow[700],
