@@ -20,6 +20,10 @@ class DiagnoseResultPage extends HookConsumerWidget {
   final _screenShotController = ScreenshotController();
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final rideType = ModalRoute.of(context)!.settings.arguments;
+
+    print('引数$rideType');
+
     final Size screenSize = MediaQuery.of(context).size;
     return Scaffold(
       backgroundColor: Colors.white,

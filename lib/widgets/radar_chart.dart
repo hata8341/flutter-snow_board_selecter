@@ -26,11 +26,13 @@ class SnowRadarChart extends HookConsumerWidget {
                 getTitle: (index) {
                   switch (index) {
                     case 0:
-                      return 'ジブ・グラトリ';
+                      return 'グラトリ';
                     case 1:
-                      return 'オールラウンド';
+                      return 'カービング';
                     case 2:
-                      return 'フリーラン・パウダー';
+                      return 'パウダー';
+                    case 3:
+                      return 'ジブ・パーク';
                     default:
                       return '';
                   }
@@ -42,7 +44,7 @@ class SnowRadarChart extends HookConsumerWidget {
                 // レーダーチャートからのタイトルの位置
                 titlePositionPercentageOffset: 0.2,
                 // ティックの数
-                tickCount: 5,
+                tickCount: 4,
                 ticksTextStyle: const TextStyle(
                   color: null,
                   fontSize: 0,
@@ -84,18 +86,26 @@ class SnowRadarChart extends HookConsumerWidget {
 
   List<SnowData> snowDataSets() {
     return [
+      // SnowData(
+      //   title: 'キャンバー',
+      //   pointList: [3.0, 5.0, 3.0, 1.5],
+      // ),
+      // SnowData(
+      //   title: 'パウダーロッカー',
+      //   pointList: [1.0, 4.0, 5.0, 1.5],
+      // ),
+      // SnowData(
+      //   title: 'ハイブリッドキャンバー',
+      //   pointList: [3.5, 4.0, 3.5, 4.0],
+      // ),
+      // SnowData(
+      //   title: 'ダブルキャンバー',
+      //   pointList: [4.5, 3.5, 3.5, 4.5],
+      // ),
       SnowData(
-        title: 'フリーラン・パウダー',
-        pointList: [2.0, 2.0, 6.0],
+        title: 'フラットキャンバー',
+        pointList: [4.5, 1.0, 1.0, 5.0],
       ),
-      // SnowData(
-      //   title: 'ジブ・グラトリ',
-      //   pointList: [6.0, 2.0, 2.0],
-      // ),
-      // SnowData(
-      //   title: 'オールラウンド',
-      //   pointList: [2.0, 6.0, 2.0],
-      // ),
     ];
   }
 }

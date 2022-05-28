@@ -8,7 +8,6 @@ import 'package:sbselector/view_model/diagnose_view_model.dart';
 AwesomeDialog endDialog(BuildContext inputContext, WidgetRef ref) {
   //  dialogPackageの影響なのか、answerListが−１されるため
   // ここで定義する
-  print('answerListを定義する');
   final List<Answer> answerList = ref.read(answerListProvider);
   return AwesomeDialog(
     context: inputContext,
@@ -23,8 +22,8 @@ AwesomeDialog endDialog(BuildContext inputContext, WidgetRef ref) {
     btnOkText: "結果画面へ",
     btnOkOnPress: () {
       debugPrint('OnClcik');
-      computeResult(ref,answerList);
-      Navigator.pushNamed(inputContext, '/diagnoseResult');
+      final rideType = computeResult(ref, answerList);
+      Navigator.pushNamed(inputContext, '/diagnoseResult', arguments: rideType);
     },
     btnOkIcon: Icons.check_circle,
     btnCancelOnPress: () {
