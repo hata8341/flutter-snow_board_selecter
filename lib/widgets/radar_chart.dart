@@ -3,7 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 class SnowRadarChart extends HookConsumerWidget {
-  const SnowRadarChart({Key? key}) : super(key: key);
+  const SnowRadarChart({
+    Key? key,
+    this.raderChartData,
+  }) : super(key: key);
+  final raderChartData;
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return Padding(
@@ -69,53 +73,24 @@ class SnowRadarChart extends HookConsumerWidget {
   }
 
   List<RadarDataSet> showingSnowDataSets() {
-    return snowDataSets().asMap().entries.map((entry) {
-      var index = entry.key;
-      var snowData = entry.value;
+    List<RadarDataSet> list = [];
 
-      return RadarDataSet(
-        fillColor: Colors.yellow.withOpacity(0.4),
-        borderColor: Colors.blueAccent,
-        borderWidth: 2.0,
-        entryRadius: 5.0,
-        dataEntries:
-            snowData.pointList.map((e) => RadarEntry(value: e)).toList(),
-      );
-    }).toList();
+    // return
+    final radarData = RadarDataSet(
+      fillColor: Colors.yellow.withOpacity(0.4),
+      borderColor: Colors.blueAccent,
+      borderWidth: 2.0,
+      entryRadius: 5.0,
+      dataEntries: setEntriesData(raderChartData),
+    );
+    list.add(radarData);
+    return list;
   }
 
-  List<SnowData> snowDataSets() {
-    return [
-      // SnowData(
-      //   title: 'キャンバー',
-      //   pointList: [3.0, 5.0, 3.0, 1.5],
-      // ),
-      // SnowData(
-      //   title: 'パウダーロッカー',
-      //   pointList: [1.0, 4.0, 5.0, 1.5],
-      // ),
-      // SnowData(
-      //   title: 'ハイブリッドキャンバー',
-      //   pointList: [3.5, 4.0, 3.5, 4.0],
-      // ),
-      // SnowData(
-      //   title: 'ダブルキャンバー',
-      //   pointList: [4.5, 3.5, 3.5, 4.5],
-      // ),
-      SnowData(
-        title: 'フラットキャンバー',
-        pointList: [4.5, 1.0, 1.0, 5.0],
-      ),
-    ];
+  List<RadarEntry>? setEntriesData(List<double> data) {
+    List<RadarEntry>? raderEntries =
+        data.map((value) => RadarEntry(value: value)).toList();
+
+    return raderEntries;
   }
-}
-
-class SnowData {
-  final String title;
-  final List<double> pointList;
-
-  SnowData({
-    required this.title,
-    required this.pointList,
-  });
 }

@@ -22,6 +22,8 @@ Snowboard _$SnowboardFromJson(Map<String, dynamic> json) {
 mixin _$Snowboard {
   String get name => throw _privateConstructorUsedError;
   String get descprition => throw _privateConstructorUsedError;
+  String get imageUrl => throw _privateConstructorUsedError;
+  List<double> get chartData => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -33,7 +35,11 @@ mixin _$Snowboard {
 abstract class $SnowboardCopyWith<$Res> {
   factory $SnowboardCopyWith(Snowboard value, $Res Function(Snowboard) then) =
       _$SnowboardCopyWithImpl<$Res>;
-  $Res call({String name, String descprition});
+  $Res call(
+      {String name,
+      String descprition,
+      String imageUrl,
+      List<double> chartData});
 }
 
 /// @nodoc
@@ -48,6 +54,8 @@ class _$SnowboardCopyWithImpl<$Res> implements $SnowboardCopyWith<$Res> {
   $Res call({
     Object? name = freezed,
     Object? descprition = freezed,
+    Object? imageUrl = freezed,
+    Object? chartData = freezed,
   }) {
     return _then(_value.copyWith(
       name: name == freezed
@@ -58,6 +66,14 @@ class _$SnowboardCopyWithImpl<$Res> implements $SnowboardCopyWith<$Res> {
           ? _value.descprition
           : descprition // ignore: cast_nullable_to_non_nullable
               as String,
+      imageUrl: imageUrl == freezed
+          ? _value.imageUrl
+          : imageUrl // ignore: cast_nullable_to_non_nullable
+              as String,
+      chartData: chartData == freezed
+          ? _value.chartData
+          : chartData // ignore: cast_nullable_to_non_nullable
+              as List<double>,
     ));
   }
 }
@@ -68,7 +84,11 @@ abstract class _$$_SnowboardCopyWith<$Res> implements $SnowboardCopyWith<$Res> {
           _$_Snowboard value, $Res Function(_$_Snowboard) then) =
       __$$_SnowboardCopyWithImpl<$Res>;
   @override
-  $Res call({String name, String descprition});
+  $Res call(
+      {String name,
+      String descprition,
+      String imageUrl,
+      List<double> chartData});
 }
 
 /// @nodoc
@@ -85,6 +105,8 @@ class __$$_SnowboardCopyWithImpl<$Res> extends _$SnowboardCopyWithImpl<$Res>
   $Res call({
     Object? name = freezed,
     Object? descprition = freezed,
+    Object? imageUrl = freezed,
+    Object? chartData = freezed,
   }) {
     return _then(_$_Snowboard(
       name: name == freezed
@@ -95,6 +117,14 @@ class __$$_SnowboardCopyWithImpl<$Res> extends _$SnowboardCopyWithImpl<$Res>
           ? _value.descprition
           : descprition // ignore: cast_nullable_to_non_nullable
               as String,
+      imageUrl: imageUrl == freezed
+          ? _value.imageUrl
+          : imageUrl // ignore: cast_nullable_to_non_nullable
+              as String,
+      chartData: chartData == freezed
+          ? _value._chartData
+          : chartData // ignore: cast_nullable_to_non_nullable
+              as List<double>,
     ));
   }
 }
@@ -102,7 +132,12 @@ class __$$_SnowboardCopyWithImpl<$Res> extends _$SnowboardCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$_Snowboard with DiagnosticableTreeMixin implements _Snowboard {
-  const _$_Snowboard({required this.name, required this.descprition});
+  const _$_Snowboard(
+      {required this.name,
+      required this.descprition,
+      required this.imageUrl,
+      required final List<double> chartData})
+      : _chartData = chartData;
 
   factory _$_Snowboard.fromJson(Map<String, dynamic> json) =>
       _$$_SnowboardFromJson(json);
@@ -111,10 +146,18 @@ class _$_Snowboard with DiagnosticableTreeMixin implements _Snowboard {
   final String name;
   @override
   final String descprition;
+  @override
+  final String imageUrl;
+  final List<double> _chartData;
+  @override
+  List<double> get chartData {
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_chartData);
+  }
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'Snowboard(name: $name, descprition: $descprition)';
+    return 'Snowboard(name: $name, descprition: $descprition, imageUrl: $imageUrl, chartData: $chartData)';
   }
 
   @override
@@ -123,7 +166,9 @@ class _$_Snowboard with DiagnosticableTreeMixin implements _Snowboard {
     properties
       ..add(DiagnosticsProperty('type', 'Snowboard'))
       ..add(DiagnosticsProperty('name', name))
-      ..add(DiagnosticsProperty('descprition', descprition));
+      ..add(DiagnosticsProperty('descprition', descprition))
+      ..add(DiagnosticsProperty('imageUrl', imageUrl))
+      ..add(DiagnosticsProperty('chartData', chartData));
   }
 
   @override
@@ -133,7 +178,10 @@ class _$_Snowboard with DiagnosticableTreeMixin implements _Snowboard {
             other is _$_Snowboard &&
             const DeepCollectionEquality().equals(other.name, name) &&
             const DeepCollectionEquality()
-                .equals(other.descprition, descprition));
+                .equals(other.descprition, descprition) &&
+            const DeepCollectionEquality().equals(other.imageUrl, imageUrl) &&
+            const DeepCollectionEquality()
+                .equals(other._chartData, _chartData));
   }
 
   @JsonKey(ignore: true)
@@ -141,7 +189,9 @@ class _$_Snowboard with DiagnosticableTreeMixin implements _Snowboard {
   int get hashCode => Object.hash(
       runtimeType,
       const DeepCollectionEquality().hash(name),
-      const DeepCollectionEquality().hash(descprition));
+      const DeepCollectionEquality().hash(descprition),
+      const DeepCollectionEquality().hash(imageUrl),
+      const DeepCollectionEquality().hash(_chartData));
 
   @JsonKey(ignore: true)
   @override
@@ -157,7 +207,9 @@ class _$_Snowboard with DiagnosticableTreeMixin implements _Snowboard {
 abstract class _Snowboard implements Snowboard {
   const factory _Snowboard(
       {required final String name,
-      required final String descprition}) = _$_Snowboard;
+      required final String descprition,
+      required final String imageUrl,
+      required final List<double> chartData}) = _$_Snowboard;
 
   factory _Snowboard.fromJson(Map<String, dynamic> json) =
       _$_Snowboard.fromJson;
@@ -166,6 +218,10 @@ abstract class _Snowboard implements Snowboard {
   String get name => throw _privateConstructorUsedError;
   @override
   String get descprition => throw _privateConstructorUsedError;
+  @override
+  String get imageUrl => throw _privateConstructorUsedError;
+  @override
+  List<double> get chartData => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
   _$$_SnowboardCopyWith<_$_Snowboard> get copyWith =>

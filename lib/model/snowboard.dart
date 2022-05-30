@@ -10,10 +10,13 @@ class Snowboard with _$Snowboard {
   const factory Snowboard({
     required String name,
     required String descprition,
-    // required String imageUrl,
-    // required List<double> chartData,
+    required String imageUrl,
+    required List<double> chartData,
   }) = _Snowboard;
 
   factory Snowboard.fromJson(Map<String, dynamic> json) =>
       _$SnowboardFromJson(json);
 }
+
+// Unable to load asset: images/w_camber.png
+// "Unable to load asset: images/w_camber.png"
