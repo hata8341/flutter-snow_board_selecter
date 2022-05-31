@@ -1,33 +1,14 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:sbselector/model/answer.dart';
+import 'package:sbselector/const/result.dart';
+import 'package:sbselector/model/result.dart';
 
-// 初期値は[]
-// addメソッド
-// removeメソッド
-class AnswerListNotifier extends StateNotifier<List<Answer>> {
-  AnswerListNotifier(this._read) : super([]);
-
-  final Reader _read;
-
-  void addAnswer(Answer answer) {
-    state = [...state, answer];
-  }
-
-  // 新しく配列を作成してみる、idを状態としてもたせていないため
-  void removeAnswer() {
-    int count = 0;
-    List<Answer> newList = [];
-    while (count < state.length - 1) {
-      newList.add(state[count]);
-      count++;
-    }
-    state = newList;
-  }
+class ResultStateNotifier extends StateNotifier<Result> {
+  ResultStateNotifier.init(this.read, {required String rideType})
+      : super(createResultData(rideType));
+  final Reader read;
 }
 
-final answerListProvider =
-    StateNotifierProvider<AnswerListNotifier, List<Answer>>(
-  (ref) {
-    return AnswerListNotifier(ref.read);
-  },
-);
+final resultProvider = StateNotifierProvider.autoDispose
+    .family<ResultStateNotifier, Result, String>((ref, rideType) {
+  return ResultStateNotifier.init(ref.read, rideType: rideType);
+});

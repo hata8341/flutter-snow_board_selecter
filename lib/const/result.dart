@@ -1,4 +1,3 @@
-
 import 'package:sbselector/const/snowboard.dart';
 import 'package:sbselector/model/result.dart';
 import 'package:sbselector/model/snowboard.dart';
@@ -22,6 +21,7 @@ const resultMap = {
 };
 
 Result createResultData(String rideType) {
+  print('resultData作成');
   print(rideType);
   Map<String, dynamic> resultData = resultMap[rideType] as Map<String, dynamic>;
   List<Snowboard> snowboardData = createSnowboardData(rideType);

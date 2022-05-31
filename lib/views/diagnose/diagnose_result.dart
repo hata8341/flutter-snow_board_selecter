@@ -6,8 +6,9 @@ import 'package:flutter_weather_bg_null_safety/flutter_weather_bg.dart';
 import 'package:gap/gap.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:sbselector/const/result.dart';
 import 'package:sbselector/model/result.dart';
+import 'package:sbselector/view_model/my_ridetypes_view_model.dart';
+import 'package:sbselector/view_model/result_view_model.dart';
 import 'package:sbselector/widgets/radar_chart.dart';
 import 'package:screenshot/screenshot.dart';
 import 'package:share_plus/share_plus.dart';
@@ -15,25 +16,24 @@ import 'package:share_plus/share_plus.dart';
 class DiagnoseResultPage extends HookConsumerWidget {
   DiagnoseResultPage({Key? key}) : super(key: key);
 
-  String title = "診断結果";
+  final String title = "診断結果";
   final WeatherType sunny = WeatherType.sunny;
-  bool cute = false;
-  bool beautiful = false;
+  final bool cute = false;
+  final bool beautiful = false;
 
   double size = 50;
-  double opacity = 1.0;
+  final double opacity = 1.0;
 
   final _screenShotController = ScreenshotController();
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final String rideType =
         ModalRoute.of(context)!.settings.arguments.toString();
 
     final Size screenSize = MediaQuery.of(context).size;
-
-    final Result result = createResultData(rideType);
-    print('ホーム');
-    print(result);
+    final Result result = ref.watch(resultProvider(rideType));
+    final myRideTypesController = ref.watch(myRideTypesProvider.notifier);
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -274,7 +274,7 @@ class DiagnoseResultPage extends HookConsumerWidget {
                         print(e);
                       }
                     },
-                    label: const Text('share'),
+                    label: const Text('共有'),
                     style: ElevatedButton.styleFrom(
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(20),
@@ -286,11 +286,13 @@ class DiagnoseResultPage extends HookConsumerWidget {
                       Icons.save,
                       color: Colors.white,
                     ),
-                    onPressed: () {
-                      // 結果を保存する実装
+                    onPressed: () async {
                       _saveResult();
+                      myRideTypesController.add(rideType);
+                      ScaffoldMessenger.of(context)
+                          .showSnackBar(successSnackBar);
                     },
-                    label: const Text('share'),
+                    label: const Text('保存'),
                     style: ElevatedButton.styleFrom(
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(20),
@@ -305,6 +307,18 @@ class DiagnoseResultPage extends HookConsumerWidget {
       ),
     );
   }
+
+  static SnackBar successSnackBar = SnackBar(
+    content: Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: const [
+        Text('保存しました'),
+      ],
+    ),
+    duration: const Duration(
+      seconds: 2,
+    ),
+  );
 
   void _shareResult() async {
     const _shareText = '#スノボセレクター';
@@ -322,16 +336,9 @@ class DiagnoseResultPage extends HookConsumerWidget {
   }
 
   void _saveResult() async {
-    try {
-      final _screenshot = await _screenShotController.capture(
-        delay: const Duration(milliseconds: 10),
-      );
-      if (_screenshot != null) {
-        print('保存する');
-      }
-    } catch (e) {
+    try {} catch (e) {
       print(e);
     }
-    print('test');
+    print('データ保存');
   }
 }

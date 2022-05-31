@@ -75,7 +75,6 @@ class SnowRadarChart extends HookConsumerWidget {
   List<RadarDataSet> showingSnowDataSets() {
     List<RadarDataSet> list = [];
 
-    // return
     final radarData = RadarDataSet(
       fillColor: Colors.yellow.withOpacity(0.4),
       borderColor: Colors.blueAccent,
