@@ -3,7 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 class SnowRadarChart extends HookConsumerWidget {
-  const SnowRadarChart({Key? key}) : super(key: key);
+  const SnowRadarChart({
+    Key? key,
+    this.raderChartData,
+  }) : super(key: key);
+  final raderChartData;
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return Padding(
@@ -26,11 +30,13 @@ class SnowRadarChart extends HookConsumerWidget {
                 getTitle: (index) {
                   switch (index) {
                     case 0:
-                      return 'ジブ・グラトリ';
+                      return 'グラトリ';
                     case 1:
-                      return 'オールラウンド';
+                      return 'カービング';
                     case 2:
-                      return 'フリーラン・パウダー';
+                      return 'パウダー';
+                    case 3:
+                      return 'ジブ・パーク';
                     default:
                       return '';
                   }
@@ -42,7 +48,7 @@ class SnowRadarChart extends HookConsumerWidget {
                 // レーダーチャートからのタイトルの位置
                 titlePositionPercentageOffset: 0.2,
                 // ティックの数
-                tickCount: 5,
+                tickCount: 4,
                 ticksTextStyle: const TextStyle(
                   color: null,
                   fontSize: 0,
@@ -67,45 +73,23 @@ class SnowRadarChart extends HookConsumerWidget {
   }
 
   List<RadarDataSet> showingSnowDataSets() {
-    return snowDataSets().asMap().entries.map((entry) {
-      var index = entry.key;
-      var snowData = entry.value;
+    List<RadarDataSet> list = [];
 
-      return RadarDataSet(
-        fillColor: Colors.yellow.withOpacity(0.4),
-        borderColor: Colors.blueAccent,
-        borderWidth: 2.0,
-        entryRadius: 5.0,
-        dataEntries:
-            snowData.pointList.map((e) => RadarEntry(value: e)).toList(),
-      );
-    }).toList();
+    final radarData = RadarDataSet(
+      fillColor: Colors.yellow.withOpacity(0.4),
+      borderColor: Colors.blueAccent,
+      borderWidth: 2.0,
+      entryRadius: 5.0,
+      dataEntries: setEntriesData(raderChartData),
+    );
+    list.add(radarData);
+    return list;
   }
 
-  List<SnowData> snowDataSets() {
-    return [
-      SnowData(
-        title: 'フリーラン・パウダー',
-        pointList: [2.0, 2.0, 6.0],
-      ),
-      // SnowData(
-      //   title: 'ジブ・グラトリ',
-      //   pointList: [6.0, 2.0, 2.0],
-      // ),
-      // SnowData(
-      //   title: 'オールラウンド',
-      //   pointList: [2.0, 6.0, 2.0],
-      // ),
-    ];
+  List<RadarEntry>? setEntriesData(List<double> data) {
+    List<RadarEntry>? raderEntries =
+        data.map((value) => RadarEntry(value: value)).toList();
+
+    return raderEntries;
   }
-}
-
-class SnowData {
-  final String title;
-  final List<double> pointList;
-
-  SnowData({
-    required this.title,
-    required this.pointList,
-  });
 }

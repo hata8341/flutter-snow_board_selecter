@@ -1,10 +1,14 @@
 import 'dart:io';
 
+import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_weather_bg_null_safety/flutter_weather_bg.dart';
 import 'package:gap/gap.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:sbselector/model/result.dart';
+import 'package:sbselector/view_model/my_ridetypes_view_model.dart';
+import 'package:sbselector/view_model/result_view_model.dart';
 import 'package:sbselector/widgets/radar_chart.dart';
 import 'package:screenshot/screenshot.dart';
 import 'package:share_plus/share_plus.dart';
@@ -12,15 +16,24 @@ import 'package:share_plus/share_plus.dart';
 class DiagnoseResultPage extends HookConsumerWidget {
   DiagnoseResultPage({Key? key}) : super(key: key);
 
-  String title = "診断結果";
+  final String title = "診断結果";
   final WeatherType sunny = WeatherType.sunny;
-  bool cute = false;
-  bool beautiful = false;
+  final bool cute = false;
+  final bool beautiful = false;
+
+  double size = 50;
+  final double opacity = 1.0;
 
   final _screenShotController = ScreenshotController();
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final String rideType =
+        ModalRoute.of(context)!.settings.arguments.toString();
+
     final Size screenSize = MediaQuery.of(context).size;
+    final Result result = ref.watch(resultProvider(rideType));
+    final myRideTypesController = ref.watch(myRideTypesProvider.notifier);
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -46,135 +59,109 @@ class DiagnoseResultPage extends HookConsumerWidget {
           controller: _screenShotController,
           child: ListView(
             children: <Widget>[
-              // スタンス・ライドスタイル
-              Material(
-                elevation: 1.0,
-                shadowColor: Colors.blueGrey,
-                child: ListTile(
-                  tileColor: Colors.grey[100],
-                  title: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: const [
-                      Text(
-                        'スタンス・ライドスタイル',
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
+              const Gap(20),
+              ListTile(
+                title: Row(
+                  children: [
+                    const Text('あなたのライドスタイルは'),
+                    AnimatedTextKit(
+                      animatedTexts: [
+                        TyperAnimatedText(
+                          '...',
+                          speed: const Duration(
+                            milliseconds: 1000,
+                          ),
                         ),
-                      ),
-                    ],
-                  ),
+                        TyperAnimatedText(
+                          '...',
+                          speed: const Duration(
+                            milliseconds: 1000,
+                          ),
+                        ),
+                        TyperAnimatedText(
+                          '...',
+                          speed: const Duration(
+                            milliseconds: 1000,
+                          ),
+                        ),
+                        TyperAnimatedText(
+                          '...',
+                          speed: const Duration(
+                            milliseconds: 1000,
+                          ),
+                        ),
+                      ],
+                      totalRepeatCount: 1,
+                      pause: const Duration(seconds: 1),
+                      isRepeatingAnimation: false,
+                      onFinished: () {
+                        print('終わったら');
+                        print(size);
+                        size = 50;
+                        print(size);
+                      },
+                    ),
+                  ],
                 ),
               ),
-
-              ExpansionTile(
+              ListTile(
+                title: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    AnimatedOpacity(
+                      opacity: opacity,
+                      duration: const Duration(
+                        seconds: 1,
+                      ),
+                      child: AnimatedDefaultTextStyle(
+                        child: Text(result.rideType),
+                        style: TextStyle(fontSize: size, color: Colors.black),
+                        duration: const Duration(
+                          seconds: 1,
+                        ),
+                        onEnd: () {
+                          print('scale_end');
+                        },
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              ListTile(
+                title: Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: const [
+                    Text('タイプです！！'),
+                  ],
+                ),
+              ),
+              const Gap(20),
+              ListTile(
                 title: Container(
-                  padding: const EdgeInsets.only(
-                    left: 10,
+                  decoration: const BoxDecoration(
+                    border: Border(
+                      bottom: BorderSide(
+                        color: Colors.blue,
+                        width: 5.0,
+                      ),
+                    ),
                   ),
                   child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      const Text('推奨スタンス'),
-                      Chip(
-                        backgroundColor: Colors.blue[50],
-                        label: const Text(
-                          'レギュラー・ダック',
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                onExpansionChanged: (bool changed) {
-                  // setState(() {
-                  //   cute = false;
-                  //   beautiful = changed;
-                },
-                children: <Widget>[
-                  CheckboxListTile(
-                    value: cute,
-                    onChanged: (checked) {
-                      // setState(() {
-                      //   cute = checked!;
-                      // });
-                    },
-                    title: const Text('可愛い系'),
-                  ),
-                  CheckboxListTile(
-                    value: beautiful,
-                    onChanged: (checked) {
-                      // setState(() {
-                      //   beautiful = checked!;
-                      // });
-                    },
-                    title: const Text('美人系'),
-                  ),
-                ],
-              ),
-              ExpansionTile(
-                title: Container(
-                  padding: const EdgeInsets.only(
-                    left: 10,
-                  ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      const Text('推奨ライド'),
-                      Chip(
-                        backgroundColor: Colors.blue[50],
-                        label: const Text(
-                          'フリーラン',
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                onExpansionChanged: (bool changed) {
-                  // setState(() {
-                  //   cute = false;
-                  //   beautiful = changed;
-                },
-                children: const <Widget>[
-                  SizedBox(
-                    height: 50,
-                    child: Text('あなたはフリーランでライドスタイルを楽しむ傾向があります'),
-                  ),
-                ],
-              ),
-              Material(
-                elevation: 1.0,
-                shadowColor: Colors.blueGrey,
-                child: ListTile(
-                  tileColor: Colors.grey[100],
-                  title: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: const [
+                      Icon(Icons.snowboarding),
                       Text(
                         'スノーボード',
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
+                          fontSize: 20,
                         ),
                       ),
                     ],
                   ),
                 ),
               ),
-              Container(
-                // decoration: BoxDecoration(
-                //   border: Border.all(
-                //     color: Colors.green,
-                //     width: 2,
-                //   ),
-                // ),
-                child: Center(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: const <Widget>[
-                      // RadarChartSample1(),
-                      SnowRadarChart(),
-                    ],
-                  ),
-                ),
-              ),
+              const Gap(20),
               ExpansionTile(
                 title: Container(
                   padding: const EdgeInsets.only(
@@ -185,23 +172,35 @@ class DiagnoseResultPage extends HookConsumerWidget {
                     children: [
                       const Text('おすすめ１'),
                       Chip(
+                        elevation: 2.0,
+                        shadowColor: Colors.grey,
                         backgroundColor: Colors.blue[50],
-                        label: const Text(
-                          'キャンバー',
+                        label: Text(
+                          result.firstRecommendBoard.name,
                         ),
                       ),
                     ],
                   ),
                 ),
-                onExpansionChanged: (bool changed) {
-                  // setState(() {
-                  //   cute = false;
-                  //   beautiful = changed;
-                },
-                children: const <Widget>[
-                  SizedBox(
-                    height: 50,
-                    child: Text('雪面にエッジが引っかかりやすい形状'),
+                onExpansionChanged: (bool changed) {},
+                children: <Widget>[
+                  Center(
+                    child: SnowRadarChart(
+                      raderChartData: result.firstRecommendBoard.chartData,
+                    ),
+                  ),
+                  Image.asset(
+                    result.firstRecommendBoard.imageUrl,
+                    fit: BoxFit.cover,
+                  ),
+                  Container(
+                    padding: const EdgeInsets.fromLTRB(16.0, 0.0, 16.0, 16.0),
+                    child: Text(
+                      result.firstRecommendBoard.descprition,
+                      style: const TextStyle(
+                        fontSize: 18.0,
+                      ),
+                    ),
                   ),
                 ],
               ),
@@ -215,30 +214,46 @@ class DiagnoseResultPage extends HookConsumerWidget {
                     children: [
                       const Text('おすすめ2'),
                       Chip(
+                        elevation: 2.0,
+                        shadowColor: Colors.grey,
                         backgroundColor: Colors.blue[50],
-                        label: const Text(
-                          'ロッカーキャンバー',
+                        label: Text(
+                          result.secondRecommendBoard.name,
                         ),
                       ),
                     ],
                   ),
                 ),
-                onExpansionChanged: (bool changed) {
-                  // setState(() {
-                  //   cute = false;
-                  //   beautiful = changed;
-                },
-                children: const <Widget>[
-                  SizedBox(
-                    height: 50,
-                    child: Text('板のノーズが雪に埋まりにくい形状'),
+                onExpansionChanged: (bool changed) {},
+                children: <Widget>[
+                  Center(
+                    child: SnowRadarChart(
+                      raderChartData: result.secondRecommendBoard.chartData,
+                    ),
+                  ),
+                  Image.asset(
+                    result.secondRecommendBoard.imageUrl,
+                    fit: BoxFit.cover,
+                  ),
+                  Container(
+                    padding: const EdgeInsets.fromLTRB(16.0, 0.0, 16.0, 16.0),
+                    child: Text(
+                      result.secondRecommendBoard.descprition,
+                      style: const TextStyle(
+                        fontSize: 18.0,
+                      ),
+                    ),
                   ),
                 ],
               ),
+              const Gap(20),
               Container(
                 padding: const EdgeInsets.fromLTRB(30, 0, 20, 0),
-                child: const Text(
-                  'あなたはレギュラースタンスの前振りスタンスが推奨スタンスです。圧雪バーンでカービングターンをしたり、コース脇などのパウダースノーで浮遊感を感じたり、壁などを使った地形遊びをするライドスタイルに興味があるようです。そんな人には雪面にエッジが上手くかかるキャンバー、板のノーズが雪に埋まりにくいロッカーキャンバーのような形状の板がおすすめ！！',
+                child: Text(
+                  result.discription,
+                  style: const TextStyle(
+                    fontSize: 18,
+                  ),
                 ),
               ),
               const Gap(10),
@@ -259,7 +274,7 @@ class DiagnoseResultPage extends HookConsumerWidget {
                         print(e);
                       }
                     },
-                    label: const Text('share'),
+                    label: const Text('共有'),
                     style: ElevatedButton.styleFrom(
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(20),
@@ -271,11 +286,13 @@ class DiagnoseResultPage extends HookConsumerWidget {
                       Icons.save,
                       color: Colors.white,
                     ),
-                    onPressed: () {
-                      // 結果を保存する実装
+                    onPressed: () async {
                       _saveResult();
+                      myRideTypesController.add(rideType);
+                      ScaffoldMessenger.of(context)
+                          .showSnackBar(successSnackBar);
                     },
-                    label: const Text('share'),
+                    label: const Text('保存'),
                     style: ElevatedButton.styleFrom(
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(20),
@@ -290,6 +307,18 @@ class DiagnoseResultPage extends HookConsumerWidget {
       ),
     );
   }
+
+  static SnackBar successSnackBar = SnackBar(
+    content: Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: const [
+        Text('保存しました'),
+      ],
+    ),
+    duration: const Duration(
+      seconds: 2,
+    ),
+  );
 
   void _shareResult() async {
     const _shareText = '#スノボセレクター';
@@ -307,16 +336,9 @@ class DiagnoseResultPage extends HookConsumerWidget {
   }
 
   void _saveResult() async {
-    try {
-      final _screenshot = await _screenShotController.capture(
-        delay: const Duration(milliseconds: 10),
-      );
-      if (_screenshot != null) {
-        print('保存する');
-      }
-    } catch (e) {
+    try {} catch (e) {
       print(e);
     }
-    print('test');
+    print('データ保存');
   }
 }

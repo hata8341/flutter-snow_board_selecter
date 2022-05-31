@@ -89,18 +89,15 @@ void mistake(WidgetRef ref) {
   answerController.removeAnswer();
 }
 
-void computeResult(WidgetRef ref, List<Answer> list) {
-  debugPrint('結果算出処理');
+String computeResult(WidgetRef ref, List<Answer> list) {
   final gTList =
       list.where((answer) => answer.category == 'groundtrickJib').toList();
   final fPList =
       list.where((answer) => answer.category == 'freerunPowder').toList();
   final gTTotal = computeTotal(gTList);
   final fPTotal = computeTotal(fPList);
-  print({gTTotal});
-  print({fPTotal});
   final rideType = checkRideType(gTTotal, fPTotal);
-  print(rideType);
+  return rideType;
 }
 
 double computeTotal(List<Answer> list) {
