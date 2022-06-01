@@ -34,6 +34,8 @@ class DiagnoseResultPage extends HookConsumerWidget {
     final Size screenSize = MediaQuery.of(context).size;
     final Result result = ref.watch(resultProvider(rideType));
     final myRideTypesController = ref.watch(myRideTypesProvider.notifier);
+
+    final myRideTypes = ref.watch(myRideTypesProvider);
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -287,7 +289,7 @@ class DiagnoseResultPage extends HookConsumerWidget {
                       color: Colors.white,
                     ),
                     onPressed: () async {
-                      _saveResult();
+                      saveResult(myRideTypes);
                       myRideTypesController.add(rideType);
                       ScaffoldMessenger.of(context)
                           .showSnackBar(successSnackBar);
@@ -335,8 +337,11 @@ class DiagnoseResultPage extends HookConsumerWidget {
     }
   }
 
-  void _saveResult() async {
-    try {} catch (e) {
+  void saveResult(List<dynamic> rideTypes) async {
+    try {
+      print('データの数');
+      print(rideTypes.length);
+    } catch (e) {
       print(e);
     }
     print('データ保存');

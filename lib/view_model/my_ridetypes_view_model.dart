@@ -1,3 +1,4 @@
+import 'package:intl/intl.dart';
 import 'package:riverpod/riverpod.dart';
 import 'package:sbselector/db/myRideTypes.dart';
 import 'package:sbselector/model/my_ridetype.dart';
@@ -7,8 +8,15 @@ class MyRideTypesNotifier extends StateNotifier<List<MyRideType>> {
   MyRideTypesNotifier(this.read) : super([]);
 
   final Reader read;
+  // FutureProviderを検討する
+  // Future<void> loadDb() async {
+  //   await MyRideTypeDb.read().then((value) => state
+  //     ..clear()
+  //     ..addAll(value));
 
-  loadDb() async {
+  // }
+
+  Future<void> loadDb() async {
     List<MyRideType> myRideTypes = [];
     await MyRideTypeDb.read().then(
       (value) => myRideTypes
@@ -21,7 +29,7 @@ class MyRideTypesNotifier extends StateNotifier<List<MyRideType>> {
 
   void add(String rideType) async {
     MyRideType myRideType = MyRideType(
-      id: Uuid().v4(),
+      id: const Uuid().v4(),
       rideType: rideType,
       createdAt: DateTime.now(),
     );
@@ -37,9 +45,17 @@ class MyRideTypesNotifier extends StateNotifier<List<MyRideType>> {
       print(e);
     }
   }
+
+  String getCreateAtStr(MyRideType history) {
+    final time = history.createdAt;
+    final ymed = DateFormat.yMEd('ja').format(time);
+    final hm = DateFormat.Hm('ja').format(time);
+    return ymed + hm;
+  }
 }
 
 final myRideTypesProvider =
-    StateNotifierProvider<MyRideTypesNotifier, List<MyRideType>>((ref) {
+    StateNotifierProvider.autoDispose<MyRideTypesNotifier, List<MyRideType>>(
+        (ref) {
   return MyRideTypesNotifier(ref.read);
 });
