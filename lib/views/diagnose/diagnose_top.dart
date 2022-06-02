@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_weather_bg_null_safety/flutter_weather_bg.dart';
+import 'package:gap/gap.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:sbselector/views/history/history_top.dart';
 import 'package:sbselector/views/settings/setting_top.dart';
@@ -8,10 +8,9 @@ import 'package:sbselector/widgets/bubble.dart';
 final bottomBarIndexProvider = StateProvider<int>((ref) => 1);
 
 class DiagnoseTopPage extends HookConsumerWidget {
-  DiagnoseTopPage({Key? key}) : super(key: key);
+  const DiagnoseTopPage({Key? key}) : super(key: key);
 
-  String title = "診断";
-  final WeatherType sunny = WeatherType.sunny;
+  final String title = "診断";
 
   String switchTitle(int bottomIndex) {
     String title = '';
@@ -61,6 +60,7 @@ class DiagnoseTopPage extends HookConsumerWidget {
     final bottomBarIndex = ref.watch(bottomBarIndexProvider.state);
     final Size screenSize = MediaQuery.of(context).size;
     return Scaffold(
+      backgroundColor: Theme.of(context).backgroundColor,
       appBar: AppBar(
         title: Row(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -68,112 +68,88 @@ class DiagnoseTopPage extends HookConsumerWidget {
         ),
       ),
       body: bottomBarIndex.state == 1
-          ? Stack(
-              children: [
-                WeatherBg(
-                  weatherType: sunny,
-                  width: screenSize.width,
-                  height: screenSize.height,
-                ),
-                Column(
-                  children: [
-                    Container(
-                      constraints: BoxConstraints.expand(
-                        height: screenSize.height * 0.17,
-                      ),
-                      decoration: BoxDecoration(
-                        border: Border.all(
-                          color: Colors.green,
-                          width: 2,
+          ? Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                mainAxisSize: MainAxisSize.max,
+                children: <Widget>[
+                  const Spacer(
+                    flex: 3,
+                  ),
+                  Column(
+                    children: [
+                      SizedBox(
+                        width: screenSize.width * 0.6,
+                        height: screenSize.height * 0.32,
+                        child: Image.asset(
+                          'images/cut_snow_penguin.png',
+                          fit: BoxFit.cover,
                         ),
                       ),
-                    ),
-                    Container(
-                      constraints: BoxConstraints.expand(
-                        height: screenSize.height * 0.61,
-                      ),
-                      decoration: BoxDecoration(
-                        border: Border.all(
-                          color: Colors.red,
-                          width: 2,
+                      const Gap(10),
+                      Container(
+                        height: screenSize.height * 0.2,
+                        padding: const EdgeInsets.all(16),
+                        decoration: const ShapeDecoration(
+                          color: Colors.white,
+                          shadows: [
+                            BoxShadow(
+                              color: Color(0x80000000),
+                              offset: Offset(0, 2),
+                              blurRadius: 2,
+                            ),
+                          ],
+                          shape: BubbleBorder(),
                         ),
-                      ),
-                      child: Center(
                         child: Column(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          children: <Widget>[
-                            SizedBox(
-                              width: screenSize.width * 0.6,
-                              height: screenSize.height * 0.32,
-                              child: Image.asset(
-                                'images/cut_snow_penguin.png',
-                                fit: BoxFit.cover,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: const <Widget>[
+                            Text(
+                              '自分の思うスノーボードを',
+                              style: TextStyle(
+                                fontSize: 20.0,
+                                fontWeight: FontWeight.bold,
                               ),
                             ),
-                            Container(
-                              height: screenSize.height * 0.2,
-                              padding: const EdgeInsets.all(16),
-                              decoration: const ShapeDecoration(
-                                color: Colors.white,
-                                shadows: [
-                                  BoxShadow(
-                                    color: Color(0x80000000),
-                                    offset: Offset(0, 2),
-                                    blurRadius: 2,
-                                  ),
-                                ],
-                                shape: BubbleBorder(),
-                              ),
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: const <Widget>[
-                                  Text(
-                                    '自分の思うスノーボードを',
-                                    style: TextStyle(
-                                      fontSize: 20.0,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                  Text(
-                                    'イメージしてね!!',
-                                    style: TextStyle(
-                                      fontSize: 20.0,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                            SizedBox(
-                              width: screenSize.width * 0.65,
-                              height: screenSize.height * 0.05,
-                              child: ElevatedButton(
-                                onPressed: () {
-                                  Navigator.pushNamed(
-                                      context, '/diagnoseContent');
-                                },
-                                style: ElevatedButton.styleFrom(
-                                  primary: Colors.yellow[700],
-                                  onPrimary: Colors.black,
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(5),
-                                  ),
-                                ),
-                                child: const Text(
-                                  '診断する',
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
+                            Text(
+                              'イメージしてね!!',
+                              style: TextStyle(
+                                fontSize: 20.0,
+                                fontWeight: FontWeight.bold,
                               ),
                             ),
                           ],
                         ),
                       ),
+                    ],
+                  ),
+                  const Spacer(),
+                  SizedBox(
+                    width: screenSize.width * 0.65,
+                    height: screenSize.height * 0.065,
+                    child: ElevatedButton(
+                      onPressed: () {
+                        Navigator.pushNamed(context, '/diagnoseContent');
+                      },
+                      style: ElevatedButton.styleFrom(
+                        primary: Colors.yellow[700],
+                        onPrimary: Colors.black,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(5),
+                        ),
+                      ),
+                      child: const Text(
+                        '診断する',
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 20.0,
+                        ),
+                      ),
                     ),
-                  ],
-                ),
-              ],
+                  ),
+                  const Spacer(),
+                ],
+              ),
             )
           : bottomBarIndex.state == 0
               ? Column(
