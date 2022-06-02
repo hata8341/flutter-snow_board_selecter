@@ -7,8 +7,6 @@ const String rideTypeTableName = 'my_ride_types';
 
 class MyRideTypeDb {
   static Future<Database> openDb() async {
-    // final _directoryPath = await getDatabasesPath();
-
     return await openDatabase(
       join(await getDatabasesPath(), rideTypeFileName),
       onCreate: (db, version) {
