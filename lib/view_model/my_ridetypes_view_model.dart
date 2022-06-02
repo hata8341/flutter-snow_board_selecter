@@ -8,13 +8,8 @@ class MyRideTypesNotifier extends StateNotifier<List<MyRideType>> {
   MyRideTypesNotifier(this.read) : super([]);
 
   final Reader read;
-  // FutureProviderを検討する
-  // Future<void> loadDb() async {
-  //   await MyRideTypeDb.read().then((value) => state
-  //     ..clear()
-  //     ..addAll(value));
 
-  // }
+  int get len => state.length;
 
   Future<void> loadDb() async {
     List<MyRideType> myRideTypes = [];
@@ -23,7 +18,6 @@ class MyRideTypesNotifier extends StateNotifier<List<MyRideType>> {
         ..clear()
         ..addAll(value),
     );
-
     state = myRideTypes;
   }
 
