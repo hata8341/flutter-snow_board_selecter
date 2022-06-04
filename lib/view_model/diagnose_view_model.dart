@@ -5,25 +5,68 @@ import 'package:sbselector/view_model/answer_view_model.dart';
 import 'package:sbselector/view_model/indicator_view_model.dart';
 import 'package:sbselector/widgets/end_dialog.dart';
 
-void checkEndDialog(WidgetRef ref, BuildContext context) {
-  return ref.listen(indicatorStateNotifierProvider, (previous, next) {
-    if (next == 1.0) {
-      showSelfDialog(endDialog(context, ref));
+
+class DiagnoseNotifier extends StateNotifier<void> {
+  DiagnoseNotifier(this._read) : super(null);
+
+  final Reader _read;
+
+  late final IndicatorStateNotifier indicatorController =
+      _read(indicatorStateNotifierProvider.notifier);
+  late final AnswerListNotifier answerListController =
+      _read(answerListProvider.notifier);
+
+  void checkEndDialog(WidgetRef ref, BuildContext context) {
+    return ref.listen(indicatorStateNotifierProvider, (previous, next) {
+      if (next == 1.0) {
+        showSelfDialog(endDialog(context, ref));
+      }
+    });
+  }
+
+  void respond(String category, double value) {
+    indicatorController.incrementIndicatorValue();
+    final answer = Answer(category: category, answerValue: value);
+    answerListController.addAnswer(answer);
+  }
+
+  void missTake() {
+    indicatorController.decrementIndicatorValue();
+    answerListController.removeAnswer();
+  }
+
+  double _computedTotal(List<Answer> list) {
+    double count = 0.0;
+    for (final answer in list) {
+      count += answer.answerValue;
     }
-  });
+    return count;
+  }
+
+  String _checkRideType(double jGTotal, double fPTotal) {
+    final difference = jGTotal - fPTotal;
+    if (difference > 9) {
+      return 'grandTrickJib';
+    } else if (difference < -9) {
+      return 'freerunPowder';
+    } else {
+      return 'allRround';
+    }
+  }
+
+  String computedResult() {
+    final jGList = answerListController.createJGList();
+    final fPList = answerListController.createFPList();
+
+    final jGTotal = _computedTotal(jGList);
+    final fPTotal = _computedTotal(fPList);
+    answerListController.resetState();
+
+    return _checkRideType(jGTotal, fPTotal);
+  }
 }
 
-void respond(WidgetRef ref, String category, double value) {
-  final indicatorStateController =
-      ref.read(indicatorStateNotifierProvider.notifier);
-  indicatorStateController.incrementIndicatorValue();
-  final answer = Answer(category: category, answerValue: value);
-  final answerListController = ref.read(answerListProvider.notifier);
-  answerListController.addAnswer(answer);
-}
-
-void mistake(WidgetRef ref) {
-  ref.watch(indicatorStateNotifierProvider.notifier).decrementIndicatorValue();
-  final answerController = ref.read(answerListProvider.notifier);
-  answerController.removeAnswer();
-}
+final diagnoseProvider =
+    StateNotifierProvider.autoDispose<DiagnoseNotifier, void>((ref) {
+  return DiagnoseNotifier(ref.read);
+});

@@ -23,8 +23,9 @@ class DiagnoseContentPage extends HookConsumerWidget {
     final Question question = questionsController.getCurrQuestion();
     final bool missIconState = indicatorValueController.getMissIconState();
 
-    checkEndDialog(ref, context);
+    final diagnoseController = ref.watch(diagnoseProvider.notifier);
 
+    diagnoseController.checkEndDialog(ref, context);
     return Scaffold(
       backgroundColor: Theme.of(context).backgroundColor,
       appBar: AppBar(
@@ -86,7 +87,7 @@ class DiagnoseContentPage extends HookConsumerWidget {
                                     color: Colors.grey,
                                   ),
                                   onPressed: () {
-                                    mistake(ref);
+                                    diagnoseController.missTake();
                                   },
                                 ),
                               ),
@@ -160,7 +161,8 @@ class DiagnoseContentPage extends HookConsumerWidget {
                                   child: ElevatedButton(
                                     onPressed: () {
                                       print('はい');
-                                      respond(ref, question.category, 5.0);
+                                      diagnoseController.respond(
+                                          question.category, 5.0);
                                     },
                                     style: ElevatedButton.styleFrom(
                                       primary: Colors.yellow[700],
@@ -182,7 +184,8 @@ class DiagnoseContentPage extends HookConsumerWidget {
                                   height: screenSize.height * 0.05,
                                   child: ElevatedButton(
                                     onPressed: () {
-                                      respond(ref, question.category, 1.0);
+                                      diagnoseController.respond(
+                                          question.category, 1.0);
                                     },
                                     style: ElevatedButton.styleFrom(
                                       primary: Colors.yellow[700],
@@ -211,7 +214,8 @@ class DiagnoseContentPage extends HookConsumerWidget {
                                   child: ElevatedButton(
                                     onPressed: () {
                                       print('たぶんそう');
-                                      respond(ref, question.category, 4.0);
+                                      diagnoseController.respond(
+                                          question.category, 4.0);
                                     },
                                     style: ElevatedButton.styleFrom(
                                       primary: Colors.yellow[700],
@@ -234,7 +238,8 @@ class DiagnoseContentPage extends HookConsumerWidget {
                                   child: ElevatedButton(
                                     onPressed: () {
                                       print('わからない');
-                                      respond(ref, question.category, 3.0);
+                                      diagnoseController.respond(
+                                          question.category, 3.0);
                                     },
                                     style: ElevatedButton.styleFrom(
                                       primary: Colors.yellow[700],
@@ -257,7 +262,8 @@ class DiagnoseContentPage extends HookConsumerWidget {
                                   child: ElevatedButton(
                                     onPressed: () {
                                       print('たぶん違う');
-                                      respond(ref, question.category, 2.0);
+                                      diagnoseController.respond(
+                                          question.category, 2.0);
                                     },
                                     style: ElevatedButton.styleFrom(
                                       primary: Colors.yellow[700],

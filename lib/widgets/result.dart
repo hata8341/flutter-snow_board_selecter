@@ -48,7 +48,10 @@ class ResultDetail extends HookConsumerWidget {
         leading: IconButton(
           icon: const Icon(Icons.close),
           onPressed: () {
-            Navigator.pop(context);
+            Navigator.popUntil(
+              context,
+              ModalRoute.withName('/diagnoseTop'),
+            );
           },
         ),
         titleSpacing: screenSize.width * 0.24,

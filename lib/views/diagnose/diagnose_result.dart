@@ -8,7 +8,6 @@ class DiagnoseResultPage extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    // ref.refresh(answerListProvider);
     final args = ModalRoute.of(context)!.settings.arguments;
     final String rideType = args as String;
     return ResultDetail(key, rideType);
