@@ -34,4 +34,3 @@ Result createResultData(String rideType) {
 
   return result;
 }
-// }
