@@ -7,6 +7,25 @@ import 'package:sbselector/widgets/bubble.dart';
 
 final bottomBarIndexProvider = StateProvider<int>((ref) => 1);
 
+final backgroundColorProvider = Provider<Color>((ref) {
+  final bottomBarIndex = ref.watch(bottomBarIndexProvider);
+  final Color backgroundColor;
+  switch (bottomBarIndex) {
+    case 1:
+      backgroundColor = Colors.blue.shade200;
+      break;
+    case 0:
+      backgroundColor = Colors.white;
+      break;
+    case 2:
+      backgroundColor = Colors.white;
+      break;
+    default:
+      backgroundColor = Colors.white;
+  }
+  return backgroundColor;
+});
+
 class DiagnoseTopPage extends HookConsumerWidget {
   const DiagnoseTopPage({Key? key}) : super(key: key);
 
@@ -59,8 +78,10 @@ class DiagnoseTopPage extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final bottomBarIndex = ref.watch(bottomBarIndexProvider.state);
     final Size screenSize = MediaQuery.of(context).size;
+
+    final backgroundColor = ref.watch(backgroundColorProvider);
     return Scaffold(
-      backgroundColor: Theme.of(context).backgroundColor,
+      backgroundColor: backgroundColor,
       appBar: AppBar(
         title: Row(
           mainAxisAlignment: MainAxisAlignment.center,

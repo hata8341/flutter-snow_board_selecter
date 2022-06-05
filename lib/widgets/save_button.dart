@@ -11,7 +11,7 @@ ElevatedButton saveButton(
       Icons.save,
       color: Colors.white,
     ),
-    onPressed: () async {
+    onPressed: () {
       myRideTypesController.add(rideType);
       ScaffoldMessenger.of(context).showSnackBar(successSnackBar);
     },
