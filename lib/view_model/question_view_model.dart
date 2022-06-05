@@ -1,11 +1,7 @@
 import 'package:riverpod/riverpod.dart';
 import 'package:sbselector/const/question.dart';
 import 'package:sbselector/model/question.dart';
-import 'package:sbselector/view_model/diagnose_view_model.dart';
-// showQuestionSetsでqusetionListを作成
-// stateNotifierにQuestionListを作成
-// stateProviderを作成
-// viewへ順番に出力する
+import 'package:sbselector/view_model/indicator_view_model.dart';
 
 class QuestionList {
   static List<Question> createQestionList() {
@@ -18,34 +14,31 @@ class QuestionList {
 }
 
 class QuestionsController extends StateNotifier<List<Question>> {
-  QuestionsController(this.read) : super(QuestionList.createQestionList());
+  QuestionsController(this._read) : super(QuestionList.createQestionList());
 
-  final Reader read;
+  final Reader _read;
+
+  int _getCurrIndex() {
+    final indicatorValue = _read(indicatorStateNotifierProvider);
+    final questionLen = state.length;
+    final maxIndex = (questionLen - 1).toDouble();
+    if (indicatorValue >= (maxIndex / 10)) return maxIndex.toInt();
+    return (indicatorValue * 10).toInt();
+  }
+
+  Question getCurrQuestion() {
+    final index = _getCurrIndex();
+    return state[index];
+  }
+
+  String getQuestionNum() {
+    final index = _getCurrIndex();
+    return (index + 1).toString();
+  }
 }
 
 final questionListProvider =
-    StateNotifierProvider<QuestionsController, List<Question>>((ref) {
+    StateNotifierProvider.autoDispose<QuestionsController, List<Question>>(
+        (ref) {
   return QuestionsController(ref.read);
-});
-
-final questionListLengthProvider = Provider<int>((ref) {
-  final questionList = ref.watch(questionListProvider);
-  return questionList.length;
-});
-
-final questionIndexProvider = Provider<int>((ref) {
-  final questionSize = ref.watch(questionListLengthProvider);
-  final maxIndex = (questionSize - 1).toDouble();
-  final indicatorValue =
-      ref.watch(diagnoseStateNotifierProvider).indicatorValue;
-  if (indicatorValue >= (maxIndex / 10)) return maxIndex.toInt();
-
-  return (indicatorValue * 10).toInt();
-});
-
-final questionProvider = Provider<Question>((ref) {
-  final questionList = ref.watch(questionListProvider);
-  final index = ref.watch(questionIndexProvider);
-
-  return questionList[index];
 });

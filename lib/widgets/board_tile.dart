@@ -4,10 +4,18 @@ import 'package:sbselector/model/snowboard.dart';
 import 'radar_chart.dart';
 
 ExpansionTile boardTile(
-  Snowboard snowboard,
-  int recommendNum,
-) {
+    ScrollController _scrollController, Snowboard snowboard, int recommendNum) {
+  final GlobalKey expansionTileKey = GlobalKey();
+
+  void _scrollToSelectedContent({GlobalKey? expansionTileKey}) {
+    final keyContent = expansionTileKey!.currentContext;
+    Future.delayed(const Duration(milliseconds: 200)).then((value) =>
+        Scrollable.ensureVisible(keyContent!,
+            duration: const Duration(milliseconds: 200)));
+  }
+
   return ExpansionTile(
+    key: expansionTileKey,
     title: Container(
       padding: const EdgeInsets.only(
         left: 10,
@@ -27,7 +35,11 @@ ExpansionTile boardTile(
         ],
       ),
     ),
-    onExpansionChanged: (bool changed) {},
+    onExpansionChanged: (bool isExpanded) {
+      if (isExpanded) {
+        _scrollToSelectedContent(expansionTileKey: expansionTileKey);
+      }
+    },
     children: <Widget>[
       Center(
         child: SnowRadarChart(

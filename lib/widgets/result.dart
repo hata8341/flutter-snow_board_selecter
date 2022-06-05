@@ -18,13 +18,14 @@ class ResultDetail extends HookConsumerWidget {
   final MyRideType? myRideType;
 
   final String title = "診断結果";
-  final bool cute = false;
-  final bool beautiful = false;
 
   final double size = 50;
   final double opacity = 1.0;
 
-  final _screenShotController = ScreenshotController();
+  // ListViewのスクロールの位置を取得するためのcontorller
+  final ScrollController _scrollController = ScrollController();
+
+  final ScreenshotController _screenShotController = ScreenshotController();
 
   static bool checkRoute(String routeName) {
     if (routeName == '/historyDetail') {
@@ -37,7 +38,6 @@ class ResultDetail extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final String routeName = ModalRoute.of(context)!.settings.name as String;
-
     final bool currRouteState = checkRoute(routeName);
     final Size screenSize = MediaQuery.of(context).size;
     final Result result = ref.watch(resultProvider(rideType));
@@ -48,7 +48,10 @@ class ResultDetail extends HookConsumerWidget {
         leading: IconButton(
           icon: const Icon(Icons.close),
           onPressed: () {
-            Navigator.pop(context);
+            Navigator.popUntil(
+              context,
+              ModalRoute.withName('/diagnoseTop'),
+            );
           },
         ),
         titleSpacing: screenSize.width * 0.24,
@@ -74,10 +77,14 @@ class ResultDetail extends HookConsumerWidget {
         child: Screenshot(
           controller: _screenShotController,
           child: ListView(
+            controller: _scrollController,
             children: <Widget>[
               const Gap(20),
               for (ListTile tile in rideTypeTitles(opacity, result, size)) tile,
               const Gap(20),
+              // const Spacer(
+              //   flex: 2,
+              // ),
               ListTile(
                 title: Container(
                   decoration: const BoxDecoration(
@@ -104,9 +111,15 @@ class ResultDetail extends HookConsumerWidget {
                 ),
               ),
               const Gap(20),
-              boardTile(result.firstRecommendBoard, 1),
-              boardTile(result.secondRecommendBoard, 2),
+              // const Spacer(
+              //   flex: 2,
+              // ),
+              boardTile(_scrollController, result.firstRecommendBoard, 1),
+              boardTile(_scrollController, result.secondRecommendBoard, 2),
               const Gap(20),
+              // const Spacer(
+              //   flex: 2,
+              // ),
               Container(
                 padding: const EdgeInsets.fromLTRB(30, 0, 20, 0),
                 child: Text(
@@ -116,7 +129,10 @@ class ResultDetail extends HookConsumerWidget {
                   ),
                 ),
               ),
-              const Gap(10),
+              const Gap(20),
+              // const Spacer(
+              //   flex: 2,
+              // ),
               Row(
                 mainAxisAlignment: !currRouteState
                     ? MainAxisAlignment.spaceEvenly

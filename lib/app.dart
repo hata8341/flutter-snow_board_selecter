@@ -46,11 +46,11 @@ class MyApp extends HookConsumerWidget {
       navigatorObservers: <NavigatorObserver>[AnalyticsServeice.observer],
       initialRoute: '/diagnoseTop',
       routes: {
-        '/diagnoseTop': (context) => DiagnoseTopPage(),
+        '/diagnoseTop': (context) => const DiagnoseTopPage(),
         '/diagnoseContent': (context) => const DiagnoseContentPage(),
-        '/diagnoseResult': (context) => DiagnoseResultPage(),
-        '/historyTop': (context) => HistoryTopPage(),
-        '/historyDetail': (context) => HistoryDetailPage(),
+        '/diagnoseResult': (context) => const DiagnoseResultPage(),
+        '/historyTop': (context) => const HistoryTopPage(),
+        '/historyDetail': (context) => const HistoryDetailPage(),
       },
     );
   }

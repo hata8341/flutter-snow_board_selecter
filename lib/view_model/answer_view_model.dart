@@ -1,9 +1,6 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:sbselector/model/answer.dart';
 
-// 初期値は[]
-// addメソッド
-// removeメソッド
 class AnswerListNotifier extends StateNotifier<List<Answer>> {
   AnswerListNotifier(this._read) : super([]);
 
@@ -13,7 +10,6 @@ class AnswerListNotifier extends StateNotifier<List<Answer>> {
     state = [...state, answer];
   }
 
-  // 新しく配列を作成してみる、idを状態としてもたせていないため
   void removeAnswer() {
     int count = 0;
     List<Answer> newList = [];
@@ -22,6 +18,20 @@ class AnswerListNotifier extends StateNotifier<List<Answer>> {
       count++;
     }
     state = newList;
+  }
+
+  List<Answer> createJGList() {
+    return state
+        .where((answer) => answer.category == 'groundtrickJib')
+        .toList();
+  }
+
+  List<Answer> createFPList() {
+    return state.where((answer) => answer.category == 'freerunPowder').toList();
+  }
+
+  void resetState() {
+    state = [];
   }
 }
 
