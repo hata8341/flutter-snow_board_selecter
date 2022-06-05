@@ -18,13 +18,15 @@ class ResultDetail extends HookConsumerWidget {
   final MyRideType? myRideType;
 
   final String title = "診断結果";
-  final bool cute = false;
-  final bool beautiful = false;
 
   final double size = 50;
   final double opacity = 1.0;
 
-  final _screenShotController = ScreenshotController();
+  // ListViewのスクロールの位置を取得するためのcontorller
+  final ScrollController _scrollController = ScrollController();
+
+  // build時にドロップダウンされていない状態でスクリーンショットを取る。
+  final ScreenshotController _screenShotController = ScreenshotController();
 
   static bool checkRoute(String routeName) {
     if (routeName == '/historyDetail') {
@@ -37,7 +39,6 @@ class ResultDetail extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final String routeName = ModalRoute.of(context)!.settings.name as String;
-
     final bool currRouteState = checkRoute(routeName);
     final Size screenSize = MediaQuery.of(context).size;
     final Result result = ref.watch(resultProvider(rideType));
@@ -77,6 +78,7 @@ class ResultDetail extends HookConsumerWidget {
         child: Screenshot(
           controller: _screenShotController,
           child: ListView(
+            controller: _scrollController,
             children: <Widget>[
               const Gap(20),
               for (ListTile tile in rideTypeTitles(opacity, result, size)) tile,
@@ -107,8 +109,8 @@ class ResultDetail extends HookConsumerWidget {
                 ),
               ),
               const Gap(20),
-              boardTile(result.firstRecommendBoard, 1),
-              boardTile(result.secondRecommendBoard, 2),
+              boardTile(_scrollController, result.firstRecommendBoard, 1),
+              boardTile(_scrollController, result.secondRecommendBoard, 2),
               const Gap(20),
               Container(
                 padding: const EdgeInsets.fromLTRB(30, 0, 20, 0),
