@@ -25,7 +25,6 @@ class ResultDetail extends HookConsumerWidget {
   // ListViewのスクロールの位置を取得するためのcontorller
   final ScrollController _scrollController = ScrollController();
 
-  // build時にドロップダウンされていない状態でスクリーンショットを取る。
   final ScreenshotController _screenShotController = ScreenshotController();
 
   static bool checkRoute(String routeName) {
@@ -83,6 +82,9 @@ class ResultDetail extends HookConsumerWidget {
               const Gap(20),
               for (ListTile tile in rideTypeTitles(opacity, result, size)) tile,
               const Gap(20),
+              // const Spacer(
+              //   flex: 2,
+              // ),
               ListTile(
                 title: Container(
                   decoration: const BoxDecoration(
@@ -109,9 +111,15 @@ class ResultDetail extends HookConsumerWidget {
                 ),
               ),
               const Gap(20),
+              // const Spacer(
+              //   flex: 2,
+              // ),
               boardTile(_scrollController, result.firstRecommendBoard, 1),
               boardTile(_scrollController, result.secondRecommendBoard, 2),
               const Gap(20),
+              // const Spacer(
+              //   flex: 2,
+              // ),
               Container(
                 padding: const EdgeInsets.fromLTRB(30, 0, 20, 0),
                 child: Text(
@@ -121,7 +129,10 @@ class ResultDetail extends HookConsumerWidget {
                   ),
                 ),
               ),
-              const Gap(10),
+              const Gap(20),
+              // const Spacer(
+              //   flex: 2,
+              // ),
               Row(
                 mainAxisAlignment: !currRouteState
                     ? MainAxisAlignment.spaceEvenly

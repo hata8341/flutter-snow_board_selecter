@@ -7,9 +7,6 @@ import 'package:screenshot/screenshot.dart';
 import 'package:share_plus/share_plus.dart';
 
 ElevatedButton shareButton(ScreenshotController screenShotController) {
-  // Future.delayed(const Duration(milliseconds: 200));
-  // screenShotController.capture(delay: const Duration(milliseconds: 10));
-
   Future<Uint8List?> capture() async {
     await Future.delayed(const Duration(milliseconds: 200));
     return await screenShotController.capture(
@@ -47,8 +44,12 @@ ElevatedButton shareButton(ScreenshotController screenShotController) {
         print(e);
       }
     },
-    label: const Text('共有'),
+    label: const Text(
+      '共有',
+      style: TextStyle(fontSize: 24),
+    ),
     style: ElevatedButton.styleFrom(
+      padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 15),
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(20),
       ),

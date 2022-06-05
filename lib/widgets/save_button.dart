@@ -15,8 +15,12 @@ ElevatedButton saveButton(
       myRideTypesController.add(rideType);
       ScaffoldMessenger.of(context).showSnackBar(successSnackBar);
     },
-    label: const Text('保存'),
+    label: const Text(
+      '保存',
+      style: TextStyle(fontSize: 24),
+    ),
     style: ElevatedButton.styleFrom(
+      padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 15),
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(20),
       ),
@@ -32,6 +36,6 @@ SnackBar successSnackBar = SnackBar(
     ],
   ),
   duration: const Duration(
-    seconds: 2,
+    seconds: 1,
   ),
 );
