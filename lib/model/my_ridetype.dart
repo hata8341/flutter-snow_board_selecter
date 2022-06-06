@@ -1,6 +1,10 @@
+import 'package:sbselector/const/rideType.dart';
+
+// Resultclassへ変更
+// freeezedでイミュータブルへ変更
 class MyRideType {
   final String id;
-  final String rideType;
+  final RideType rideType;
   final DateTime createdAt;
 
   MyRideType({
@@ -12,7 +16,7 @@ class MyRideType {
   factory MyRideType.fromMap(Map<String, dynamic> json) {
     return MyRideType(
       id: json['id'],
-      rideType: json['rideType'],
+      rideType: RideType.values.byName(json['rideType']),
       createdAt: DateTime.parse(json['createdAt']).toLocal(),
     );
   }
@@ -20,7 +24,7 @@ class MyRideType {
   Map<String, dynamic> toMap() {
     return {
       'id': id,
-      'rideType': rideType,
+      'rideType': rideType.name,
       'createdAt': createdAt.toUtc().toIso8601String()
     };
   }

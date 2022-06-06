@@ -3,18 +3,19 @@ import 'package:sbselector/const/question.dart';
 import 'package:sbselector/model/question.dart';
 import 'package:sbselector/view_model/indicator_view_model.dart';
 
-class QuestionList {
+class _QuestionList {
   static List<Question> createQestionList() {
     final List<Question> list;
 
     list = questionBox.map((question) => Question.fromJson(question)).toList();
+    list.shuffle();
 
     return list;
   }
 }
 
 class QuestionsController extends StateNotifier<List<Question>> {
-  QuestionsController(this._read) : super(QuestionList.createQestionList());
+  QuestionsController(this._read) : super(_QuestionList.createQestionList());
 
   final Reader _read;
 

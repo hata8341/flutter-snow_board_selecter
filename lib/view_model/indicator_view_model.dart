@@ -20,10 +20,6 @@ class IndicatorStateNotifier extends StateNotifier<double> {
   bool getMissIconState() {
     return state > 0.0;
   }
-
-  void resetState() {
-    state = 0.0;
-  }
 }
 
 final indicatorStateNotifierProvider =

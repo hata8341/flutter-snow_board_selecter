@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:sbselector/const/rideType.dart';
+import 'package:sbselector/model/my_ridetype.dart';
 import 'package:sbselector/view_model/answer_view_model.dart';
 import 'package:sbselector/widgets/result.dart';
 
@@ -9,7 +11,7 @@ class DiagnoseResultPage extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final args = ModalRoute.of(context)!.settings.arguments;
-    final String rideType = args as String;
+    final RideType rideType = args as RideType;
     return ResultDetail(key, rideType);
   }
 }

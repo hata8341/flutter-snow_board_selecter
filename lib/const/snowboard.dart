@@ -1,5 +1,3 @@
-import 'package:sbselector/model/snowboard.dart';
-
 const snowboardMap = {
   'grandTrickJib': {
     {
@@ -50,11 +48,3 @@ const snowboardMap = {
     },
   },
 };
-
-List<Snowboard> createSnowboardData(String rideType) {
-  List<Snowboard> list = [];
-  for (var data in snowboardMap[rideType]!) {
-    list.add(Snowboard.fromJson(data));
-  }
-  return list;
-}

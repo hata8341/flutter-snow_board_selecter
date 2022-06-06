@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:sbselector/const/rideType.dart';
 import 'package:sbselector/view_model/my_ridetypes_view_model.dart';
-import 'package:sbselector/view_model/page_view_model.dart';
 
 class HistoryList extends HookConsumerWidget {
   const HistoryList({Key? key}) : super(key: key);
@@ -11,7 +11,6 @@ class HistoryList extends HookConsumerWidget {
     final historiesController = ref.watch(myRideTypesProvider.notifier);
     final historyLen = historiesController.len;
 
-    final pageController = ref.watch(pageProvider.notifier);
     return Expanded(
         child: historyLen > 0
             ? ListView.builder(
@@ -23,7 +22,8 @@ class HistoryList extends HookConsumerWidget {
                 itemCount: historyLen,
                 itemBuilder: (context, index) {
                   final history = histories[index];
-                  final date = historiesController.getCreateAtStr(history);
+                  final RideType rideType = history.rideType;
+                  final date = historiesController.getCreatedAtStr(history);
                   return GestureDetector(
                     onTap: () {
                       Navigator.pushNamed(
@@ -37,8 +37,7 @@ class HistoryList extends HookConsumerWidget {
                         ListTile(
                           leading: Container(
                             decoration: BoxDecoration(
-                              color:
-                                  pageController.getIconColor(history.rideType),
+                              color: rideType.iconColor,
                               borderRadius: BorderRadius.circular(55.0),
                             ),
                             padding: const EdgeInsets.all(4.0),
@@ -46,7 +45,7 @@ class HistoryList extends HookConsumerWidget {
                             width: 55.0,
                             child: Center(
                               child: Text(
-                                pageController.getIconStr(history.rideType),
+                                rideType.iconInitial,
                                 style: const TextStyle(
                                   fontWeight: FontWeight.w400,
                                   color: Colors.white,
@@ -56,7 +55,7 @@ class HistoryList extends HookConsumerWidget {
                             ),
                           ),
                           title: Text(
-                            pageController.egToJp(history.rideType),
+                            rideType.nameJp,
                             style: const TextStyle(fontSize: 18.0),
                           ),
                           subtitle: Text('診断日:' + date),

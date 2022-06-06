@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:sbselector/const/rideType.dart';
 import 'package:sbselector/model/answer.dart';
 import 'package:sbselector/view_model/answer_view_model.dart';
 import 'package:sbselector/view_model/indicator_view_model.dart';
@@ -42,18 +43,18 @@ class DiagnoseNotifier extends StateNotifier<void> {
     return count;
   }
 
-  String _checkRideType(double jGTotal, double fPTotal) {
+  RideType _checkRideType(double jGTotal, double fPTotal) {
     final difference = jGTotal - fPTotal;
     if (difference > 9) {
-      return 'grandTrickJib';
+      return RideType.grandTrickJib;
     } else if (difference < -9) {
-      return 'freerunPowder';
+      return RideType.freerunPowder;
     } else {
-      return 'allRound';
+      return RideType.allRound;
     }
   }
 
-  String computedResult() {
+  RideType computedResult() {
     final jGList = answerListController.createJGList();
     final fPList = answerListController.createFPList();
 

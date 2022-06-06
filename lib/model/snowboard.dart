@@ -17,6 +17,3 @@ class Snowboard with _$Snowboard {
   factory Snowboard.fromJson(Map<String, dynamic> json) =>
       _$SnowboardFromJson(json);
 }
-
-// Unable to load asset: images/w_camber.png
-// "Unable to load asset: images/w_camber.png"
