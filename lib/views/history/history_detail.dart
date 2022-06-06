@@ -7,8 +7,8 @@ class HistoryDetailPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final MyRideType rideType =
+    final MyRideType myRideType =
         ModalRoute.of(context)!.settings.arguments as MyRideType;
-    return ResultDetail(key, rideType.rideType, rideType);
+    return ResultDetail(key, myRideType.rideType, myRideType);
   }
 }

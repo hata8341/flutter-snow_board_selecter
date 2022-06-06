@@ -35,12 +35,31 @@ class HistoryList extends HookConsumerWidget {
                     child: Column(
                       children: [
                         ListTile(
-                          leading: Text('テスト$index'),
+                          leading: Container(
+                            decoration: BoxDecoration(
+                              color:
+                                  pageController.getIconColor(history.rideType),
+                              borderRadius: BorderRadius.circular(55.0),
+                            ),
+                            padding: const EdgeInsets.all(4.0),
+                            height: 55.0,
+                            width: 55.0,
+                            child: Center(
+                              child: Text(
+                                pageController.getIconStr(history.rideType),
+                                style: const TextStyle(
+                                  fontWeight: FontWeight.w400,
+                                  color: Colors.white,
+                                  fontSize: 22,
+                                ),
+                              ),
+                            ),
+                          ),
                           title: Text(
                             pageController.egToJp(history.rideType),
                             style: const TextStyle(fontSize: 18.0),
                           ),
-                          subtitle: Text('日付:' + date),
+                          subtitle: Text('診断日:' + date),
                           trailing: const Icon(Icons.keyboard_arrow_right),
                         ),
                         const Divider(),
