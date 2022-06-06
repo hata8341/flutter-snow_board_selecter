@@ -5,7 +5,6 @@ import 'package:sbselector/view_model/answer_view_model.dart';
 import 'package:sbselector/view_model/indicator_view_model.dart';
 import 'package:sbselector/widgets/end_dialog.dart';
 
-
 class DiagnoseNotifier extends StateNotifier<void> {
   DiagnoseNotifier(this._read) : super(null);
 
@@ -50,7 +49,7 @@ class DiagnoseNotifier extends StateNotifier<void> {
     } else if (difference < -9) {
       return 'freerunPowder';
     } else {
-      return 'allRround';
+      return 'allRound';
     }
   }
 

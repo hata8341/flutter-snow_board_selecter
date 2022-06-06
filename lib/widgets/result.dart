@@ -3,6 +3,7 @@ import 'package:gap/gap.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:sbselector/model/my_ridetype.dart';
 import 'package:sbselector/model/result.dart';
+import 'package:sbselector/view_model/page_view_model.dart';
 import 'package:sbselector/view_model/result_view_model.dart';
 import 'package:sbselector/widgets/board_tile.dart';
 import 'package:sbselector/widgets/delete_dialog.dart';
@@ -27,7 +28,7 @@ class ResultDetail extends HookConsumerWidget {
 
   final ScreenshotController _screenShotController = ScreenshotController();
 
-  static bool checkRoute(String routeName) {
+  bool checkRoute(String routeName) {
     if (routeName == '/historyDetail') {
       return true;
     } else {
@@ -41,6 +42,8 @@ class ResultDetail extends HookConsumerWidget {
     final bool currRouteState = checkRoute(routeName);
     final Size screenSize = MediaQuery.of(context).size;
     final Result result = ref.watch(resultProvider(rideType));
+    // final PageNotifier pageController = ref.watch(pageProvider.notifier);
+    // final String rideTypeName = pageController.checkWriteInStr(result.rideType);
 
     return Scaffold(
       backgroundColor: Colors.white,
@@ -82,9 +85,6 @@ class ResultDetail extends HookConsumerWidget {
               const Gap(20),
               for (ListTile tile in rideTypeTitles(opacity, result, size)) tile,
               const Gap(20),
-              // const Spacer(
-              //   flex: 2,
-              // ),
               ListTile(
                 title: Container(
                   decoration: const BoxDecoration(
@@ -111,15 +111,9 @@ class ResultDetail extends HookConsumerWidget {
                 ),
               ),
               const Gap(20),
-              // const Spacer(
-              //   flex: 2,
-              // ),
               boardTile(_scrollController, result.firstRecommendBoard, 1),
               boardTile(_scrollController, result.secondRecommendBoard, 2),
               const Gap(20),
-              // const Spacer(
-              //   flex: 2,
-              // ),
               Container(
                 padding: const EdgeInsets.fromLTRB(30, 0, 20, 0),
                 child: Text(
@@ -130,9 +124,6 @@ class ResultDetail extends HookConsumerWidget {
                 ),
               ),
               const Gap(20),
-              // const Spacer(
-              //   flex: 2,
-              // ),
               Row(
                 mainAxisAlignment: !currRouteState
                     ? MainAxisAlignment.spaceEvenly

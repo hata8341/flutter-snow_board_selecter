@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:sbselector/view_model/my_ridetypes_view_model.dart';
+import 'package:sbselector/view_model/page_view_model.dart';
 
 class HistoryList extends HookConsumerWidget {
   const HistoryList({Key? key}) : super(key: key);
@@ -9,6 +10,8 @@ class HistoryList extends HookConsumerWidget {
     final histories = ref.watch(myRideTypesProvider);
     final historiesController = ref.watch(myRideTypesProvider.notifier);
     final historyLen = historiesController.len;
+
+    final pageController = ref.watch(pageProvider.notifier);
     return Expanded(
         child: historyLen > 0
             ? ListView.builder(
@@ -17,7 +20,7 @@ class HistoryList extends HookConsumerWidget {
                   vertical: 10,
                 ),
                 shrinkWrap: true,
-                itemCount: histories.length,
+                itemCount: historyLen,
                 itemBuilder: (context, index) {
                   final history = histories[index];
                   final date = historiesController.getCreateAtStr(history);
@@ -32,9 +35,31 @@ class HistoryList extends HookConsumerWidget {
                     child: Column(
                       children: [
                         ListTile(
-                          leading: Text('テスト$index'),
-                          title: Text(history.rideType),
-                          subtitle: Text('日付:' + date),
+                          leading: Container(
+                            decoration: BoxDecoration(
+                              color:
+                                  pageController.getIconColor(history.rideType),
+                              borderRadius: BorderRadius.circular(55.0),
+                            ),
+                            padding: const EdgeInsets.all(4.0),
+                            height: 55.0,
+                            width: 55.0,
+                            child: Center(
+                              child: Text(
+                                pageController.getIconStr(history.rideType),
+                                style: const TextStyle(
+                                  fontWeight: FontWeight.w400,
+                                  color: Colors.white,
+                                  fontSize: 22,
+                                ),
+                              ),
+                            ),
+                          ),
+                          title: Text(
+                            pageController.egToJp(history.rideType),
+                            style: const TextStyle(fontSize: 18.0),
+                          ),
+                          subtitle: Text('診断日:' + date),
                           trailing: const Icon(Icons.keyboard_arrow_right),
                         ),
                         const Divider(),

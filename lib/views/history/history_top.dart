@@ -9,7 +9,7 @@ class HistoryTopPage extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final historiesController = ref.watch(myRideTypesProvider.notifier);
     return FutureBuilder(
-      future: historiesController.loadDb(),
+      future: historiesController.load(),
       builder: (BuildContext context, AsyncSnapshot snapshot) {
         if (snapshot.connectionState == ConnectionState.done) {
           return const HistoryList();
