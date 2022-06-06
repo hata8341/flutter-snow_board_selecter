@@ -9,8 +9,8 @@ final bgmProvider = StateProvider<bool>((ref) {
 });
 
 class SettingList extends HookConsumerWidget {
-  SettingList({Key? key}) : super(key: key);
-  bool value = false;
+  const SettingList({Key? key}) : super(key: key);
+  final bool value = false;
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final themeController = ref.watch(themeProvider.state);

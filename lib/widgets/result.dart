@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:sbselector/const/rideType.dart';
 import 'package:sbselector/model/my_ridetype.dart';
-import 'package:sbselector/model/result.dart';
 import 'package:sbselector/view_model/page_view_model.dart';
-import 'package:sbselector/view_model/result_view_model.dart';
 import 'package:sbselector/widgets/board_tile.dart';
 import 'package:sbselector/widgets/delete_dialog.dart';
 import 'package:sbselector/widgets/end_dialog.dart';
@@ -13,9 +12,10 @@ import 'package:sbselector/widgets/save_button.dart';
 import 'package:sbselector/widgets/share_button.dart';
 import 'package:screenshot/screenshot.dart';
 
+// resultDetailのパラメタの修正
 class ResultDetail extends HookConsumerWidget {
   ResultDetail(Key? key, this.rideType, [this.myRideType]) : super(key: key);
-  final String rideType;
+  final RideType rideType;
   final MyRideType? myRideType;
 
   final String title = "診断結果";
@@ -41,9 +41,8 @@ class ResultDetail extends HookConsumerWidget {
     final String routeName = ModalRoute.of(context)!.settings.name as String;
     final bool currRouteState = checkRoute(routeName);
     final Size screenSize = MediaQuery.of(context).size;
-    final Result result = ref.watch(resultProvider(rideType));
-    // final PageNotifier pageController = ref.watch(pageProvider.notifier);
-    // final String rideTypeName = pageController.checkWriteInStr(result.rideType);
+    final PageNotifier pageController = ref.watch(pageProvider.notifier);
+    final String rideTypeName = pageController.checkWriteInRideType(rideType);
 
     return Scaffold(
       backgroundColor: Colors.white,
@@ -83,7 +82,8 @@ class ResultDetail extends HookConsumerWidget {
             controller: _scrollController,
             children: <Widget>[
               const Gap(20),
-              for (ListTile tile in rideTypeTitles(opacity, result, size)) tile,
+              for (ListTile tile in rideTypeTitles(opacity, rideTypeName, size))
+                tile,
               const Gap(20),
               ListTile(
                 title: Container(
@@ -111,13 +111,13 @@ class ResultDetail extends HookConsumerWidget {
                 ),
               ),
               const Gap(20),
-              boardTile(_scrollController, result.firstRecommendBoard, 1),
-              boardTile(_scrollController, result.secondRecommendBoard, 2),
+              boardTile(_scrollController, rideType.firstRecommendBoard, 1),
+              boardTile(_scrollController, rideType.secondRecommendBoard, 2),
               const Gap(20),
               Container(
                 padding: const EdgeInsets.fromLTRB(30, 0, 20, 0),
                 child: Text(
-                  result.discription,
+                  rideType.discription,
                   style: const TextStyle(
                     fontSize: 18,
                   ),

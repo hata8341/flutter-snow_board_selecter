@@ -5,9 +5,9 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 class SnowRadarChart extends HookConsumerWidget {
   const SnowRadarChart({
     Key? key,
-    this.raderChartData,
+    required this.raderChartData,
   }) : super(key: key);
-  final raderChartData;
+  final List<double> raderChartData;
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return Padding(
@@ -20,7 +20,6 @@ class SnowRadarChart extends HookConsumerWidget {
             aspectRatio: 1.6,
             child: RadarChart(
               RadarChartData(
-                // 仮に1つ定義
                 borderData: FlBorderData(show: false),
                 dataSets: showingSnowDataSets(),
                 radarBackgroundColor: Colors.transparent,
@@ -61,7 +60,6 @@ class SnowRadarChart extends HookConsumerWidget {
                   color: Colors.black,
                   width: 2,
                 ),
-                // radarTouchData: RadarTouchData(),
               ),
               swapAnimationDuration: const Duration(milliseconds: 150),
               swapAnimationCurve: Curves.linear,

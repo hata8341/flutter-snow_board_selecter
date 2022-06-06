@@ -11,7 +11,6 @@ class BubbleBorder extends ShapeBorder {
 
   @override
   Path getInnerPath(Rect rect, {TextDirection? textDirection}) {
-    // throw UnimplementedError();
     assert(textDirection != null,
         'The textDirection argument to $runtimeType.getInnerPath must not be null.');
     return Path();

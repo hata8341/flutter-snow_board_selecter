@@ -1,5 +1,6 @@
 import 'package:intl/intl.dart';
 import 'package:riverpod/riverpod.dart';
+import 'package:sbselector/const/rideType.dart';
 import 'package:sbselector/db/myRideTypes.dart';
 import 'package:sbselector/model/my_ridetype.dart';
 import 'package:uuid/uuid.dart';
@@ -21,7 +22,7 @@ class MyRideTypesNotifier extends StateNotifier<List<MyRideType>> {
     state = myRideTypes;
   }
 
-  void add(String rideType) async {
+  void add(RideType rideType) async {
     MyRideType myRideType = MyRideType(
       id: const Uuid().v4(),
       rideType: rideType,
@@ -40,7 +41,7 @@ class MyRideTypesNotifier extends StateNotifier<List<MyRideType>> {
     }
   }
 
-  String getCreateAtStr(MyRideType history) {
+  String getCreatedAtStr(MyRideType history) {
     final time = history.createdAt;
     final ymed = DateFormat.yMEd('ja').format(time);
     final hm = DateFormat.Hm('ja').format(time);

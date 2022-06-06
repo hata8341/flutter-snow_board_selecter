@@ -1,8 +1,8 @@
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/material.dart';
-import 'package:sbselector/model/result.dart';
 
-List<ListTile> rideTypeTitles(double opacity, Result result, double size) {
+List<ListTile> rideTypeTitles(
+    double opacity, String rideTypeName, double size) {
   return [
     ListTile(
       title: Row(
@@ -53,7 +53,7 @@ List<ListTile> rideTypeTitles(double opacity, Result result, double size) {
               seconds: 1,
             ),
             child: AnimatedDefaultTextStyle(
-              child: Text(result.rideType),
+              child: Text(rideTypeName),
               style: TextStyle(
                 fontSize: size,
                 color: Colors.black,
