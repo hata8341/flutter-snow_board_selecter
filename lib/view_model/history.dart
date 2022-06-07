@@ -1,4 +1,3 @@
-import 'package:intl/intl.dart';
 import 'package:riverpod/riverpod.dart';
 import 'package:sbselector/const/rideType.dart';
 import 'package:sbselector/db/result.dart';
@@ -10,11 +9,9 @@ class HistoryNotifier extends StateNotifier<List<Result>> {
 
   final Reader _read;
 
-  int get len => state.length;
-
   Future<void> load() async {
     List<Result> myRideTypes = [];
-    await MyRideTypeDb.read().then(
+    await ResultDb.read().then(
       (value) => myRideTypes
         ..clear()
         ..addAll(value),
@@ -28,29 +25,25 @@ class HistoryNotifier extends StateNotifier<List<Result>> {
       rideType: rideType,
       createdAt: DateTime.now(),
     );
-    await MyRideTypeDb.create(myRideType);
-    load();
+    await ResultDb.create(myRideType);
+    await load();
   }
 
   void delete(String id) async {
     try {
-      await MyRideTypeDb.delete(id);
-      load();
+      await ResultDb.delete(id);
+      await load();
     } catch (e) {
       print(e);
     }
   }
 
   Result getCurrResult(int index) {
+    print('現在のインデックス');
+    print(index);
     return state[index];
   }
 
-  String getCreatedAtStr(Result history) {
-    final time = history.createdAt;
-    final ymed = DateFormat.yMEd('ja').format(time);
-    final hm = DateFormat.Hm('ja').format(time);
-    return ymed + hm;
-  }
 }
 
 final historyNotifierProvider =

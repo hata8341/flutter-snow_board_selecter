@@ -5,7 +5,7 @@ import 'package:sqflite/sqflite.dart';
 const String rideTypeFileName = 'ride_types.db';
 const String rideTypeTableName = 'my_ride_types';
 
-class MyRideTypeDb {
+class ResultDb {
   static Future<Database> openDb() async {
     return await openDatabase(
       join(await getDatabasesPath(), rideTypeFileName),

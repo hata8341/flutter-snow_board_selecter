@@ -1,34 +1,33 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:sbselector/const/rideType.dart';
+import 'package:sbselector/model/result.dart';
 import 'package:sbselector/view_model/history.dart';
 
 class HistoryList extends HookConsumerWidget {
   const HistoryList({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final historyController = ref.watch(historyNotifierProvider.notifier);
-    final historyLen = historyController.len;
-
+    final history = ref.watch(historyNotifierProvider);
     return Expanded(
-        child: historyLen > 0
+        child: history.isNotEmpty
             ? ListView.builder(
                 padding: const EdgeInsets.symmetric(
                   horizontal: 10,
                   vertical: 10,
                 ),
                 shrinkWrap: true,
-                itemCount: historyLen,
+                itemCount: history.length,
                 itemBuilder: (context, index) {
-                  final history = historyController.getCurrResult(index);
-                  final RideType rideType = history.rideType;
-                  final date = history.createdAtStr;
+                  final Result result = history[index];
+                  final RideType rideType = result.rideType;
+                  final date = result.createdAtStr;
                   return GestureDetector(
                     onTap: () {
                       Navigator.pushNamed(
                         context,
                         '/historyDetail',
-                        arguments: history,
+                        arguments: result,
                       );
                     },
                     child: Column(

@@ -5,7 +5,7 @@ import 'package:sbselector/view_model/history.dart';
 
 AwesomeDialog deleteDialog(
     BuildContext inputContext, WidgetRef ref, String id) {
-  final myRideTypesController = ref.watch(historyNotifierProvider.notifier);
+  final historyController = ref.watch(historyNotifierProvider.notifier);
   return AwesomeDialog(
     context: inputContext,
     dialogType: DialogType.ERROR,
@@ -13,8 +13,8 @@ AwesomeDialog deleteDialog(
     headerAnimationLoop: false,
     desc: '診断結果を削除してよろしいですか？',
     btnCancelOnPress: () {},
-    btnOkOnPress: () {
-      myRideTypesController.delete(id);
+    btnOkOnPress: () async {
+      historyController.delete(id);
       ScaffoldMessenger.of(inputContext).showSnackBar(
         const SnackBar(
           content: Text('診断結果を削除しました'),
