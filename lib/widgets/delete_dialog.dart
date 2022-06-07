@@ -1,11 +1,11 @@
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:sbselector/view_model/my_ridetypes_view_model.dart';
+import 'package:sbselector/view_model/history.dart';
 
 AwesomeDialog deleteDialog(
     BuildContext inputContext, WidgetRef ref, String id) {
-  final myRideTypesController = ref.watch(myRideTypesProvider.notifier);
+  final myRideTypesController = ref.watch(historyNotifierProvider.notifier);
   return AwesomeDialog(
     context: inputContext,
     dialogType: DialogType.ERROR,

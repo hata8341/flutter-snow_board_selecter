@@ -1,19 +1,19 @@
 import 'package:intl/intl.dart';
 import 'package:riverpod/riverpod.dart';
 import 'package:sbselector/const/rideType.dart';
-import 'package:sbselector/db/myRideTypes.dart';
-import 'package:sbselector/model/my_ridetype.dart';
+import 'package:sbselector/db/result.dart';
+import 'package:sbselector/model/result.dart';
 import 'package:uuid/uuid.dart';
 
-class MyRideTypesNotifier extends StateNotifier<List<MyRideType>> {
-  MyRideTypesNotifier(this._read) : super([]);
+class HistoryNotifier extends StateNotifier<List<Result>> {
+  HistoryNotifier(this._read) : super([]);
 
   final Reader _read;
 
   int get len => state.length;
 
   Future<void> load() async {
-    List<MyRideType> myRideTypes = [];
+    List<Result> myRideTypes = [];
     await MyRideTypeDb.read().then(
       (value) => myRideTypes
         ..clear()
@@ -23,7 +23,7 @@ class MyRideTypesNotifier extends StateNotifier<List<MyRideType>> {
   }
 
   void add(RideType rideType) async {
-    MyRideType myRideType = MyRideType(
+    Result myRideType = Result(
       id: const Uuid().v4(),
       rideType: rideType,
       createdAt: DateTime.now(),
@@ -41,7 +41,11 @@ class MyRideTypesNotifier extends StateNotifier<List<MyRideType>> {
     }
   }
 
-  String getCreatedAtStr(MyRideType history) {
+  Result getCurrResult(int index) {
+    return state[index];
+  }
+
+  String getCreatedAtStr(Result history) {
     final time = history.createdAt;
     final ymed = DateFormat.yMEd('ja').format(time);
     final hm = DateFormat.Hm('ja').format(time);
@@ -49,8 +53,7 @@ class MyRideTypesNotifier extends StateNotifier<List<MyRideType>> {
   }
 }
 
-final myRideTypesProvider =
-    StateNotifierProvider.autoDispose<MyRideTypesNotifier, List<MyRideType>>(
-        (ref) {
-  return MyRideTypesNotifier(ref.read);
+final historyNotifierProvider =
+    StateNotifierProvider.autoDispose<HistoryNotifier, List<Result>>((ref) {
+  return HistoryNotifier(ref.read);
 });

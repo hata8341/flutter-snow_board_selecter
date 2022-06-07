@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:sbselector/const/rideType.dart';
-import 'package:sbselector/model/my_ridetype.dart';
+import 'package:sbselector/model/result.dart';
 import 'package:sbselector/view_model/page_view_model.dart';
 import 'package:sbselector/widgets/board_tile.dart';
 import 'package:sbselector/widgets/delete_dialog.dart';
@@ -16,7 +16,7 @@ import 'package:screenshot/screenshot.dart';
 class ResultDetail extends HookConsumerWidget {
   ResultDetail(Key? key, this.rideType, [this.myRideType]) : super(key: key);
   final RideType rideType;
-  final MyRideType? myRideType;
+  final Result? myRideType;
 
   final String title = "診断結果";
 
