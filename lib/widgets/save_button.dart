@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:sbselector/const/rideType.dart';
-import 'package:sbselector/view_model/my_ridetypes_view_model.dart';
+import 'package:sbselector/view_model/history.dart';
 
 ElevatedButton saveButton(
     RideType rideType, BuildContext context, WidgetRef ref) {
-  final myRideTypesController = ref.watch(myRideTypesProvider.notifier);
+  final myRideTypesController = ref.watch(historyNotifierProvider.notifier);
 
   return ElevatedButton.icon(
     icon: const Icon(

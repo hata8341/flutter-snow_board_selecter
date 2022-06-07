@@ -101,7 +101,7 @@ class __$$_QuestionCopyWithImpl<$Res> extends _$QuestionCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_Question with DiagnosticableTreeMixin implements _Question {
+class _$_Question implements _Question {
   const _$_Question({required this.category, required this.content});
 
   factory _$_Question.fromJson(Map<String, dynamic> json) =>
@@ -113,17 +113,8 @@ class _$_Question with DiagnosticableTreeMixin implements _Question {
   final String content;
 
   @override
-  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+  String toString() {
     return 'Question(category: $category, content: $content)';
-  }
-
-  @override
-  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
-    properties
-      ..add(DiagnosticsProperty('type', 'Question'))
-      ..add(DiagnosticsProperty('category', category))
-      ..add(DiagnosticsProperty('content', content));
   }
 
   @override

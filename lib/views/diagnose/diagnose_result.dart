@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:sbselector/const/rideType.dart';
-import 'package:sbselector/model/my_ridetype.dart';
-import 'package:sbselector/view_model/answer_view_model.dart';
 import 'package:sbselector/widgets/result.dart';
 
 class DiagnoseResultPage extends HookConsumerWidget {

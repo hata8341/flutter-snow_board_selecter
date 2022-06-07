@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:sbselector/model/my_ridetype.dart';
+import 'package:sbselector/model/result.dart';
 import 'package:sbselector/widgets/result.dart';
 
 class HistoryDetailPage extends StatelessWidget {
@@ -7,8 +7,8 @@ class HistoryDetailPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final MyRideType myRideType =
-        ModalRoute.of(context)!.settings.arguments as MyRideType;
+    final Result myRideType =
+        ModalRoute.of(context)!.settings.arguments as Result;
     return ResultDetail(key, myRideType.rideType, myRideType);
   }
 }

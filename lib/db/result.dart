@@ -1,5 +1,5 @@
 import 'package:path/path.dart';
-import 'package:sbselector/model/my_ridetype.dart';
+import 'package:sbselector/model/result.dart';
 import 'package:sqflite/sqflite.dart';
 
 const String rideTypeFileName = 'ride_types.db';
@@ -18,7 +18,7 @@ class MyRideTypeDb {
     );
   }
 
-  static Future<void> create(MyRideType rideType) async {
+  static Future<void> create(Result rideType) async {
     var db = await openDb();
     await db.insert(
       rideTypeTableName,
@@ -27,11 +27,11 @@ class MyRideTypeDb {
     );
   }
 
-  static Future<List<MyRideType>> read() async {
+  static Future<List<Result>> read() async {
     var db = await openDb();
     final List<Map<String, dynamic>> maps = await db.query(rideTypeTableName);
     return List.generate(maps.length, (index) {
-      return MyRideType.fromMap(maps[index]);
+      return Result.fromMap(maps[index]);
     });
   }
 

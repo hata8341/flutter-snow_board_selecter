@@ -8,7 +8,7 @@ class _QuestionList {
     final List<Question> list;
 
     list = questionBox.map((question) => Question.fromJson(question)).toList();
-    list.shuffle();
+    // list.shuffle();
 
     return list;
   }
