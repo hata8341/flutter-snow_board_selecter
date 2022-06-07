@@ -11,12 +11,13 @@ import 'package:sbselector/widgets/ridetype_tiles.dart';
 import 'package:sbselector/widgets/save_button.dart';
 import 'package:sbselector/widgets/share_button.dart';
 import 'package:screenshot/screenshot.dart';
-
-// resultDetailのパラメタの修正
 class ResultDetail extends HookConsumerWidget {
-  ResultDetail(Key? key, this.rideType, [this.myRideType]) : super(key: key);
-  final RideType rideType;
-  final Result? myRideType;
+  ResultDetail({Key? key, required this.value}
+      )
+      : super(key: key);
+  late final RideType rideType;
+  late final String id;
+  final dynamic value;
 
   final String title = "診断結果";
 
@@ -36,8 +37,20 @@ class ResultDetail extends HookConsumerWidget {
     }
   }
 
+  void checkTypeValue() {
+    if (value is RideType) {
+      rideType = value;
+    } else if (value is Result) {
+      id = value.id;
+      rideType = value.rideType;
+    } else {
+      throw ArgumentError.value(value);
+    }
+  }
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    checkTypeValue();
     final String routeName = ModalRoute.of(context)!.settings.name as String;
     final bool currRouteState = checkRoute(routeName);
     final Size screenSize = MediaQuery.of(context).size;
@@ -69,7 +82,7 @@ class ResultDetail extends HookConsumerWidget {
             child: IconButton(
               icon: const Icon(Icons.delete),
               onPressed: () {
-                showSelfDialog(deleteDialog(context, ref, myRideType!.id));
+                showSelfDialog(deleteDialog(context, ref, id));
               },
             ),
           ),

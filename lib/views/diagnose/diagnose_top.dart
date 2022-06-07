@@ -179,7 +179,7 @@ class DiagnoseTopPage extends HookConsumerWidget {
                   ],
                 )
               : Column(
-                  children: [
+                  children: const [
                     SettingList(),
                   ],
                 ),
