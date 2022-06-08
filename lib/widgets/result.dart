@@ -2,21 +2,20 @@ import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:sbselector/const/ridetype.dart';
-import 'package:sbselector/model/result.dart';
+import 'package:sbselector/view_model/history.dart';
 import 'package:sbselector/view_model/page_view_model.dart';
 import 'package:sbselector/widgets/board_tile.dart';
 import 'package:sbselector/widgets/delete_dialog.dart';
 import 'package:sbselector/widgets/end_dialog.dart';
 import 'package:sbselector/widgets/ridetype_tiles.dart';
-import 'package:sbselector/widgets/save_button.dart';
 import 'package:sbselector/widgets/share_button.dart';
 import 'package:screenshot/screenshot.dart';
 
 class ResultDetail extends HookConsumerWidget {
-  ResultDetail({Key? key, required this.value}) : super(key: key);
-  final dynamic value;
-  late final RideType rideType;
-  late final String id;
+  ResultDetail({Key? key, required this.rideType, required this.id})
+      : super(key: key);
+  final RideType rideType;
+  final String? id;
 
   final String title = "診断結果";
 
@@ -36,35 +35,33 @@ class ResultDetail extends HookConsumerWidget {
     }
   }
 
-  void checkTypeValue() {
-    if (value is RideType) {
-      rideType = value;
-    } else if (value is Result) {
-      id = value.id;
-      rideType = value.rideType;
-    } else {
-      throw ArgumentError.value(value);
-    }
-  }
-
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    checkTypeValue();
     final String routeName = ModalRoute.of(context)!.settings.name as String;
     final bool currRouteState = checkRoute(routeName);
     final Size screenSize = MediaQuery.of(context).size;
-    final PageStateNotifier pageController = ref.watch(pageStateProvider.notifier);
+    final PageStateNotifier pageController =
+        ref.watch(pageStateProvider.notifier);
     final String rideTypeName = pageController.checkWriteInRideType(rideType);
 
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        leading: IconButton(
-          icon: const Icon(Icons.close),
-          onPressed: () {
-            Navigator.popUntil(
-              context,
-              ModalRoute.withName('/'),
+        leading: Consumer(
+          builder: (context, ref, _) {
+            final histroyController =
+                ref.watch(historyNotifierProvider.notifier);
+            return IconButton(
+              icon: const Icon(Icons.close),
+              onPressed: () {
+                if (!currRouteState) {
+                  histroyController.add(rideType);
+                }
+                Navigator.popUntil(
+                  context,
+                  ModalRoute.withName('/'),
+                );
+              },
             );
           },
         ),
@@ -81,75 +78,77 @@ class ResultDetail extends HookConsumerWidget {
             child: IconButton(
               icon: const Icon(Icons.delete),
               onPressed: () {
-                showSelfDialog(deleteDialog(context, ref, id));
+                showSelfDialog(
+                  deleteDialog(context, ref, id!),
+                );
               },
             ),
           ),
         ],
       ),
       body: SafeArea(
-        child: Screenshot(
-          controller: _screenShotController,
-          child: ListView(
-            controller: _scrollController,
-            children: <Widget>[
-              const Gap(20),
-              for (ListTile tile in rideTypeTitles(opacity, rideTypeName, size))
-                tile,
-              const Gap(20),
-              ListTile(
-                title: Container(
-                  decoration: const BoxDecoration(
-                    border: Border(
-                      bottom: BorderSide(
-                        color: Colors.blue,
-                        width: 5.0,
+        child: ListView(
+          controller: _scrollController,
+          children: <Widget>[
+            Screenshot(
+              controller: _screenShotController,
+              child: Column(
+                children: [
+                  const Gap(20),
+                  for (ListTile tile
+                      in rideTypeTitles(opacity, rideTypeName, size))
+                    tile,
+                  const Gap(20),
+                  ListTile(
+                    title: Container(
+                      decoration: const BoxDecoration(
+                        border: Border(
+                          bottom: BorderSide(
+                            color: Colors.blue,
+                            width: 5.0,
+                          ),
+                        ),
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: const [
+                          Icon(Icons.snowboarding),
+                          Text(
+                            'スノーボード',
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 20,
+                            ),
+                          ),
+                        ],
                       ),
                     ),
                   ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: const [
-                      Icon(Icons.snowboarding),
-                      Text(
-                        'スノーボード',
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 20,
-                        ),
+                  const Gap(20),
+                  boardTile(_scrollController, rideType.firstRecommendBoard, 1),
+                  boardTile(
+                      _scrollController, rideType.secondRecommendBoard, 2),
+                  const Gap(20),
+                  Container(
+                    padding: const EdgeInsets.fromLTRB(30, 0, 20, 0),
+                    child: Text(
+                      rideType.discription,
+                      style: const TextStyle(
+                        fontSize: 18,
                       ),
-                    ],
-                  ),
-                ),
-              ),
-              const Gap(20),
-              boardTile(_scrollController, rideType.firstRecommendBoard, 1),
-              boardTile(_scrollController, rideType.secondRecommendBoard, 2),
-              const Gap(20),
-              Container(
-                padding: const EdgeInsets.fromLTRB(30, 0, 20, 0),
-                child: Text(
-                  rideType.discription,
-                  style: const TextStyle(
-                    fontSize: 18,
-                  ),
-                ),
-              ),
-              const Gap(20),
-              Row(
-                mainAxisAlignment: !currRouteState
-                    ? MainAxisAlignment.spaceEvenly
-                    : MainAxisAlignment.center,
-                children: [
-                  shareButton(_screenShotController),
-                  Visibility(
-                    visible: !currRouteState,
-                    child: saveButton(rideType, context, ref),
+                    ),
                   ),
                 ],
               ),
-            ],
-          ),
+            ),
+            const Gap(20),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                shareButton(_screenShotController),
+              ],
+            ),
+          ],
         ),
       ),
     );

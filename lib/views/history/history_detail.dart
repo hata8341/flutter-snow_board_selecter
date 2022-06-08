@@ -8,6 +8,6 @@ class HistoryDetailPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final Result result = ModalRoute.of(context)!.settings.arguments as Result;
-    return ResultDetail(value: result);
+    return ResultDetail(rideType: result.rideType, id: result.id);
   }
 }
