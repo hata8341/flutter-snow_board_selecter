@@ -1,10 +1,28 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:sbselector/const/rideType.dart';
+import 'package:sbselector/const/bottom_bar_index.dart';
+import 'package:sbselector/const/ridetype.dart';
+import 'package:sbselector/model/page_state.dart';
 
-class PageNotifier extends StateNotifier<void> {
-  PageNotifier(this._read) : super(null);
+class PageStateNotifier extends StateNotifier<PageState> {
+  PageStateNotifier(this._read) : super(const PageState());
 
   final Reader _read;
+
+  void changeIndex(int index) {
+    state = state.copyWith(bottomBarIndex: BottomBarIndex.values[index]);
+  }
+
+  void toggleTheme() {
+    state = state.copyWith(themeState: !state.themeState);
+  }
+
+  void toggleBgm() {
+    state = state.copyWith(bgmState: !state.bgmState);
+  }
+
+  // HookConsumerWidget getCurrPage(){
+
+  // }
 
   String checkWriteInRideType(RideType rideType) {
     final rideTypeName = rideType.nameJp;
@@ -20,6 +38,7 @@ class PageNotifier extends StateNotifier<void> {
   }
 }
 
-final pageProvider = StateNotifierProvider<PageNotifier, void>((ref) {
-  return PageNotifier((ref.read));
+final pageStateProvider =
+    StateNotifierProvider.autoDispose<PageStateNotifier, PageState>((ref) {
+  return PageStateNotifier((ref.read));
 });

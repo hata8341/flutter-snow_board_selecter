@@ -1,35 +1,30 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-
-final themeProvider = StateProvider<bool>((ref) {
-  return false;
-});
-final bgmProvider = StateProvider<bool>((ref) {
-  return false;
-});
-
+import 'package:sbselector/view_model/page_view_model.dart';
 class SettingList extends HookConsumerWidget {
   const SettingList({Key? key}) : super(key: key);
   final bool value = false;
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final themeController = ref.watch(themeProvider.state);
-    final bgmController = ref.watch(bgmProvider.state);
+
+    final pageState = ref.watch(pageStateProvider);
+    final pageController = ref.watch(pageStateProvider.notifier);
+
     return ListView(
       scrollDirection: Axis.vertical,
       shrinkWrap: true,
       children: <Widget>[
         SwitchListTile(
-          value: themeController.state,
-          onChanged: (bool newValue) {
-            themeController.state = newValue;
+          value: pageState.themeState,
+          onChanged: (bool newState) {
+            pageController.toggleTheme();
           },
           title: const Text('ダークモード'),
         ),
         SwitchListTile(
-          value: bgmController.state,
-          onChanged: (bool newValue) {
-            bgmController.state = newValue;
+          value: pageState.bgmState,
+          onChanged: (bool newState) {
+            pageController.toggleBgm();
           },
           title: const Text('ミュージック'),
         ),

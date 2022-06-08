@@ -93,7 +93,7 @@ class __$$_AnswerCopyWithImpl<$Res> extends _$AnswerCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_Answer with DiagnosticableTreeMixin implements _Answer {
+class _$_Answer implements _Answer {
   const _$_Answer({required this.category, required this.answerValue});
 
   @override
@@ -102,17 +102,8 @@ class _$_Answer with DiagnosticableTreeMixin implements _Answer {
   final double answerValue;
 
   @override
-  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+  String toString() {
     return 'Answer(category: $category, answerValue: $answerValue)';
-  }
-
-  @override
-  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
-    properties
-      ..add(DiagnosticsProperty('type', 'Answer'))
-      ..add(DiagnosticsProperty('category', category))
-      ..add(DiagnosticsProperty('answerValue', answerValue));
   }
 
   @override
