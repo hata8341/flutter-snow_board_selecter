@@ -20,10 +20,6 @@ class PageStateNotifier extends StateNotifier<PageState> {
     state = state.copyWith(bgmState: !state.bgmState);
   }
 
-  // HookConsumerWidget getCurrPage(){
-
-  // }
-
   String checkWriteInRideType(RideType rideType) {
     final rideTypeName = rideType.nameJp;
     if (rideTypeName == 'フリーラン・パウダー') {

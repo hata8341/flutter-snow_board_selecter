@@ -10,6 +10,6 @@ class DiagnoseResultPage extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final args = ModalRoute.of(context)!.settings.arguments;
     final RideType rideType = args as RideType;
-    return ResultDetail(value: rideType);
+    return ResultDetail(rideType: rideType,id: null,);
   }
 }
