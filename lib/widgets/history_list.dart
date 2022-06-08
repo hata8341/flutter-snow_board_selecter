@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:sbselector/const/rideType.dart';
+import 'package:sbselector/const/ridetype.dart';
 import 'package:sbselector/model/result.dart';
 import 'package:sbselector/view_model/history.dart';
 

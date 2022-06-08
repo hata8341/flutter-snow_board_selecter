@@ -131,7 +131,7 @@ class __$$_SnowboardCopyWithImpl<$Res> extends _$SnowboardCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_Snowboard with DiagnosticableTreeMixin implements _Snowboard {
+class _$_Snowboard implements _Snowboard {
   const _$_Snowboard(
       {required this.name,
       required this.descprition,
@@ -156,19 +156,8 @@ class _$_Snowboard with DiagnosticableTreeMixin implements _Snowboard {
   }
 
   @override
-  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+  String toString() {
     return 'Snowboard(name: $name, descprition: $descprition, imageUrl: $imageUrl, chartData: $chartData)';
-  }
-
-  @override
-  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
-    properties
-      ..add(DiagnosticsProperty('type', 'Snowboard'))
-      ..add(DiagnosticsProperty('name', name))
-      ..add(DiagnosticsProperty('descprition', descprition))
-      ..add(DiagnosticsProperty('imageUrl', imageUrl))
-      ..add(DiagnosticsProperty('chartData', chartData));
   }
 
   @override

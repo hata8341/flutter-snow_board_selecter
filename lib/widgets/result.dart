@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:sbselector/const/rideType.dart';
+import 'package:sbselector/const/ridetype.dart';
 import 'package:sbselector/model/result.dart';
 import 'package:sbselector/view_model/page_view_model.dart';
 import 'package:sbselector/widgets/board_tile.dart';
@@ -11,13 +11,12 @@ import 'package:sbselector/widgets/ridetype_tiles.dart';
 import 'package:sbselector/widgets/save_button.dart';
 import 'package:sbselector/widgets/share_button.dart';
 import 'package:screenshot/screenshot.dart';
+
 class ResultDetail extends HookConsumerWidget {
-  ResultDetail({Key? key, required this.value}
-      )
-      : super(key: key);
+  ResultDetail({Key? key, required this.value}) : super(key: key);
+  final dynamic value;
   late final RideType rideType;
   late final String id;
-  final dynamic value;
 
   final String title = "診断結果";
 
@@ -54,7 +53,7 @@ class ResultDetail extends HookConsumerWidget {
     final String routeName = ModalRoute.of(context)!.settings.name as String;
     final bool currRouteState = checkRoute(routeName);
     final Size screenSize = MediaQuery.of(context).size;
-    final PageNotifier pageController = ref.watch(pageProvider.notifier);
+    final PageStateNotifier pageController = ref.watch(pageStateProvider.notifier);
     final String rideTypeName = pageController.checkWriteInRideType(rideType);
 
     return Scaffold(
@@ -65,7 +64,7 @@ class ResultDetail extends HookConsumerWidget {
           onPressed: () {
             Navigator.popUntil(
               context,
-              ModalRoute.withName('/diagnoseTop'),
+              ModalRoute.withName('/'),
             );
           },
         ),

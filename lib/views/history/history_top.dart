@@ -8,15 +8,19 @@ class HistoryTopPage extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final historiesController = ref.watch(historyNotifierProvider.notifier);
-    return FutureBuilder(
-      future: historiesController.load(),
-      builder: (BuildContext context, AsyncSnapshot snapshot) {
-        if (snapshot.connectionState == ConnectionState.done) {
-          return const HistoryList();
-        } else {
-          return const CircularProgressIndicator();
-        }
-      },
+    return Column(
+      children: [
+        FutureBuilder(
+          future: historiesController.load(),
+          builder: (BuildContext context, AsyncSnapshot snapshot) {
+            if (snapshot.connectionState == ConnectionState.done) {
+              return const HistoryList();
+            } else {
+              return const CircularProgressIndicator();
+            }
+          },
+        ),
+      ],
     );
   }
 }

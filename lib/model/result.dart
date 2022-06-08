@@ -1,6 +1,6 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:intl/intl.dart';
-import 'package:sbselector/const/rideType.dart';
+import 'package:sbselector/const/ridetype.dart';
 
 part 'result.freezed.dart';
 

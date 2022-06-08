@@ -6,6 +6,7 @@ import 'package:sbselector/views/diagnose/diagnose_content.dart';
 import 'package:sbselector/views/diagnose/diagnose_result.dart';
 import 'package:sbselector/views/history/history_detail.dart';
 import 'package:sbselector/views/history/history_top.dart';
+import 'package:sbselector/views/top_page.dart';
 
 import 'firebase/firebase_crashlytics_config.dart';
 import 'views/diagnose/diagnose_top.dart';
@@ -44,8 +45,9 @@ class MyApp extends HookConsumerWidget {
         primarySwatch: Colors.blue,
       ),
       navigatorObservers: <NavigatorObserver>[AnalyticsServeice.observer],
-      initialRoute: '/diagnoseTop',
+      initialRoute: '/',
       routes: {
+        '/': (context) => const TopPage(),
         '/diagnoseTop': (context) => const DiagnoseTopPage(),
         '/diagnoseContent': (context) => const DiagnoseContentPage(),
         '/diagnoseResult': (context) => const DiagnoseResultPage(),

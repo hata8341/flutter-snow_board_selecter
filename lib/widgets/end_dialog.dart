@@ -1,7 +1,7 @@
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:sbselector/const/rideType.dart';
+import 'package:sbselector/const/ridetype.dart';
 import 'package:sbselector/view_model/diagnose_view_model.dart';
 
 AwesomeDialog endDialog(BuildContext inputContext, WidgetRef ref) {

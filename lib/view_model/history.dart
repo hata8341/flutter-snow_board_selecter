@@ -1,5 +1,5 @@
 import 'package:riverpod/riverpod.dart';
-import 'package:sbselector/const/rideType.dart';
+import 'package:sbselector/const/ridetype.dart';
 import 'package:sbselector/db/result.dart';
 import 'package:sbselector/model/result.dart';
 import 'package:uuid/uuid.dart';
@@ -37,13 +37,6 @@ class HistoryNotifier extends StateNotifier<List<Result>> {
       print(e);
     }
   }
-
-  Result getCurrResult(int index) {
-    print('現在のインデックス');
-    print(index);
-    return state[index];
-  }
-
 }
 
 final historyNotifierProvider =
