@@ -17,6 +17,11 @@ class HistoryNotifier extends StateNotifier<List<Result>> {
         ..addAll(value),
     );
     state = myRideTypes;
+    _sortOrder();
+  }
+
+  void _sortOrder() {
+    state.sort((a, b) => b.createdAt.compareTo(a.createdAt));
   }
 
   void add(RideType rideType) async {
