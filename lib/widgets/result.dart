@@ -44,8 +44,10 @@ class ResultDetail extends HookConsumerWidget {
         ref.watch(pageStateProvider.notifier);
     final String rideTypeName = pageController.checkWriteInRideType(rideType);
 
+    final textTheme = Theme.of(context).textTheme;
+    final ColorScheme colorScheme = Theme.of(context).colorScheme;
+
     return Scaffold(
-      backgroundColor: Colors.white,
       appBar: AppBar(
         leading: Consumer(
           builder: (context, ref, _) {
@@ -76,7 +78,10 @@ class ResultDetail extends HookConsumerWidget {
           Visibility(
             visible: currRouteState,
             child: IconButton(
-              icon: const Icon(Icons.delete),
+              icon: const Icon(
+                Icons.delete,
+                color: Colors.red,
+              ),
               onPressed: () {
                 showSelfDialog(
                   deleteDialog(context, ref, id!),
@@ -96,7 +101,7 @@ class ResultDetail extends HookConsumerWidget {
                 children: [
                   const Gap(20),
                   for (ListTile tile
-                      in rideTypeTitles(opacity, rideTypeName, size))
+                      in rideTypeTitles(opacity, rideTypeName, size, textTheme))
                     tile,
                   const Gap(20),
                   ListTile(
@@ -111,30 +116,25 @@ class ResultDetail extends HookConsumerWidget {
                       ),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
-                        children: const [
-                          Icon(Icons.snowboarding),
-                          Text(
-                            'スノーボード',
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 20,
-                            ),
-                          ),
+                        children: [
+                          const Icon(Icons.snowboarding),
+                          Text('スノーボード', style: textTheme.headline5),
                         ],
                       ),
                     ),
                   ),
                   const Gap(20),
-                  boardTile(_scrollController, rideType.firstRecommendBoard, 1),
-                  boardTile(
-                      _scrollController, rideType.secondRecommendBoard, 2),
+                  boardTile(_scrollController, rideType.firstRecommendBoard, 1,
+                      colorScheme),
+                  boardTile(_scrollController, rideType.secondRecommendBoard, 2,
+                      colorScheme),
                   const Gap(20),
                   Container(
-                    padding: const EdgeInsets.fromLTRB(30, 0, 20, 0),
+                    padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
                     child: Text(
                       rideType.discription,
                       style: const TextStyle(
-                        fontSize: 18,
+                        fontSize: 20,
                       ),
                     ),
                   ),

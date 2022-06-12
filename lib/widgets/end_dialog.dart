@@ -25,7 +25,7 @@ AwesomeDialog endDialog(BuildContext inputContext, WidgetRef ref) {
     },
     onDissmissCallback: (type) {
       debugPrint('Dialog Dissmiss from callback $type');
-      return (type == DismissType.MODAL_BARRIER)
+      return (type == DismissType.MODAL_BARRIER || type == DismissType.TOP_ICON)
           ? diagnoseController.missTake()
           : debugPrint('okbutton');
     },

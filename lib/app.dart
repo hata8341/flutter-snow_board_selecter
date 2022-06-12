@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:sbselector/const/theme.dart';
 import 'package:sbselector/firebase/firebase_analytics_config.dart';
+import 'package:sbselector/view_model/theme_view_mode.dart';
 import 'package:sbselector/views/diagnose/diagnose_content.dart';
 import 'package:sbselector/views/diagnose/diagnose_result.dart';
 import 'package:sbselector/views/history/history_detail.dart';
@@ -17,6 +19,7 @@ class MyApp extends HookConsumerWidget {
   final String id;
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final themeMode = ref.watch(themeStateProvider).themeMode;
     useEffect(() {
       ref.read(crashReporter).setIdentify(id);
       return null;
@@ -41,9 +44,9 @@ class MyApp extends HookConsumerWidget {
       },
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
+      themeMode: themeMode,
+      theme: lightThemeData(),
+      darkTheme: darkThemeData(),
       navigatorObservers: <NavigatorObserver>[AnalyticsServeice.observer],
       initialRoute: '/',
       routes: {
