@@ -3,8 +3,8 @@ import 'package:sbselector/model/snowboard.dart';
 
 import 'radar_chart.dart';
 
-ExpansionTile boardTile(
-    ScrollController _scrollController, Snowboard snowboard, int recommendNum) {
+ExpansionTile boardTile(ScrollController _scrollController, Snowboard snowboard,
+    int recommendNum, ColorScheme colorScheme) {
   final GlobalKey expansionTileKey = GlobalKey();
 
   void _scrollToSelectedContent({GlobalKey? expansionTileKey}) {
@@ -23,13 +23,17 @@ ExpansionTile boardTile(
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Text('おすすめ' + recommendNum.toString()),
+          Text(
+            'おすすめ' + recommendNum.toString(),
+            style: const TextStyle(fontSize: 20.0),
+          ),
           Chip(
             elevation: 2.0,
-            shadowColor: Colors.grey,
-            backgroundColor: Colors.blue[50],
             label: Text(
               snowboard.name,
+              style: const TextStyle(
+                fontSize: 16.0,
+              ),
             ),
           ),
         ],
@@ -51,11 +55,11 @@ ExpansionTile boardTile(
         fit: BoxFit.cover,
       ),
       Container(
-        padding: const EdgeInsets.fromLTRB(16.0, 0.0, 16.0, 16.0),
+        padding: const EdgeInsets.fromLTRB(22.0, 0.0, 20.0, 16.0),
         child: Text(
           snowboard.descprition,
           style: const TextStyle(
-            fontSize: 18.0,
+            fontSize: 20.0,
           ),
         ),
       ),

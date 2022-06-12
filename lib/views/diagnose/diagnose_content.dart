@@ -5,6 +5,7 @@ import 'package:sbselector/model/question.dart';
 import 'package:sbselector/view_model/diagnose_view_model.dart';
 import 'package:sbselector/view_model/indicator_view_model.dart';
 import 'package:sbselector/view_model/question_view_model.dart';
+import 'package:sbselector/view_model/theme_view_mode.dart';
 import 'package:sbselector/widgets/bubble.dart';
 
 class DiagnoseContentPage extends HookConsumerWidget {
@@ -25,16 +26,30 @@ class DiagnoseContentPage extends HookConsumerWidget {
 
     final diagnoseController = ref.watch(diagnoseProvider.notifier);
 
+    final themeStateController = ref.watch(themeStateProvider.notifier);
+
     diagnoseController.checkEndDialog(ref, context);
     return Scaffold(
-      backgroundColor: Theme.of(context).backgroundColor,
+      backgroundColor: themeStateController.getScaffoldBackgroundColor(),
       appBar: AppBar(
+        backgroundColor: themeStateController.getBarColor(),
+        iconTheme: const IconThemeData.fallback().copyWith(
+          color: themeStateController.getAppBarTextIconColor(),
+        ),
         title: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           mainAxisSize: MainAxisSize.min,
           children: [
-            const Icon(Icons.search),
-            Text(title),
+            Icon(
+              Icons.search,
+              color: themeStateController.getAppBarTextIconColor(),
+            ),
+            Text(
+              title,
+              style: TextStyle(
+                color: themeStateController.getAppBarTextIconColor(),
+              ),
+            ),
           ],
         ),
       ),
@@ -52,10 +67,10 @@ class DiagnoseContentPage extends HookConsumerWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: <Widget>[
                       SizedBox(
-                        width: screenSize.width * 0.6,
+                        width: screenSize.width * 0.65,
                         height: screenSize.height * 0.32,
                         child: Image.asset(
-                          'images/cut_snow_penguin.png',
+                          'images/snow_penguin_top.png',
                           fit: BoxFit.cover,
                         ),
                       ),
@@ -63,16 +78,15 @@ class DiagnoseContentPage extends HookConsumerWidget {
                         width: screenSize.width * 0.9,
                         height: screenSize.height * 0.22,
                         padding: const EdgeInsets.all(16),
-                        decoration: const ShapeDecoration(
-                          color: Colors.white,
-                          shadows: [
+                        decoration: ShapeDecoration(
+                          color: themeStateController.getBubbleColor(),
+                          shadows: const [
                             BoxShadow(
-                              color: Color(0x80000000),
                               offset: Offset(0, 2),
                               blurRadius: 2,
                             ),
                           ],
-                          shape: BubbleBorder(),
+                          shape: const BubbleBorder(),
                         ),
                         child: Stack(
                           children: [
@@ -84,7 +98,6 @@ class DiagnoseContentPage extends HookConsumerWidget {
                                 child: IconButton(
                                   icon: const Icon(
                                     Icons.arrow_back,
-                                    color: Colors.grey,
                                   ),
                                   onPressed: () {
                                     diagnoseController.missTake();
@@ -97,7 +110,7 @@ class DiagnoseContentPage extends HookConsumerWidget {
                               children: <Widget>[
                                 const Icon(
                                   Icons.live_help,
-                                  color: Colors.grey,
+                                  // color: Colors.grey,
                                 ),
                                 AnimatedSwitcher(
                                   duration: const Duration(
@@ -139,11 +152,10 @@ class DiagnoseContentPage extends HookConsumerWidget {
                         ),
                       ),
                       LinearProgressIndicator(
-                        backgroundColor: Colors.grey,
+                        backgroundColor: Colors.grey.shade300,
+                        color: themeStateController.getBarColor(),
                         minHeight: 10,
                         value: indicatorValue,
-                        valueColor:
-                            const AlwaysStoppedAnimation<Color>(Colors.red),
                       ),
                       Container(
                         width: screenSize.width,
@@ -160,13 +172,12 @@ class DiagnoseContentPage extends HookConsumerWidget {
                                   height: screenSize.height * 0.05,
                                   child: ElevatedButton(
                                     onPressed: () {
-                                      print('はい');
                                       diagnoseController.respond(
                                           question.category, 5.0);
                                     },
                                     style: ElevatedButton.styleFrom(
-                                      primary: Colors.yellow[700],
-                                      onPrimary: Colors.black,
+                                      primary:
+                                          themeStateController.getBarColor(),
                                       shape: RoundedRectangleBorder(
                                         borderRadius: BorderRadius.circular(5),
                                       ),
@@ -188,8 +199,8 @@ class DiagnoseContentPage extends HookConsumerWidget {
                                           question.category, 1.0);
                                     },
                                     style: ElevatedButton.styleFrom(
-                                      primary: Colors.yellow[700],
-                                      onPrimary: Colors.black,
+                                      primary:
+                                          themeStateController.getBarColor(),
                                       shape: RoundedRectangleBorder(
                                         borderRadius: BorderRadius.circular(5),
                                       ),
@@ -213,13 +224,12 @@ class DiagnoseContentPage extends HookConsumerWidget {
                                   height: screenSize.height * 0.05,
                                   child: ElevatedButton(
                                     onPressed: () {
-                                      print('たぶんそう');
                                       diagnoseController.respond(
                                           question.category, 4.0);
                                     },
                                     style: ElevatedButton.styleFrom(
-                                      primary: Colors.yellow[700],
-                                      onPrimary: Colors.black,
+                                      primary:
+                                          themeStateController.getBarColor(),
                                       shape: RoundedRectangleBorder(
                                         borderRadius: BorderRadius.circular(5),
                                       ),
@@ -237,13 +247,12 @@ class DiagnoseContentPage extends HookConsumerWidget {
                                   height: screenSize.height * 0.05,
                                   child: ElevatedButton(
                                     onPressed: () {
-                                      print('わからない');
                                       diagnoseController.respond(
                                           question.category, 3.0);
                                     },
                                     style: ElevatedButton.styleFrom(
-                                      primary: Colors.yellow[700],
-                                      onPrimary: Colors.black,
+                                      primary:
+                                          themeStateController.getBarColor(),
                                       shape: RoundedRectangleBorder(
                                         borderRadius: BorderRadius.circular(5),
                                       ),
@@ -261,13 +270,12 @@ class DiagnoseContentPage extends HookConsumerWidget {
                                   height: screenSize.height * 0.05,
                                   child: ElevatedButton(
                                     onPressed: () {
-                                      print('たぶん違う');
                                       diagnoseController.respond(
                                           question.category, 2.0);
                                     },
                                     style: ElevatedButton.styleFrom(
-                                      primary: Colors.yellow[700],
-                                      onPrimary: Colors.black,
+                                      primary:
+                                          themeStateController.getBarColor(),
                                       shape: RoundedRectangleBorder(
                                         borderRadius: BorderRadius.circular(5),
                                       ),

@@ -22,9 +22,6 @@ class SnowRadarChart extends HookConsumerWidget {
               RadarChartData(
                 borderData: FlBorderData(show: false),
                 dataSets: showingSnowDataSets(),
-                radarBackgroundColor: Colors.transparent,
-                radarBorderData:
-                    const BorderSide(color: Colors.black, width: 2),
                 // レーダーチャートの外側のタイトル
                 getTitle: (index) {
                   switch (index) {
@@ -41,23 +38,19 @@ class SnowRadarChart extends HookConsumerWidget {
                   }
                 },
                 titleTextStyle: const TextStyle(
-                  color: Colors.black,
-                  fontSize: 12,
+                  fontSize: 16.0,
                 ),
                 // レーダーチャートからのタイトルの位置
                 titlePositionPercentageOffset: 0.2,
                 // ティックの数
                 tickCount: 4,
                 ticksTextStyle: const TextStyle(
-                  color: null,
                   fontSize: 0,
                 ),
                 tickBorderData: const BorderSide(
-                  color: Colors.black,
                   width: 2,
                 ),
                 gridBorderData: const BorderSide(
-                  color: Colors.black,
                   width: 2,
                 ),
               ),
@@ -74,8 +67,6 @@ class SnowRadarChart extends HookConsumerWidget {
     List<RadarDataSet> list = [];
 
     final radarData = RadarDataSet(
-      fillColor: Colors.yellow.withOpacity(0.4),
-      borderColor: Colors.blueAccent,
       borderWidth: 2.0,
       entryRadius: 5.0,
       dataEntries: setEntriesData(raderChartData),

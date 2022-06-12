@@ -32,6 +32,10 @@ class PageStateNotifier extends StateNotifier<PageState> {
 
     return rideTypeName;
   }
+
+  bool isDiagnoseTop() {
+    return state.bottomBarIndex.value == 1 ? true : false;
+  }
 }
 
 final pageStateProvider =

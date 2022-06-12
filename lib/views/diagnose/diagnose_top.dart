@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:sbselector/view_model/theme_view_mode.dart';
 import 'package:sbselector/widgets/bubble.dart';
 
 class DiagnoseTopPage extends HookConsumerWidget {
@@ -8,8 +9,9 @@ class DiagnoseTopPage extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-
     final Size screenSize = MediaQuery.of(context).size;
+
+    final themeStateController = ref.watch(themeStateProvider.notifier);
 
     return Center(
       child: Column(
@@ -22,10 +24,10 @@ class DiagnoseTopPage extends HookConsumerWidget {
           Column(
             children: [
               SizedBox(
-                width: screenSize.width * 0.6,
+                width: screenSize.width * 0.65,
                 height: screenSize.height * 0.32,
                 child: Image.asset(
-                  'images/cut_snow_penguin.png',
+                  'images/snow_penguin_top.png',
                   fit: BoxFit.cover,
                 ),
               ),
@@ -33,16 +35,15 @@ class DiagnoseTopPage extends HookConsumerWidget {
               Container(
                 height: screenSize.height * 0.2,
                 padding: const EdgeInsets.all(16),
-                decoration: const ShapeDecoration(
-                  color: Colors.white,
-                  shadows: [
+                decoration: ShapeDecoration(
+                  color: themeStateController.getBubbleColor(),
+                  shadows: const [
                     BoxShadow(
-                      color: Color(0x80000000),
                       offset: Offset(0, 2),
                       blurRadius: 2,
                     ),
                   ],
-                  shape: BubbleBorder(),
+                  shape: const BubbleBorder(),
                 ),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -75,18 +76,17 @@ class DiagnoseTopPage extends HookConsumerWidget {
                 Navigator.pushNamed(context, '/diagnoseContent');
               },
               style: ElevatedButton.styleFrom(
-                primary: Colors.yellow[700],
-                onPrimary: Colors.black,
+                primary: themeStateController.getBarColor(),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(5),
                 ),
               ),
-              child: const Text(
+              child: Text(
                 '診断する',
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 20.0,
-                ),
+                style: Theme.of(context).textTheme.headline5!.copyWith(
+                      fontWeight: FontWeight.normal,
+                      color: Colors.grey.shade900,
+                    ),
               ),
             ),
           ),

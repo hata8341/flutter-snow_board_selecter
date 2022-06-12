@@ -36,16 +36,16 @@ enum BottomBarIndex {
     return Colors.white;
   }
 
-  Icon get icon {
+  IconData get icon {
     switch (value) {
       case 0:
-        return const Icon(Icons.list);
+        return Icons.list;
       case 1:
-        return const Icon(Icons.search);
+        return Icons.search;
       case 2:
-        return const Icon(Icons.settings);
+        return Icons.settings;
     }
-    return const Icon(Icons.error);
+    return Icons.error;
   }
 
   HookConsumerWidget get page {

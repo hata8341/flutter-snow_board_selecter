@@ -35,7 +35,6 @@ ElevatedButton shareButton(ScreenshotController screenShotController) {
   return ElevatedButton.icon(
     icon: const Icon(
       Icons.share,
-      color: Colors.white,
     ),
     onPressed: () {
       try {
