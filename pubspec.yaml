@@ -56,7 +56,7 @@ dependencies:
   path: ^1.8.1
   intl: ^0.17.0
   shared_preferences: ^2.0.15
-  google_fonts: ^3.0.1
+  just_audio: ^0.9.24
 
 dev_dependencies:
   flutter_test:
@@ -84,6 +84,7 @@ flutter:
   assets:
     - images/
     - images/test_board/
+    - bgm/
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

@@ -17,7 +17,7 @@ final _privateConstructorUsedError = UnsupportedError(
 /// @nodoc
 mixin _$PageState {
   BottomBarIndex get bottomBarIndex => throw _privateConstructorUsedError;
-  bool get themeState => throw _privateConstructorUsedError;
+  AudioPlayer? get player => throw _privateConstructorUsedError;
   bool get bgmState => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
@@ -29,7 +29,8 @@ mixin _$PageState {
 abstract class $PageStateCopyWith<$Res> {
   factory $PageStateCopyWith(PageState value, $Res Function(PageState) then) =
       _$PageStateCopyWithImpl<$Res>;
-  $Res call({BottomBarIndex bottomBarIndex, bool themeState, bool bgmState});
+  $Res call(
+      {BottomBarIndex bottomBarIndex, AudioPlayer? player, bool bgmState});
 }
 
 /// @nodoc
@@ -43,7 +44,7 @@ class _$PageStateCopyWithImpl<$Res> implements $PageStateCopyWith<$Res> {
   @override
   $Res call({
     Object? bottomBarIndex = freezed,
-    Object? themeState = freezed,
+    Object? player = freezed,
     Object? bgmState = freezed,
   }) {
     return _then(_value.copyWith(
@@ -51,10 +52,10 @@ class _$PageStateCopyWithImpl<$Res> implements $PageStateCopyWith<$Res> {
           ? _value.bottomBarIndex
           : bottomBarIndex // ignore: cast_nullable_to_non_nullable
               as BottomBarIndex,
-      themeState: themeState == freezed
-          ? _value.themeState
-          : themeState // ignore: cast_nullable_to_non_nullable
-              as bool,
+      player: player == freezed
+          ? _value.player
+          : player // ignore: cast_nullable_to_non_nullable
+              as AudioPlayer?,
       bgmState: bgmState == freezed
           ? _value.bgmState
           : bgmState // ignore: cast_nullable_to_non_nullable
@@ -69,7 +70,8 @@ abstract class _$$_PageStateCopyWith<$Res> implements $PageStateCopyWith<$Res> {
           _$_PageState value, $Res Function(_$_PageState) then) =
       __$$_PageStateCopyWithImpl<$Res>;
   @override
-  $Res call({BottomBarIndex bottomBarIndex, bool themeState, bool bgmState});
+  $Res call(
+      {BottomBarIndex bottomBarIndex, AudioPlayer? player, bool bgmState});
 }
 
 /// @nodoc
@@ -85,7 +87,7 @@ class __$$_PageStateCopyWithImpl<$Res> extends _$PageStateCopyWithImpl<$Res>
   @override
   $Res call({
     Object? bottomBarIndex = freezed,
-    Object? themeState = freezed,
+    Object? player = freezed,
     Object? bgmState = freezed,
   }) {
     return _then(_$_PageState(
@@ -93,10 +95,10 @@ class __$$_PageStateCopyWithImpl<$Res> extends _$PageStateCopyWithImpl<$Res>
           ? _value.bottomBarIndex
           : bottomBarIndex // ignore: cast_nullable_to_non_nullable
               as BottomBarIndex,
-      themeState: themeState == freezed
-          ? _value.themeState
-          : themeState // ignore: cast_nullable_to_non_nullable
-              as bool,
+      player: player == freezed
+          ? _value.player
+          : player // ignore: cast_nullable_to_non_nullable
+              as AudioPlayer?,
       bgmState: bgmState == freezed
           ? _value.bgmState
           : bgmState // ignore: cast_nullable_to_non_nullable
@@ -110,7 +112,7 @@ class __$$_PageStateCopyWithImpl<$Res> extends _$PageStateCopyWithImpl<$Res>
 class _$_PageState implements _PageState {
   const _$_PageState(
       {this.bottomBarIndex = BottomBarIndex.one,
-      this.themeState = false,
+      this.player = null,
       this.bgmState = false});
 
   @override
@@ -118,14 +120,14 @@ class _$_PageState implements _PageState {
   final BottomBarIndex bottomBarIndex;
   @override
   @JsonKey()
-  final bool themeState;
+  final AudioPlayer? player;
   @override
   @JsonKey()
   final bool bgmState;
 
   @override
   String toString() {
-    return 'PageState(bottomBarIndex: $bottomBarIndex, themeState: $themeState, bgmState: $bgmState)';
+    return 'PageState(bottomBarIndex: $bottomBarIndex, player: $player, bgmState: $bgmState)';
   }
 
   @override
@@ -135,8 +137,7 @@ class _$_PageState implements _PageState {
             other is _$_PageState &&
             const DeepCollectionEquality()
                 .equals(other.bottomBarIndex, bottomBarIndex) &&
-            const DeepCollectionEquality()
-                .equals(other.themeState, themeState) &&
+            const DeepCollectionEquality().equals(other.player, player) &&
             const DeepCollectionEquality().equals(other.bgmState, bgmState));
   }
 
@@ -144,7 +145,7 @@ class _$_PageState implements _PageState {
   int get hashCode => Object.hash(
       runtimeType,
       const DeepCollectionEquality().hash(bottomBarIndex),
-      const DeepCollectionEquality().hash(themeState),
+      const DeepCollectionEquality().hash(player),
       const DeepCollectionEquality().hash(bgmState));
 
   @JsonKey(ignore: true)
@@ -156,13 +157,13 @@ class _$_PageState implements _PageState {
 abstract class _PageState implements PageState {
   const factory _PageState(
       {final BottomBarIndex bottomBarIndex,
-      final bool themeState,
+      final AudioPlayer? player,
       final bool bgmState}) = _$_PageState;
 
   @override
   BottomBarIndex get bottomBarIndex => throw _privateConstructorUsedError;
   @override
-  bool get themeState => throw _privateConstructorUsedError;
+  AudioPlayer? get player => throw _privateConstructorUsedError;
   @override
   bool get bgmState => throw _privateConstructorUsedError;
   @override
