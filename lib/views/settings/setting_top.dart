@@ -34,7 +34,6 @@ class SettingList extends HookConsumerWidget {
           height: 10.0,
           indent: 20.0,
           endIndent: 20.0,
-          // color: Colors.black,
         ),
         ListTile(
           title: const Text('フィードバックする'),

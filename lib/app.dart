@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:sbselector/const/theme.dart';
 import 'package:sbselector/firebase/firebase_analytics_config.dart';
+import 'package:sbselector/view_model/page_view_model.dart';
 import 'package:sbselector/view_model/theme_view_mode.dart';
 import 'package:sbselector/views/diagnose/diagnose_content.dart';
 import 'package:sbselector/views/diagnose/diagnose_result.dart';
@@ -19,11 +21,22 @@ class MyApp extends HookConsumerWidget {
   final String id;
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final themeMode = ref.watch(themeStateProvider).themeMode;
     useEffect(() {
       ref.read(crashReporter).setIdentify(id);
       return null;
     }, []);
+    final themeMode = ref.watch(themeStateProvider).themeMode;
+    final bgmController = ref.watch(pageStateProvider.notifier);
+
+    SystemChannels.lifecycle.setMessageHandler((message) {
+      if (message == 'AppLifecycleState.paused') {
+        bgmController.checkPausedBgm();
+      }
+      if (message == 'AppLifecycleState.resumed') {
+        bgmController.checkResumedBgm();
+      }
+      return Future<String>.value('');
+    });
 
     return MaterialApp(
       builder: (BuildContext context, widget) {
