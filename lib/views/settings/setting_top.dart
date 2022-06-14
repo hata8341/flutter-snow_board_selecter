@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:in_app_review/in_app_review.dart';
 import 'package:sbselector/view_model/page_view_model.dart';
 import 'package:sbselector/view_model/theme_view_mode.dart';
 
@@ -46,12 +47,14 @@ class SettingList extends HookConsumerWidget {
         ),
         ListTile(
           title: const Text('アプリを評価する'),
-          trailing: IconButton(
-            icon: const Icon(Icons.keyboard_arrow_right),
-            onPressed: () {
-              print('アプリを評価する');
-            },
-          ),
+          leading: const Icon(Icons.rate_review),
+          trailing: const Icon(Icons.keyboard_arrow_right),
+          onTap: () async {
+            final InAppReview inAppReview = InAppReview.instance;
+            if (await inAppReview.isAvailable()) {
+              inAppReview.requestReview();
+            }
+          },
         ),
         const Divider(
           height: 10.0,
