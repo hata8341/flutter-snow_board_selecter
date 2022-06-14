@@ -57,6 +57,8 @@ dependencies:
   intl: ^0.17.0
   shared_preferences: ^2.0.15
   just_audio: ^0.9.24
+  webview_flutter: ^3.0.4
+  # platform: ^3.1.0
 
 dev_dependencies:
   flutter_test:

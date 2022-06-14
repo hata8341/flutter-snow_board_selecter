@@ -36,20 +36,11 @@ class SettingList extends HookConsumerWidget {
           endIndent: 20.0,
         ),
         ListTile(
-          title: const Text('フィードバックする'),
+          title: const Text('お問い合わせ'),
           trailing: IconButton(
             icon: const Icon(Icons.keyboard_arrow_right),
             onPressed: () {
-              print('フィードバックする');
-            },
-          ),
-        ),
-        ListTile(
-          title: const Text('メッセージを残す'),
-          trailing: IconButton(
-            icon: const Icon(Icons.keyboard_arrow_right),
-            onPressed: () {
-              print('メッセージを残す');
+              Navigator.pushNamed(context, '/formContact');
             },
           ),
         ),
