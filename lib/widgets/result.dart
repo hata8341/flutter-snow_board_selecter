@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:sbselector/const/ridetype.dart';
-import 'package:sbselector/view_model/history.dart';
+import 'package:sbselector/view_model/history_view_model.dart';
 import 'package:sbselector/view_model/page_view_model.dart';
 import 'package:sbselector/widgets/board_tile.dart';
 import 'package:sbselector/widgets/delete_dialog.dart';
@@ -124,10 +124,16 @@ class ResultDetail extends HookConsumerWidget {
                     ),
                   ),
                   const Gap(20),
-                  boardTile(_scrollController, rideType.firstRecommendBoard, 1,
-                      colorScheme),
-                  boardTile(_scrollController, rideType.secondRecommendBoard, 2,
-                      colorScheme),
+                  boardTile(
+                    _scrollController,
+                    rideType.firstRecommendBoard,
+                    1,
+                  ),
+                  boardTile(
+                    _scrollController,
+                    rideType.secondRecommendBoard,
+                    2,
+                  ),
                   const Gap(20),
                   Container(
                     padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),

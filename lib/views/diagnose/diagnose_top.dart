@@ -4,7 +4,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:sbselector/view_model/theme_view_mode.dart';
 import 'package:sbselector/widgets/bubble.dart';
 
-class DiagnoseTopPage extends HookConsumerWidget {
+class DiagnoseTopPage extends ConsumerWidget {
   const DiagnoseTopPage({Key? key}) : super(key: key);
 
   @override

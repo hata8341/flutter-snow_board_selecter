@@ -8,7 +8,7 @@ import 'package:sbselector/view_model/question_view_model.dart';
 import 'package:sbselector/view_model/theme_view_mode.dart';
 import 'package:sbselector/widgets/bubble.dart';
 
-class DiagnoseContentPage extends HookConsumerWidget {
+class DiagnoseContentPage extends ConsumerWidget {
   const DiagnoseContentPage({Key? key}) : super(key: key);
 
   final String title = "診断";
@@ -110,7 +110,6 @@ class DiagnoseContentPage extends HookConsumerWidget {
                               children: <Widget>[
                                 const Icon(
                                   Icons.live_help,
-                                  // color: Colors.grey,
                                 ),
                                 AnimatedSwitcher(
                                   duration: const Duration(

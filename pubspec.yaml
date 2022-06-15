@@ -73,7 +73,12 @@ dev_dependencies:
   # rules and activating additional ones.
   flutter_lints: ^1.0.0
   build_runner: ^2.1.11
+  flutter_launcher_icons: ^0.9.3
 
+flutter_icons:
+  image_path: "images/icon/snow_penguin_icon.png"
+  android: true
+  ios: true
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
 
@@ -89,6 +94,7 @@ flutter:
     - images/
     - images/test_board/
     - bgm/
+    - images/icon/snow_penguin_icon.png
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

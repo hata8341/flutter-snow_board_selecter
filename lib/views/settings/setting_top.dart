@@ -6,7 +6,7 @@ import 'package:sbselector/view_model/page_view_model.dart';
 import 'package:sbselector/view_model/setting_view_model.dart';
 import 'package:sbselector/view_model/theme_view_mode.dart';
 
-class SettingList extends HookConsumerWidget {
+class SettingList extends ConsumerWidget {
   const SettingList({Key? key}) : super(key: key);
   final bool value = false;
   @override
@@ -92,6 +92,10 @@ class SettingList extends HookConsumerWidget {
             // icon作成したら追加
             showLicensePage(
               context: context,
+              applicationIcon: Image.asset(
+                'images/snow_penguin_top.png',
+                fit: BoxFit.cover,
+              ),
               applicationName: info.appName,
               applicationVersion: info.version,
               applicationLegalese: '$date Thata',

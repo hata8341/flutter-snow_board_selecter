@@ -3,8 +3,8 @@ import 'package:sbselector/model/snowboard.dart';
 
 import 'radar_chart.dart';
 
-ExpansionTile boardTile(ScrollController _scrollController, Snowboard snowboard,
-    int recommendNum, ColorScheme colorScheme) {
+ExpansionTile boardTile(
+    ScrollController _scrollController, Snowboard snowboard, int recommendNum) {
   final GlobalKey expansionTileKey = GlobalKey();
 
   void _scrollToSelectedContent({GlobalKey? expansionTileKey}) {

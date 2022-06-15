@@ -48,7 +48,7 @@ enum BottomBarIndex {
     return Icons.error;
   }
 
-  HookConsumerWidget get page {
+  ConsumerWidget get page {
     switch (value) {
       case 0:
         return const HistoryTopPage();
