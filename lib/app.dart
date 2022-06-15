@@ -10,6 +10,8 @@ import 'package:sbselector/views/diagnose/diagnose_content.dart';
 import 'package:sbselector/views/diagnose/diagnose_result.dart';
 import 'package:sbselector/views/history/history_detail.dart';
 import 'package:sbselector/views/history/history_top.dart';
+import 'package:sbselector/views/settings/error_page.dart';
+import 'package:sbselector/views/settings/setting_top.dart';
 import 'package:sbselector/views/top_page.dart';
 
 import 'firebase/firebase_crashlytics_config.dart';
@@ -69,6 +71,8 @@ class MyApp extends HookConsumerWidget {
         '/diagnoseResult': (context) => const DiagnoseResultPage(),
         '/historyTop': (context) => const HistoryTopPage(),
         '/historyDetail': (context) => const HistoryDetailPage(),
+        '/setting': (context) => const SettingList(),
+        '/errorPage': (context) => const ErrorPage(),
       },
     );
   }
