@@ -25,6 +25,7 @@ class SettingList extends HookConsumerWidget {
           onChanged: (bool status) {
             themeController.update(status);
           },
+          secondary: const Icon(Icons.dark_mode),
           title: const Text('ダークモード'),
         ),
         SwitchListTile(
@@ -32,6 +33,7 @@ class SettingList extends HookConsumerWidget {
           onChanged: (bool newState) {
             pageController.toggleBgm();
           },
+          secondary: const Icon(Icons.music_note),
           title: const Text('ミュージック'),
         ),
         const Divider(
@@ -41,16 +43,15 @@ class SettingList extends HookConsumerWidget {
         ),
         ListTile(
           title: const Text('お問い合わせ'),
-          trailing: IconButton(
-            icon: const Icon(Icons.keyboard_arrow_right),
-            onPressed: () {
-              try {
-                settingController.contactForm();
-              } catch (_) {
-                Navigator.pushNamed(context, '/errorPage');
-              }
-            },
-          ),
+          trailing: const Icon(Icons.keyboard_arrow_right),
+          onTap: () {
+            try {
+              settingController.contactForm();
+            } catch (_) {
+              Navigator.pushNamed(context, '/errorPage');
+            }
+          },
+          leading: const Icon(Icons.contact_mail),
         ),
         ListTile(
           title: const Text('アプリを評価する'),
@@ -69,40 +70,34 @@ class SettingList extends HookConsumerWidget {
           endIndent: 20.0,
         ),
         ListTile(
-          title: const Text('インフォメーション'),
-          trailing: IconButton(
-            icon: const Icon(Icons.keyboard_arrow_right),
-            onPressed: () async {
-              print('インフォメーション');
-            },
-          ),
+          title: const Text('このアプリについて'),
+          trailing: const Icon(Icons.keyboard_arrow_right),
+          onTap: () {},
+          leading: const Icon(Icons.snowboarding),
         ),
         ListTile(
-          title: const Text('プライバシーポリシー'),
-          trailing: IconButton(
-            icon: const Icon(Icons.keyboard_arrow_right),
-            onPressed: () {
-              print('プライバシーポリシー');
-            },
-          ),
+          title: const Text('利用規約・プライバシーポリシー'),
+          trailing: const Icon(Icons.keyboard_arrow_right),
+          onTap: () {
+            settingController.contactPrivacyPage();
+          },
+          leading: const Icon(Icons.privacy_tip),
         ),
         ListTile(
           title: const Text('ライセンス情報'),
-          trailing: IconButton(
-            icon: const Icon(Icons.keyboard_arrow_right),
-            onPressed: () async {
-              print('ライセンス情報');
-              final info = await PackageInfo.fromPlatform();
-              final date = DateTime.now().year.toString();
-              // icon作成したら追加
-              showLicensePage(
-                context: context,
-                applicationName: info.appName,
-                applicationVersion: info.version,
-                applicationLegalese: '$date Thata',
-              );
-            },
-          ),
+          trailing: const Icon(Icons.keyboard_arrow_right),
+          onTap: () async {
+            final info = await PackageInfo.fromPlatform();
+            final date = DateTime.now().year.toString();
+            // icon作成したら追加
+            showLicensePage(
+              context: context,
+              applicationName: info.appName,
+              applicationVersion: info.version,
+              applicationLegalese: '$date Thata',
+            );
+          },
+          leading: const Icon(Icons.perm_device_info),
         ),
       ],
     );
