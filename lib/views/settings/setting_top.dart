@@ -92,6 +92,10 @@ class SettingList extends ConsumerWidget {
             // icon作成したら追加
             showLicensePage(
               context: context,
+              applicationIcon: Image.asset(
+                'images/snow_penguin_top.png',
+                fit: BoxFit.cover,
+              ),
               applicationName: info.appName,
               applicationVersion: info.version,
               applicationLegalese: '$date Thata',
