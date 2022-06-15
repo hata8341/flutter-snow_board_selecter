@@ -6,7 +6,7 @@ import 'package:sbselector/view_model/page_view_model.dart';
 import 'package:sbselector/view_model/setting_view_model.dart';
 import 'package:sbselector/view_model/theme_view_mode.dart';
 
-class SettingList extends HookConsumerWidget {
+class SettingList extends ConsumerWidget {
   const SettingList({Key? key}) : super(key: key);
   final bool value = false;
   @override

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:sbselector/const/ridetype.dart';
-import 'package:sbselector/view_model/history.dart';
+import 'package:sbselector/view_model/history_view_model.dart';
 
 ElevatedButton saveButton(
     RideType rideType, BuildContext context, WidgetRef ref) {

@@ -1,15 +1,14 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
-import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-class SnowRadarChart extends HookConsumerWidget {
+class SnowRadarChart extends StatelessWidget {
   const SnowRadarChart({
     Key? key,
     required this.raderChartData,
   }) : super(key: key);
   final List<double> raderChartData;
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(16.0),
       child: Column(

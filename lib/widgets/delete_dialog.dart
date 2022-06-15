@@ -1,7 +1,7 @@
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:sbselector/view_model/history.dart';
+import 'package:sbselector/view_model/history_view_model.dart';
 
 AwesomeDialog deleteDialog(
     BuildContext inputContext, WidgetRef ref, String id) {

@@ -3,7 +3,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:sbselector/view_model/page_view_model.dart';
 import 'package:sbselector/view_model/theme_view_mode.dart';
 
-class TopPage extends HookConsumerWidget {
+class TopPage extends ConsumerWidget {
   const TopPage({Key? key}) : super(key: key);
 
   @override
