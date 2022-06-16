@@ -95,7 +95,7 @@ flutter:
     - images/
     - images/test_board/
     - bgm/
-    - images/icon/snow_penguin_icon.png
+    - images/icon/
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see
