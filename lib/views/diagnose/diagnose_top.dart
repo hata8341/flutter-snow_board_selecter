@@ -28,7 +28,7 @@ class DiagnoseTopPage extends ConsumerWidget {
                 height: screenSize.height * 0.32,
                 child: Image.asset(
                   'images/snow_penguin_top.png',
-                  fit: BoxFit.cover,
+                  fit: BoxFit.fitHeight,
                 ),
               ),
               const Gap(10),

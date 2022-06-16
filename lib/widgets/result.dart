@@ -39,13 +39,12 @@ class ResultDetail extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final String routeName = ModalRoute.of(context)!.settings.name as String;
     final bool currRouteState = checkRoute(routeName);
-    final Size screenSize = MediaQuery.of(context).size;
+    final double screenWith = MediaQuery.of(context).size.width;
     final PageStateNotifier pageController =
         ref.watch(pageStateProvider.notifier);
     final String rideTypeName = pageController.checkWriteInRideType(rideType);
 
     final textTheme = Theme.of(context).textTheme;
-    final ColorScheme colorScheme = Theme.of(context).colorScheme;
 
     return Scaffold(
       appBar: AppBar(
@@ -67,12 +66,17 @@ class ResultDetail extends HookConsumerWidget {
             );
           },
         ),
-        titleSpacing: screenSize.width * 0.24,
-        title: Row(
-          children: <Widget>[
-            const Icon(Icons.search),
-            Text(title),
-          ],
+        titleSpacing: screenWith <= 414.0 ? screenWith * 0.24 : null,
+        title: Center(
+          child: Row(
+            mainAxisAlignment: screenWith <= 414.0
+                ? MainAxisAlignment.start
+                : MainAxisAlignment.center,
+            children: <Widget>[
+              const Icon(Icons.search),
+              Text(title),
+            ],
+          ),
         ),
         actions: [
           Visibility(
