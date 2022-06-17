@@ -95,7 +95,7 @@ class SettingList extends ConsumerWidget {
               context: context,
               applicationIcon: Image.asset(
                 'images/snow_penguin_top.png',
-                fit: BoxFit.cover,
+                fit: BoxFit.fitHeight,
               ),
               applicationName: info.appName,
               applicationVersion: info.version,
