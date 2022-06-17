@@ -72,7 +72,9 @@ class SettingList extends ConsumerWidget {
         ListTile(
           title: const Text('このアプリについて'),
           trailing: const Icon(Icons.keyboard_arrow_right),
-          onTap: () {},
+          onTap: () {
+            settingController.appGuidePage();
+          },
           leading: const Icon(Icons.snowboarding),
         ),
         ListTile(
@@ -89,7 +91,6 @@ class SettingList extends ConsumerWidget {
           onTap: () async {
             final info = await PackageInfo.fromPlatform();
             final date = DateTime.now().year.toString();
-            // icon作成したら追加
             showLicensePage(
               context: context,
               applicationIcon: Image.asset(
