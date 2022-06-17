@@ -3,3 +3,6 @@ const String formUrl =
 
 const String privacyUrl =
     'https://rustic-guavaberry-fea.notion.site/379101b2b6b149b980120cb870e8ca50';
+
+const String appGuideUrl =
+    'https://rustic-guavaberry-fea.notion.site/9e3f8144690b465a9990911ade15e233';

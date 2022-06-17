@@ -8,12 +8,18 @@ class SettingNotifier extends StateNotifier<void> {
 
   final Uri _privacyUri = Uri.parse(privacyUrl);
 
+  final Uri _appGuideUri = Uri.parse(appGuideUrl);
+
   void contactForm() async {
     if (!await launchUrl(_formUri)) throw '接続されていません';
   }
 
   void contactPrivacyPage() async {
     if (!await launchUrl(_privacyUri)) throw '接続されていません';
+  }
+
+  void appGuidePage() async {
+    if (!await launchUrl(_appGuideUri)) throw '接続されていません';
   }
 }
 
