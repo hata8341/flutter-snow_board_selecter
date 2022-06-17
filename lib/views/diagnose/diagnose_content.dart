@@ -22,6 +22,8 @@ class DiagnoseContentPage extends ConsumerWidget {
     final questionsController = ref.watch(questionListProvider.notifier);
     final String questionNum = questionsController.getQuestionNum();
     final Question question = questionsController.getCurrQuestion();
+
+    final String imageUrl = questionsController.getImageUrl();
     final bool missIconState = indicatorValueController.getMissIconState();
 
     final diagnoseController = ref.watch(diagnoseProvider.notifier);
@@ -61,9 +63,19 @@ class DiagnoseContentPage extends ConsumerWidget {
               SizedBox(
                 width: screenSize.width * 0.65,
                 height: screenSize.height * 0.32,
-                child: Image.asset(
-                  'images/snow_penguin_top.png',
-                  fit: BoxFit.fitHeight,
+                child: AnimatedSwitcher(
+                  duration: const Duration(milliseconds: 300),
+                  transitionBuilder: (child, animation) {
+                    return FadeTransition(
+                      child: child,
+                      opacity: animation,
+                    );
+                  },
+                  child: Image.asset(
+                    imageUrl,
+                    fit: BoxFit.fitHeight,
+                    key: ValueKey<String>(imageUrl),
+                  ),
                 ),
               ),
               Container(

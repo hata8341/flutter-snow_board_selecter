@@ -36,6 +36,18 @@ class QuestionsController extends StateNotifier<List<Question>> {
     final index = _getCurrIndex();
     return (index + 1).toString();
   }
+
+  String getImageUrl() {
+    if (_getCurrIndex() > 7) {
+      return 'images/snow_penguin_3.png';
+    } else if (_getCurrIndex() > 5) {
+      return 'images/snow_penguin_2.png';
+    } else if (_getCurrIndex() > 2) {
+      return 'images/snow_penguin_1.png';
+    } else {
+      return 'images/snow_penguin_top.png';
+    }
+  }
 }
 
 final questionListProvider =
