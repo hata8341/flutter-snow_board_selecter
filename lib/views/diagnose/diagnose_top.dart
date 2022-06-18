@@ -83,7 +83,7 @@ class DiagnoseTopPage extends ConsumerWidget {
               ),
               child: Text(
                 '診断する',
-                style: Theme.of(context).textTheme.headline5!.copyWith(
+                style: Theme.of(context).textTheme.headline5?.copyWith(
                       fontWeight: FontWeight.normal,
                       color: Colors.grey.shade900,
                     ),

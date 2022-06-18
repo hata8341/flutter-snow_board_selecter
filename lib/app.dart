@@ -55,7 +55,7 @@ class MyApp extends HookConsumerWidget {
               .report(details.exceptionAsString(), details.stack);
           return error;
         };
-        return widget!;
+        return widget as Widget;
       },
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',

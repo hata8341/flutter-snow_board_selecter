@@ -37,7 +37,8 @@ class ResultDetail extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final String routeName = ModalRoute.of(context)!.settings.name as String;
+    // final ModalRoute modalRoute =  as ModalRoute;
+    final String routeName = ModalRoute.of(context)?.settings.name as String;
     final bool currRouteState = checkRoute(routeName);
     final double screenWith = MediaQuery.of(context).size.width;
     final PageStateNotifier pageController =

@@ -25,7 +25,7 @@ class TopPage extends ConsumerWidget {
             ),
             Text(
               pageState.bottomBarIndex.title,
-              style: Theme.of(context).textTheme.headline5!.copyWith(
+              style: Theme.of(context).textTheme.headline5?.copyWith(
                   fontWeight: FontWeight.normal,
                   color: themeController.getAppBarTextIconColor()),
             ),

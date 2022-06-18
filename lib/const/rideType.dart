@@ -23,42 +23,47 @@ extension RideTypeExt on RideType {
 
   Snowboard get firstRecommendBoard {
     Map<String, Object> data;
+    Set<Map<String, Object>> snowboard =
+        snowboardMap[name] as Set<Map<String, Object>>;
     switch (this) {
       case RideType.grandTrickJib:
-        data = snowboardMap[name]!.first;
+        data = snowboard.first;
         return Snowboard.fromJson(data);
       case RideType.freerunPowder:
-        data = snowboardMap[name]!.first;
+        data = snowboard.first;
         return Snowboard.fromJson(data);
       case RideType.allRound:
-        data = snowboardMap[name]!.first;
+        data = snowboard.first;
         return Snowboard.fromJson(data);
     }
   }
 
   Snowboard get secondRecommendBoard {
     Map<String, Object> data;
+    Set<Map<String, Object>> snowboardName =
+        snowboardMap[name] as Set<Map<String, Object>>;
     switch (this) {
       case RideType.grandTrickJib:
-        data = snowboardMap[name]!.last;
+        data = snowboardName.last;
         return Snowboard.fromJson(data);
       case RideType.freerunPowder:
-        data = snowboardMap[name]!.last;
+        data = snowboardName.last;
         return Snowboard.fromJson(data);
       case RideType.allRound:
-        data = snowboardMap[name]!.last;
+        data = snowboardName.last;
         return Snowboard.fromJson(data);
     }
   }
 
   String get discription {
+    Map<String, String> result = resultMap[name] as Map<String, String>;
     switch (this) {
       case RideType.grandTrickJib:
-        return resultMap[name]!['discription']!;
+        return result['discription'] as String;
       case RideType.freerunPowder:
-        return resultMap[name]!['discription']!;
+        return result['discription'] as String;
       case RideType.allRound:
-        return resultMap[name]!['discription']!;
+        return result['discription'] as String;
     }
   }
 
