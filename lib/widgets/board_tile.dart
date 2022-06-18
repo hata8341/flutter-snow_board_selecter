@@ -5,8 +5,8 @@ import 'radar_chart.dart';
 
 ExpansionTile boardTile(
     ScrollController _scrollController, Snowboard snowboard, int recommendNum) {
-  final GlobalKey expansionTileKey = GlobalKey();
 
+  final GlobalKey expansionTileKey = GlobalKey();
   void _scrollToSelectedContent({GlobalKey? expansionTileKey}) {
     final keyContent = expansionTileKey!.currentContext;
     Future.delayed(const Duration(milliseconds: 200)).then((value) =>

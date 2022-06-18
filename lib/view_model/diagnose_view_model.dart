@@ -16,14 +16,6 @@ class DiagnoseNotifier extends StateNotifier<void> {
   late final AnswerListNotifier answerListController =
       _read(answerListProvider.notifier);
 
-  void checkEndDialog(WidgetRef ref, BuildContext context) {
-    return ref.listen(indicatorStateNotifierProvider, (previous, next) {
-      if (next == 1.0) {
-        showSelfDialog(endDialog(context, ref));
-      }
-    });
-  }
-
   void respond(String category, double value) {
     indicatorController.incrementIndicatorValue();
     final answer = Answer(category: category, answerValue: value);

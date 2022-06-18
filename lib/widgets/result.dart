@@ -11,7 +11,7 @@ import 'package:sbselector/widgets/ridetype_tiles.dart';
 import 'package:sbselector/widgets/share_button.dart';
 import 'package:screenshot/screenshot.dart';
 
-class ResultDetail extends HookConsumerWidget {
+class ResultDetail extends ConsumerWidget {
   ResultDetail({Key? key, required this.rideType, required this.id})
       : super(key: key);
   final RideType rideType;
@@ -86,8 +86,8 @@ class ResultDetail extends HookConsumerWidget {
                 Icons.delete,
                 color: Colors.red,
               ),
-              onPressed: () {
-                showSelfDialog(
+              onPressed: () async {
+                await showSelfDialog(
                   deleteDialog(context, ref, id!),
                 );
               },
