@@ -11,6 +11,7 @@ class TopPage extends ConsumerWidget {
     final pageState = ref.watch(pageStateProvider);
     final pageController = ref.watch(pageStateProvider.notifier);
     final themeController = ref.watch(themeStateProvider.notifier);
+
     return Scaffold(
       backgroundColor: themeController.getScaffoldBackgroundColor(),
       appBar: AppBar(

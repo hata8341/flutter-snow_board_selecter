@@ -7,8 +7,9 @@ import 'package:sbselector/view_model/indicator_view_model.dart';
 import 'package:sbselector/view_model/question_view_model.dart';
 import 'package:sbselector/view_model/theme_view_mode.dart';
 import 'package:sbselector/widgets/bubble.dart';
+import 'package:sbselector/widgets/end_dialog.dart';
 
-class DiagnoseContentPage extends ConsumerWidget {
+class DiagnoseContentPage extends HookConsumerWidget {
   const DiagnoseContentPage({Key? key}) : super(key: key);
 
   final String title = "診断";
@@ -20,17 +21,20 @@ class DiagnoseContentPage extends ConsumerWidget {
     final indicatorValueController =
         ref.watch(indicatorStateNotifierProvider.notifier);
     final questionsController = ref.watch(questionListProvider.notifier);
+    final diagnoseController = ref.watch(diagnoseProvider.notifier);
+    final themeStateController = ref.watch(themeStateProvider.notifier);
+
     final String questionNum = questionsController.getQuestionNum();
     final Question question = questionsController.getCurrQuestion();
-
     final String imageUrl = questionsController.getImageUrl();
     final bool missIconState = indicatorValueController.getMissIconState();
 
-    final diagnoseController = ref.watch(diagnoseProvider.notifier);
+    ref.listen(indicatorStateNotifierProvider, (previous, next) {
+      if (next == 1.0) {
+        showSelfDialog(endDialog(context, ref));
+      }
+    });
 
-    final themeStateController = ref.watch(themeStateProvider.notifier);
-
-    diagnoseController.checkEndDialog(ref, context);
     return Scaffold(
       backgroundColor: themeStateController.getScaffoldBackgroundColor(),
       appBar: AppBar(
