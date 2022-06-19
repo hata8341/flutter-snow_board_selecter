@@ -7,7 +7,7 @@ class DiagnoseResultPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final args = ModalRoute.of(context)!.settings.arguments;
+    final args = ModalRoute.of(context)?.settings.arguments;
     final RideType rideType = args as RideType;
     return ResultDetail(
       rideType: rideType,

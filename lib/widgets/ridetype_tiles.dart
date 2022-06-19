@@ -9,7 +9,7 @@ List<ListTile> rideTypeTitles(
         children: [
           Text('あなたのライドスタイルは', style: textTheme.headline6),
           AnimatedTextKit(
-            animatedTexts: pointAnimatedText(textTheme.headline6!),
+            animatedTexts: pointAnimatedText(textTheme.headline6 as TextStyle),
             totalRepeatCount: 1,
             pause: const Duration(seconds: 1),
             isRepeatingAnimation: false,
@@ -29,7 +29,7 @@ List<ListTile> rideTypeTitles(
             ),
             child: AnimatedDefaultTextStyle(
               child: Text(rideTypeName),
-              style: textTheme.headline3!,
+              style: textTheme.headline3 as TextStyle,
               duration: const Duration(
                 seconds: 1,
               ),
@@ -45,7 +45,7 @@ List<ListTile> rideTypeTitles(
         children: [
           Text(
             'タイプです！！',
-            style: textTheme.headline6!,
+            style: textTheme.headline6 as TextStyle,
           ),
         ],
       ),

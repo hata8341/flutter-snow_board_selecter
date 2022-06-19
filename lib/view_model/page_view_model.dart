@@ -15,15 +15,15 @@ class PageStateNotifier extends StateNotifier<PageState> {
 
   void _onBgm() async {
     state = state.copyWith(player: AudioPlayer());
-    await state.player!.setAsset('bgm/tie_no_wa.mp3');
-    await state.player!.setLoopMode(LoopMode.one);
-    await state.player!.load();
-    await state.player!.play();
+    await state.player?.setAsset('bgm/tie_no_wa.mp3');
+    await state.player?.setLoopMode(LoopMode.one);
+    await state.player?.load();
+    await state.player?.play();
   }
 
   void _offBgm() async {
-    await state.player!.stop();
-    await state.player!.dispose();
+    await state.player?.stop();
+    await state.player?.dispose();
   }
 
   void toggleBgm() async {
@@ -34,14 +34,14 @@ class PageStateNotifier extends StateNotifier<PageState> {
   void checkResumedBgm() async {
     if (state.player != null && state.bgmState == true) {
       print('再開する');
-      await state.player!.play();
+      await state.player?.play();
     }
   }
 
   void checkPausedBgm() async {
     if (state.bgmState == true) {
       print('一時停止');
-      await state.player!.stop();
+      await state.player?.stop();
     }
   }
 

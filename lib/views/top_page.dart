@@ -25,7 +25,7 @@ class TopPage extends ConsumerWidget {
             ),
             Text(
               pageState.bottomBarIndex.title,
-              style: Theme.of(context).textTheme.headline5!.copyWith(
+              style: Theme.of(context).textTheme.headline5?.copyWith(
                   fontWeight: FontWeight.normal,
                   color: themeController.getAppBarTextIconColor()),
             ),
@@ -35,7 +35,9 @@ class TopPage extends ConsumerWidget {
       body: pageState.bottomBarIndex.page,
       bottomNavigationBar: BottomNavigationBar(
         backgroundColor: themeController.getBarColor(),
-        onTap: (int index) => {pageController.changeIndex(index)},
+        onTap: (int index) => {
+          pageController.changeIndex(index),
+        },
         currentIndex: pageState.bottomBarIndex.value,
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
