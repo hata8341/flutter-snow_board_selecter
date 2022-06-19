@@ -22,25 +22,25 @@ class SnowRadarChart extends StatelessWidget {
                 borderData: FlBorderData(show: false),
                 dataSets: showingSnowDataSets(),
                 // レーダーチャートの外側のタイトル
-                getTitle: (index) {
+                getTitle: (index, angle) {
                   switch (index) {
                     case 0:
-                      return 'グラトリ';
+                      return const RadarChartTitle(text: 'グラトリ');
                     case 1:
-                      return 'カービング';
+                      return const RadarChartTitle(text: 'カービング');
                     case 2:
-                      return 'パウダー';
+                      return const RadarChartTitle(text: 'パウダー');
                     case 3:
-                      return 'ジブ・パーク';
+                      return const RadarChartTitle(text: 'ジブ・パーク');
                     default:
-                      return '';
+                      return const RadarChartTitle(text: '');
                   }
                 },
                 titleTextStyle: const TextStyle(
                   fontSize: 16.0,
                 ),
                 // レーダーチャートからのタイトルの位置
-                titlePositionPercentageOffset: 0.2,
+                titlePositionPercentageOffset: 0.42,
                 // ティックの数
                 tickCount: 4,
                 ticksTextStyle: const TextStyle(

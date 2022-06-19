@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:sbselector/const/theme.dart';
 import 'package:sbselector/firebase/firebase_analytics_config.dart';
@@ -14,7 +13,6 @@ import 'package:sbselector/views/settings/error_page.dart';
 import 'package:sbselector/views/settings/setting_top.dart';
 import 'package:sbselector/views/top_page.dart';
 
-import 'firebase/firebase_crashlytics_config.dart';
 import 'views/diagnose/diagnose_top.dart';
 
 class MyApp extends HookConsumerWidget {
@@ -23,10 +21,6 @@ class MyApp extends HookConsumerWidget {
   final String id;
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    useEffect(() {
-      ref.read(crashReporter).setIdentify(id);
-      return null;
-    }, []);
     final themeMode = ref.watch(themeStateProvider).themeMode;
     final bgmController = ref.watch(pageStateProvider.notifier);
 
@@ -49,12 +43,6 @@ class MyApp extends HookConsumerWidget {
             child: error,
           ));
         }
-        ErrorWidget.builder = (FlutterErrorDetails details) {
-          ref
-              .read(crashReporter)
-              .report(details.exceptionAsString(), details.stack);
-          return error;
-        };
         return widget as Widget;
       },
       debugShowCheckedModeBanner: false,

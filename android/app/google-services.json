@@ -29,6 +29,13 @@
             {
               "client_id": "1088242086856-ekek7ikmhg8mbf6ud1hjamin7kuak37t.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "1088242086856-qkqvlifva4uvrkjmh13j012idupd5e3o.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "jp.Thata.sbselector"
+              }
             }
           ]
         }

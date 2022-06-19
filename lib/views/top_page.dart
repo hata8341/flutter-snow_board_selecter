@@ -35,7 +35,9 @@ class TopPage extends ConsumerWidget {
       body: pageState.bottomBarIndex.page,
       bottomNavigationBar: BottomNavigationBar(
         backgroundColor: themeController.getBarColor(),
-        onTap: (int index) => {pageController.changeIndex(index)},
+        onTap: (int index) => {
+          pageController.changeIndex(index),
+        },
         currentIndex: pageState.bottomBarIndex.value,
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
