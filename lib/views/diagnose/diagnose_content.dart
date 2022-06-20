@@ -71,8 +71,8 @@ class DiagnoseContentPage extends HookConsumerWidget {
                   duration: const Duration(milliseconds: 300),
                   transitionBuilder: (child, animation) {
                     return FadeTransition(
-                      child: child,
                       opacity: animation,
+                      child: child,
                     );
                   },
                   child: Image.asset(
@@ -180,8 +180,7 @@ class DiagnoseContentPage extends HookConsumerWidget {
                           height: screenSize.height * 0.05,
                           child: ElevatedButton(
                             onPressed: () {
-                              diagnoseController.respond(
-                                  question.category, 5.0);
+                              diagnoseController.respond(question.category, 5);
                             },
                             style: ElevatedButton.styleFrom(
                               primary: themeStateController.getBarColor(),
@@ -202,8 +201,7 @@ class DiagnoseContentPage extends HookConsumerWidget {
                           height: screenSize.height * 0.05,
                           child: ElevatedButton(
                             onPressed: () {
-                              diagnoseController.respond(
-                                  question.category, 1.0);
+                              diagnoseController.respond(question.category, 1);
                             },
                             style: ElevatedButton.styleFrom(
                               primary: themeStateController.getBarColor(),
@@ -230,8 +228,7 @@ class DiagnoseContentPage extends HookConsumerWidget {
                           height: screenSize.height * 0.05,
                           child: ElevatedButton(
                             onPressed: () {
-                              diagnoseController.respond(
-                                  question.category, 4.0);
+                              diagnoseController.respond(question.category, 4);
                             },
                             style: ElevatedButton.styleFrom(
                               primary: themeStateController.getBarColor(),
@@ -252,8 +249,7 @@ class DiagnoseContentPage extends HookConsumerWidget {
                           height: screenSize.height * 0.05,
                           child: ElevatedButton(
                             onPressed: () {
-                              diagnoseController.respond(
-                                  question.category, 3.0);
+                              diagnoseController.respond(question.category, 3);
                             },
                             style: ElevatedButton.styleFrom(
                               primary: themeStateController.getBarColor(),
@@ -274,8 +270,7 @@ class DiagnoseContentPage extends HookConsumerWidget {
                           height: screenSize.height * 0.05,
                           child: ElevatedButton(
                             onPressed: () {
-                              diagnoseController.respond(
-                                  question.category, 2.0);
+                              diagnoseController.respond(question.category, 2);
                             },
                             style: ElevatedButton.styleFrom(
                               primary: themeStateController.getBarColor(),

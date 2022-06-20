@@ -17,7 +17,7 @@ final _privateConstructorUsedError = UnsupportedError(
 /// @nodoc
 mixin _$Answer {
   String get category => throw _privateConstructorUsedError;
-  double get answerValue => throw _privateConstructorUsedError;
+  int get answerValue => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $AnswerCopyWith<Answer> get copyWith => throw _privateConstructorUsedError;
@@ -27,7 +27,7 @@ mixin _$Answer {
 abstract class $AnswerCopyWith<$Res> {
   factory $AnswerCopyWith(Answer value, $Res Function(Answer) then) =
       _$AnswerCopyWithImpl<$Res>;
-  $Res call({String category, double answerValue});
+  $Res call({String category, int answerValue});
 }
 
 /// @nodoc
@@ -51,7 +51,7 @@ class _$AnswerCopyWithImpl<$Res> implements $AnswerCopyWith<$Res> {
       answerValue: answerValue == freezed
           ? _value.answerValue
           : answerValue // ignore: cast_nullable_to_non_nullable
-              as double,
+              as int,
     ));
   }
 }
@@ -61,7 +61,7 @@ abstract class _$$_AnswerCopyWith<$Res> implements $AnswerCopyWith<$Res> {
   factory _$$_AnswerCopyWith(_$_Answer value, $Res Function(_$_Answer) then) =
       __$$_AnswerCopyWithImpl<$Res>;
   @override
-  $Res call({String category, double answerValue});
+  $Res call({String category, int answerValue});
 }
 
 /// @nodoc
@@ -86,7 +86,7 @@ class __$$_AnswerCopyWithImpl<$Res> extends _$AnswerCopyWithImpl<$Res>
       answerValue: answerValue == freezed
           ? _value.answerValue
           : answerValue // ignore: cast_nullable_to_non_nullable
-              as double,
+              as int,
     ));
   }
 }
@@ -99,7 +99,7 @@ class _$_Answer implements _Answer {
   @override
   final String category;
   @override
-  final double answerValue;
+  final int answerValue;
 
   @override
   String toString() {
@@ -131,12 +131,12 @@ class _$_Answer implements _Answer {
 abstract class _Answer implements Answer {
   const factory _Answer(
       {required final String category,
-      required final double answerValue}) = _$_Answer;
+      required final int answerValue}) = _$_Answer;
 
   @override
   String get category => throw _privateConstructorUsedError;
   @override
-  double get answerValue => throw _privateConstructorUsedError;
+  int get answerValue => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
   _$$_AnswerCopyWith<_$_Answer> get copyWith =>

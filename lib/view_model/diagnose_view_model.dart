@@ -1,10 +1,8 @@
-import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:sbselector/const/ridetype.dart';
 import 'package:sbselector/model/answer.dart';
 import 'package:sbselector/view_model/answer_view_model.dart';
 import 'package:sbselector/view_model/indicator_view_model.dart';
-import 'package:sbselector/widgets/end_dialog.dart';
 
 class DiagnoseNotifier extends StateNotifier<void> {
   DiagnoseNotifier(this._read) : super(null);
@@ -16,7 +14,7 @@ class DiagnoseNotifier extends StateNotifier<void> {
   late final AnswerListNotifier answerListController =
       _read(answerListProvider.notifier);
 
-  void respond(String category, double value) {
+  void respond(String category, int value) {
     indicatorController.incrementIndicatorValue();
     final answer = Answer(category: category, answerValue: value);
     answerListController.addAnswer(answer);

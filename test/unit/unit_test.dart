@@ -1,7 +1,11 @@
+import 'dart:math';
+
 import 'package:flutter_test/flutter_test.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:sbselector/const/question.dart';
+import 'package:sbselector/model/answer.dart';
 import 'package:sbselector/model/question.dart';
+import 'package:sbselector/view_model/answer_view_model.dart';
 import 'package:sbselector/view_model/indicator_view_model.dart';
 import 'package:sbselector/view_model/question_view_model.dart';
 
@@ -62,7 +66,7 @@ void main() {
       expect(target.read(questionListProvider.notifier).getQuestionNum(), '2');
     });
 
-    test('curr question exist test', () {
+    test('exist curr question test', () {
       final currQuestion =
           target.read(questionListProvider.notifier).getCurrQuestion();
       final isQuesion =
@@ -77,19 +81,6 @@ void main() {
       expect(target.read(questionListProvider).contains(currQuestion2), true);
     });
 
-    // String getImageUrl() {
-    //   if (_getCurrIndex() > 7) {
-    //     return 'images/snow_penguin_3.png';
-    //   } else if (_getCurrIndex() > 5) {
-    //     return 'images/snow_penguin_2.png';
-    //   } else if (_getCurrIndex() > 2) {
-    //     return 'images/snow_penguin_1.png';
-    //   } else {
-    //     return 'images/snow_penguin_top.png';
-    //   }
-    // }
-
-    // 質問の進捗によって受け取るimageのpathは違うか
     test('quesion penguin image test', () {
       final imageTop = target.read(questionListProvider.notifier).getImageUrl();
       expect(imageTop, 'images/snow_penguin_top.png');
@@ -129,7 +120,7 @@ void main() {
         ),
       ],
     );
-    test('indicator increment test', () {
+    test('increment indicator  test', () {
       expect(target.read(indicatorStateNotifierProvider), 0.0);
 
       target
@@ -137,7 +128,7 @@ void main() {
           .incrementIndicatorValue();
       expect(target.read(indicatorStateNotifierProvider), 0.1);
     });
-    test('indicator decrement test', () {
+    test('decrement indicator test', () {
       expect(target.read(indicatorStateNotifierProvider), 0.0);
 
       target
@@ -164,6 +155,112 @@ void main() {
           .read(indicatorStateNotifierProvider.notifier)
           .getMissIconState();
       expect(updateStatus, true);
+    });
+  });
+
+  group('answerList test', () {
+    final answerListProvider =
+        StateNotifierProvider<AnswerListNotifier, List<Answer>>(
+      (ref) {
+        return AnswerListNotifier(ref.read);
+      },
+    );
+    final target = ProviderContainer(overrides: [answerListProvider]);
+
+    final defalutList = target.read(answerListProvider);
+
+    final questionList = target.read(questionListProvider);
+
+    test('add anserList test', () {
+      expect(defalutList.length, 0);
+
+      const answer = Answer(category: 'groundtrickJib', answerValue: 1);
+
+      target.read(answerListProvider.notifier).addAnswer(answer);
+
+      final addAnswerList = target.read(answerListProvider);
+
+      expect(addAnswerList.length, 1);
+    });
+
+    test('remove answerList test', () {
+      expect(defalutList.length, 0);
+
+      const answer = Answer(category: 'groundtrickJib', answerValue: 1);
+      target.read(answerListProvider.notifier).addAnswer(answer);
+
+      final addAnswerList = target.read(answerListProvider);
+
+      expect(addAnswerList.length, 1);
+
+      target.read(answerListProvider.notifier).removeAnswer();
+
+      final removeAnswerList = target.read(answerListProvider);
+
+      expect(removeAnswerList.length, 0);
+    });
+
+    test('createJGList test', () {
+
+      for (var question in questionList) {
+        int randomNum = 1 + Random().nextInt(5);
+        final answer =
+            Answer(category: question.category, answerValue: randomNum);
+        target.read(answerListProvider.notifier).addAnswer(answer);
+      }
+
+      final isNotEmpty = target.read(answerListProvider).isNotEmpty;
+      expect(isNotEmpty, true);
+
+      final jGList = target.read(answerListProvider.notifier).createJGList();
+      bool isAllJGList = true;
+      for (var anwser in jGList) {
+        if (anwser.category == 'freerunPowder') {
+          isAllJGList = false;
+        }
+      }
+      expect(isAllJGList, true);
+    });
+
+    test('createFPList test', () {
+      for (var question in questionList) {
+        int randomNum = 1 + Random().nextInt(5);
+        final answer =
+            Answer(category: question.category, answerValue: randomNum);
+        target.read(answerListProvider.notifier).addAnswer(answer);
+      }
+
+      final isNotEmpty = target.read(answerListProvider).isNotEmpty;
+
+      expect(isNotEmpty, true);
+
+      final fPList = target.read(answerListProvider.notifier).createFPList();
+      bool isAllFPList = true;
+      for (var anwser in fPList) {
+        if (anwser.category == 'groundtrickJib') {
+          isAllFPList = false;
+        }
+      }
+      expect(isAllFPList, true);
+    });
+
+    test('reset test', () {
+      expect(defalutList, []);
+
+      for (var question in questionList) {
+        int randomNum = 1 + Random().nextInt(5);
+        final answer =
+            Answer(category: question.category, answerValue: randomNum);
+        target.read(answerListProvider.notifier).addAnswer(answer);
+      }
+      final isNotEmptyAnswer = target.read(answerListProvider).isNotEmpty;
+      expect(isNotEmptyAnswer, true);
+
+      target.read(answerListProvider.notifier).resetState();
+
+      final isEmptyAnswer = target.read(answerListProvider).isEmpty;
+
+      expect(isEmptyAnswer, true);
     });
   });
 }
