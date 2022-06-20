@@ -1,37 +1,37 @@
 {
   "project_info": {
-    "project_number": "1088242086856",
-    "project_id": "sbselector-app",
-    "storage_bucket": "sbselector-app.appspot.com"
+    "project_number": "226503441456",
+    "project_id": "flutter-sbselecter",
+    "storage_bucket": "flutter-sbselecter.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:1088242086856:android:0f843eded331e847af06fd",
+        "mobilesdk_app_id": "1:226503441456:android:115b9710cceff4556501f5",
         "android_client_info": {
           "package_name": "jp.Thata.sbselector"
         }
       },
       "oauth_client": [
         {
-          "client_id": "1088242086856-ekek7ikmhg8mbf6ud1hjamin7kuak37t.apps.googleusercontent.com",
+          "client_id": "226503441456-ami6vk6p26tbj9t3rtkkrraernegsn50.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyD7O1nNMsfuDAXvy_daO7aYO0HDp0yz71I"
+          "current_key": "AIzaSyDXj_-COLVeHyUSPUPSLUDyFY6BBmh1myI"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "1088242086856-ekek7ikmhg8mbf6ud1hjamin7kuak37t.apps.googleusercontent.com",
+              "client_id": "226503441456-ami6vk6p26tbj9t3rtkkrraernegsn50.apps.googleusercontent.com",
               "client_type": 3
             },
             {
-              "client_id": "1088242086856-qkqvlifva4uvrkjmh13j012idupd5e3o.apps.googleusercontent.com",
+              "client_id": "226503441456-9h5v7q8rhctf2enunvc25s2ffhvco68u.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
                 "bundle_id": "jp.Thata.sbselector"

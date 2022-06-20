@@ -1,21 +1,27 @@
+import 'package:flutter/material.dart';
 import 'package:riverpod/riverpod.dart';
 import 'package:sbselector/const/question.dart';
 import 'package:sbselector/model/question.dart';
 import 'package:sbselector/view_model/indicator_view_model.dart';
 
-class _QuestionList {
-  static List<Question> createQestionList() {
-    final List<Question> list;
+// class _QuestionList {
+//   static List<Question> createQestionList() {
+//     final List<Question> list;
 
-    list = questionBox.map((question) => Question.fromJson(question)).toList();
-    // list.shuffle();
+//     list = questionBox.map((question) => Question.fromJson(question)).toList();
+//     // list.shuffle();
 
-    return list;
+//     return list;
+//   }
+// }
+
+class QuestionListStateNotifier extends StateNotifier<List<Question>> {
+  QuestionListStateNotifier(this._read) : super([]) {
+    final List<Question> list =
+        questionBox.map((question) => Question.fromJson(question)).toList();
+
+    state = list;
   }
-}
-
-class QuestionsController extends StateNotifier<List<Question>> {
-  QuestionsController(this._read) : super(_QuestionList.createQestionList());
 
   final Reader _read;
 
@@ -50,8 +56,7 @@ class QuestionsController extends StateNotifier<List<Question>> {
   }
 }
 
-final questionListProvider =
-    StateNotifierProvider.autoDispose<QuestionsController, List<Question>>(
-        (ref) {
-  return QuestionsController(ref.read);
+final questionListProvider = StateNotifierProvider.autoDispose<
+    QuestionListStateNotifier, List<Question>>((ref) {
+  return QuestionListStateNotifier(ref.read);
 });

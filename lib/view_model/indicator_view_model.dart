@@ -1,9 +1,8 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 class IndicatorStateNotifier extends StateNotifier<double> {
-  IndicatorStateNotifier(this._read) : super(0.0);
+  IndicatorStateNotifier() : super(0.0);
 
-  final Reader _read;
 
   void incrementIndicatorValue() {
     var newValue = (state + 0.1) * 10;
@@ -24,5 +23,5 @@ class IndicatorStateNotifier extends StateNotifier<double> {
 
 final indicatorStateNotifierProvider =
     StateNotifierProvider.autoDispose<IndicatorStateNotifier, double>((ref) {
-  return IndicatorStateNotifier(ref.read);
+  return IndicatorStateNotifier();
 });
