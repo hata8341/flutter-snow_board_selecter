@@ -5,14 +5,30 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:sbselector/const/question.dart';
 import 'package:sbselector/model/answer.dart';
 import 'package:sbselector/model/question.dart';
+import 'package:sbselector/model/snowboard.dart';
 import 'package:sbselector/view_model/answer_view_model.dart';
 import 'package:sbselector/view_model/indicator_view_model.dart';
 import 'package:sbselector/view_model/question_view_model.dart';
 
 void main() {
-  group('questionList test', () {
+  group('question test', () {
+    const questionData = {
+      'id': 1,
+      'category': 'groundtrickJib',
+      'content': 'スノーボードで雪の上を回ったり、ジャンプしたりしたいですか？',
+    };
+    test('question contstructor test', () {
+      final target = Question(
+        category: questionData['category'] as String,
+        content: questionData['content'] as String,
+      );
+
+      final fromJsonQuestion = Question.fromJson(questionData);
+
+      expect(target, fromJsonQuestion);
+    });
     const Set<Map<String, Object>> questionsOrigin = questionBox;
-    test('questionList constructor 10', () {
+    test('questionList constructor 10 test', () {
       final List<Question> questionList = questionsOrigin
           .map((question) => Question.fromJson(question))
           .toList();
@@ -159,6 +175,17 @@ void main() {
   });
 
   group('answerList test', () {
+    const answerData = {
+      'category': 'groundtrickJib',
+      'answerValue': 1,
+    };
+    test('answer test', () {
+      final target = Answer(
+        category: answerData['category'] as String,
+        answerValue: answerData['answerValue'] as int,
+      );
+      expect(target, isInstanceOf<Answer>());
+    });
     final answerListProvider =
         StateNotifierProvider<AnswerListNotifier, List<Answer>>(
       (ref) {
@@ -201,7 +228,6 @@ void main() {
     });
 
     test('createJGList test', () {
-
       for (var question in questionList) {
         int randomNum = 1 + Random().nextInt(5);
         final answer =
@@ -261,6 +287,25 @@ void main() {
       final isEmptyAnswer = target.read(answerListProvider).isEmpty;
 
       expect(isEmptyAnswer, true);
+    });
+  });
+  group('snowboard test', () {
+    const snowboardData = {
+      'name': 'ダブルキャンバー',
+      'descprition':
+          'ダブルキャンバーとは股下がロッカーで、両足元がキャンバーの構造をしています。ボードを真横から見たときにアルファベットの「M」もような形状をしています。股下部分のロッカー形状により、板のノーズ・テールが雪面に着きにくく、逆エッジが軽減されます。またロッカー形状により、パウダーでの浮力を得ることができます。',
+      'imageUrl': 'images/test_board/w_camber.png',
+      'chartData': [4.5, 3.5, 3.5, 4.5],
+    };
+    test('Snowboard test', () {
+      final target = Snowboard(
+        name: snowboardData['name'] as String,
+        descprition: snowboardData['descprition'] as String,
+        imageUrl: snowboardData['imageUrl'] as String,
+        chartData: snowboardData['chartData'] as List<double>,
+      );
+      final fromJsonSnowBoard = Snowboard.fromJson(snowboardData);
+      expect(target, fromJsonSnowBoard);
     });
   });
 }
