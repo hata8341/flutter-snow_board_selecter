@@ -5,14 +5,17 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:intl/intl.dart';
+import 'package:sbselector/const/bottom_bar_index.dart';
 import 'package:sbselector/const/question.dart';
 import 'package:sbselector/const/result.dart';
 import 'package:sbselector/const/ridetype.dart';
 import 'package:sbselector/const/snowboard.dart';
 import 'package:sbselector/model/answer.dart';
+import 'package:sbselector/model/page_state.dart';
 import 'package:sbselector/model/question.dart';
 import 'package:sbselector/model/result.dart';
 import 'package:sbselector/model/snowboard.dart';
+import 'package:sbselector/model/theme_status.dart';
 import 'package:sbselector/view_model/answer_view_model.dart';
 import 'package:sbselector/view_model/indicator_view_model.dart';
 import 'package:sbselector/view_model/question_view_model.dart';
@@ -115,7 +118,6 @@ void main() {
         ),
       ]);
 
-      target.read(indicatorStateNotifierProvider.notifier).refresh();
       final imageTop = target.read(questionListProvider.notifier).getImageUrl();
       expect(imageTop, 'images/snow_penguin_top.png');
 
@@ -483,6 +485,27 @@ void main() {
       final createdAtStrData = ymed + hm;
 
       expect(target, createdAtStrData);
+    });
+  });
+
+  group('pageState test', () {
+    test('pageState contstructor test', () {
+      const target = PageState(
+        bottomBarIndex: BottomBarIndex.one,
+        player: null,
+        bgmState: false,
+      );
+      expect(target is PageState, true);
+    });
+  });
+
+  group('themeStatus test', () {
+    test('themeStatus contstructor test', () {
+      const target = ThemeStatus(
+        themeMode: ThemeMode.system,
+        switchStatus: false,
+      );
+      expect(target is ThemeStatus, true);
     });
   });
 }
