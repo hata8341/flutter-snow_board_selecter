@@ -1,14 +1,22 @@
 import 'dart:math';
 
+import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:intl/date_symbol_data_local.dart';
+import 'package:intl/intl.dart';
 import 'package:sbselector/const/question.dart';
+import 'package:sbselector/const/result.dart';
+import 'package:sbselector/const/ridetype.dart';
+import 'package:sbselector/const/snowboard.dart';
 import 'package:sbselector/model/answer.dart';
 import 'package:sbselector/model/question.dart';
+import 'package:sbselector/model/result.dart';
 import 'package:sbselector/model/snowboard.dart';
 import 'package:sbselector/view_model/answer_view_model.dart';
 import 'package:sbselector/view_model/indicator_view_model.dart';
 import 'package:sbselector/view_model/question_view_model.dart';
+import 'package:uuid/uuid.dart';
 
 void main() {
   group('question test', () {
@@ -63,18 +71,13 @@ void main() {
       expect(questionListSize, questionsOriginSize);
     });
 
-    final questionListProvider = StateNotifierProvider.autoDispose<
-        QuestionListStateNotifier, List<Question>>((ref) {
-      return QuestionListStateNotifier(ref.read);
-    });
-    final target = ProviderContainer(overrides: [
-      questionListProvider.overrideWithProvider(questionListProvider),
-      indicatorStateNotifierProvider.overrideWithValue(
-        IndicatorStateNotifier(),
-      ),
-    ]);
-
     test('question num test', () {
+      final target = ProviderContainer(overrides: [
+        questionListProvider.overrideWithProvider(questionListProvider),
+        indicatorStateNotifierProvider.overrideWithValue(
+          IndicatorStateNotifier(),
+        ),
+      ]);
       expect(target.read(questionListProvider.notifier).getQuestionNum(), '1');
       target
           .read(indicatorStateNotifierProvider.notifier)
@@ -83,6 +86,13 @@ void main() {
     });
 
     test('exist curr question test', () {
+      final target = ProviderContainer(overrides: [
+        questionListProvider.overrideWithProvider(questionListProvider),
+        indicatorStateNotifierProvider.overrideWithValue(
+          IndicatorStateNotifier(),
+        ),
+      ]);
+
       final currQuestion =
           target.read(questionListProvider.notifier).getCurrQuestion();
       final isQuesion =
@@ -98,6 +108,14 @@ void main() {
     });
 
     test('quesion penguin image test', () {
+      final target = ProviderContainer(overrides: [
+        questionListProvider.overrideWithProvider(questionListProvider),
+        indicatorStateNotifierProvider.overrideWithValue(
+          IndicatorStateNotifier(),
+        ),
+      ]);
+
+      target.read(indicatorStateNotifierProvider.notifier).refresh();
       final imageTop = target.read(questionListProvider.notifier).getImageUrl();
       expect(imageTop, 'images/snow_penguin_top.png');
 
@@ -107,8 +125,8 @@ void main() {
             .incrementIndicatorValue();
       }
       final imaeg1 = target.read(questionListProvider.notifier).getImageUrl();
-
       expect(imaeg1, 'images/snow_penguin_1.png');
+
       for (var i = 0; i < 3; i++) {
         target
             .read(indicatorStateNotifierProvider.notifier)
@@ -129,14 +147,14 @@ void main() {
     });
   });
   group('indicator test', () {
-    final target = ProviderContainer(
-      overrides: [
-        indicatorStateNotifierProvider.overrideWithValue(
-          IndicatorStateNotifier(),
-        ),
-      ],
-    );
     test('increment indicator  test', () {
+      final target = ProviderContainer(
+        overrides: [
+          indicatorStateNotifierProvider.overrideWithValue(
+            IndicatorStateNotifier(),
+          ),
+        ],
+      );
       expect(target.read(indicatorStateNotifierProvider), 0.0);
 
       target
@@ -145,6 +163,13 @@ void main() {
       expect(target.read(indicatorStateNotifierProvider), 0.1);
     });
     test('decrement indicator test', () {
+      final target = ProviderContainer(
+        overrides: [
+          indicatorStateNotifierProvider.overrideWithValue(
+            IndicatorStateNotifier(),
+          ),
+        ],
+      );
       expect(target.read(indicatorStateNotifierProvider), 0.0);
 
       target
@@ -159,6 +184,13 @@ void main() {
     });
 
     test('missIcon status test', () {
+      final target = ProviderContainer(
+        overrides: [
+          indicatorStateNotifierProvider.overrideWithValue(
+            IndicatorStateNotifier(),
+          ),
+        ],
+      );
       final defalutStatus = target
           .read(indicatorStateNotifierProvider.notifier)
           .getMissIconState();
@@ -186,19 +218,11 @@ void main() {
       );
       expect(target, isInstanceOf<Answer>());
     });
-    final answerListProvider =
-        StateNotifierProvider<AnswerListNotifier, List<Answer>>(
-      (ref) {
-        return AnswerListNotifier(ref.read);
-      },
-    );
-    final target = ProviderContainer(overrides: [answerListProvider]);
-
-    final defalutList = target.read(answerListProvider);
-
-    final questionList = target.read(questionListProvider);
 
     test('add anserList test', () {
+      final target = ProviderContainer(overrides: [answerListProvider]);
+      final defalutList = target.read(answerListProvider);
+
       expect(defalutList.length, 0);
 
       const answer = Answer(category: 'groundtrickJib', answerValue: 1);
@@ -211,6 +235,10 @@ void main() {
     });
 
     test('remove answerList test', () {
+      final target = ProviderContainer(overrides: [answerListProvider]);
+
+      final defalutList = target.read(answerListProvider);
+
       expect(defalutList.length, 0);
 
       const answer = Answer(category: 'groundtrickJib', answerValue: 1);
@@ -228,6 +256,9 @@ void main() {
     });
 
     test('createJGList test', () {
+      final target = ProviderContainer(overrides: [answerListProvider]);
+
+      final questionList = target.read(questionListProvider);
       for (var question in questionList) {
         int randomNum = 1 + Random().nextInt(5);
         final answer =
@@ -249,6 +280,9 @@ void main() {
     });
 
     test('createFPList test', () {
+      final target = ProviderContainer(overrides: [answerListProvider]);
+
+      final questionList = target.read(questionListProvider);
       for (var question in questionList) {
         int randomNum = 1 + Random().nextInt(5);
         final answer =
@@ -271,6 +305,12 @@ void main() {
     });
 
     test('reset test', () {
+      final target = ProviderContainer(overrides: [answerListProvider]);
+
+      final defalutList = target.read(answerListProvider);
+
+      final questionList = target.read(questionListProvider);
+
       expect(defalutList, []);
 
       for (var question in questionList) {
@@ -306,6 +346,143 @@ void main() {
       );
       final fromJsonSnowBoard = Snowboard.fromJson(snowboardData);
       expect(target, fromJsonSnowBoard);
+    });
+  });
+
+  group('RideType test', () {
+    const grandTrickJibType = RideType.grandTrickJib;
+    const freerunPowderType = RideType.freerunPowder;
+    const allRoundType = RideType.allRound;
+
+    const snowboardData = snowboardMap;
+    const resultData = resultMap;
+    test('RideType name test', () {
+      expect(grandTrickJibType.name, 'grandTrickJib');
+      expect(freerunPowderType.name, 'freerunPowder');
+      expect(allRoundType.name, 'allRound');
+    });
+
+    test('RideType nameJp test', () {
+      expect(grandTrickJibType.nameJp, 'ジブ・グラトリ');
+      expect(freerunPowderType.nameJp, 'フリーラン・パウダー');
+      expect(allRoundType.nameJp, 'オールラウンド');
+    });
+
+    test('RideType firstRecommendBoard test', () {
+      final grandTrickJibName = grandTrickJibType.name;
+      final gJFirstRecommendBoardData =
+          snowboardData[grandTrickJibName]?.first as Map<String, dynamic>;
+      expect(grandTrickJibType.firstRecommendBoard,
+          Snowboard.fromJson(gJFirstRecommendBoardData));
+
+      final freerunPowderName = freerunPowderType.name;
+      final fPFirstRecommendBoardData =
+          snowboardData[freerunPowderName]?.first as Map<String, dynamic>;
+      expect(freerunPowderType.firstRecommendBoard,
+          Snowboard.fromJson(fPFirstRecommendBoardData));
+
+      final allRoundName = allRoundType.name;
+      final aRFirstRecommendBoardData =
+          snowboardData[allRoundName]?.first as Map<String, dynamic>;
+      expect(allRoundType.firstRecommendBoard,
+          Snowboard.fromJson(aRFirstRecommendBoardData));
+    });
+    test('RideType secondRecommendBoard test', () {
+      final grandTrickJibName = grandTrickJibType.name;
+      final gJSecondRecommendBoard =
+          snowboardData[grandTrickJibName]?.last as Map<String, dynamic>;
+      expect(grandTrickJibType.secondRecommendBoard,
+          Snowboard.fromJson(gJSecondRecommendBoard));
+
+      final freerunPowderName = freerunPowderType.name;
+      final fPSecondRecommendBoard =
+          snowboardData[freerunPowderName]?.last as Map<String, dynamic>;
+      expect(freerunPowderType.secondRecommendBoard,
+          Snowboard.fromJson(fPSecondRecommendBoard));
+
+      final allRoundName = allRoundType.name;
+      final aRSecondRecommendBoard =
+          snowboardData[allRoundName]?.last as Map<String, dynamic>;
+      expect(allRoundType.secondRecommendBoard,
+          Snowboard.fromJson(aRSecondRecommendBoard));
+    });
+
+    test('RideType description test', () {
+      final grandTrickJibName = grandTrickJibType.name;
+      final gJDescriptionData = resultData[grandTrickJibName]?['description'];
+      expect(grandTrickJibType.description, gJDescriptionData);
+
+      final freerunPowderName = freerunPowderType.name;
+      final fPDescriptionData = resultData[freerunPowderName]?['description'];
+      expect(freerunPowderType.description, fPDescriptionData);
+
+      final allRoundName = allRoundType.name;
+      final aRDescriptionData = resultData[allRoundName]?['description'];
+      expect(allRoundType.description, aRDescriptionData);
+    });
+
+    test('RideType IconInitial test', () {
+      expect(grandTrickJibType.iconInitial, 'JG');
+      expect(freerunPowderType.iconInitial, 'FP');
+      expect(allRoundType.iconInitial, 'AR');
+    });
+
+    test('RideType IconColor test', () {
+      expect(grandTrickJibType.iconColor, Colors.teal);
+      expect(freerunPowderType.iconColor, Colors.deepPurple);
+      expect(allRoundType.iconColor, Colors.deepOrangeAccent);
+    });
+  });
+
+  group('Result test', () {
+    Map<String, dynamic> resultData = {
+      'id': const Uuid().v4(),
+      'rideType': RideType.grandTrickJib,
+      'createdAt': DateTime.now(),
+    };
+    RideType rideTypeData = resultData['rideType'] as RideType;
+    DateTime createdAtData = resultData['createdAt'] as DateTime;
+
+    final jsonData = {
+      'id': resultData['id'],
+      'rideType': rideTypeData.name,
+      'createdAt': createdAtData.toUtc().toIso8601String(),
+    };
+
+    final result = Result(
+      id: resultData['id'],
+      rideType: resultData['rideType'],
+      createdAt: resultData['createdAt'],
+    );
+    test('result constructor fromMap test', () {
+      final target = Result(
+        id: resultData['id'],
+        rideType: resultData['rideType'],
+        createdAt: resultData['createdAt'],
+      );
+
+      final fromJsonResult = Result.fromMap(jsonData);
+
+      expect(target, fromJsonResult);
+    });
+
+    test('result toMap test', () {
+      final target = result.toMap();
+
+      expect(target, jsonData);
+    });
+
+    test('result createdAtStr test', () {
+      initializeDateFormatting('ja');
+
+      final target = result.createdAtStr;
+
+      final time = DateTime.parse(jsonData['createdAt']).toLocal();
+      final ymed = DateFormat.yMEd('ja').format(time);
+      final hm = DateFormat.Hm('ja').format(time);
+      final createdAtStrData = ymed + hm;
+
+      expect(target, createdAtStrData);
     });
   });
 }

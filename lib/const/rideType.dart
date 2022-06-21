@@ -55,15 +55,15 @@ extension RideTypeExt on RideType {
     }
   }
 
-  String get discription {
+  String get description {
     Map<String, String> result = resultMap[name] as Map<String, String>;
     switch (this) {
       case RideType.grandTrickJib:
-        return result['discription'] as String;
+        return result['description'] as String;
       case RideType.freerunPowder:
-        return result['discription'] as String;
+        return result['description'] as String;
       case RideType.allRound:
-        return result['discription'] as String;
+        return result['description'] as String;
     }
   }
 

@@ -37,7 +37,6 @@ class ResultDetail extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    // final ModalRoute modalRoute =  as ModalRoute;
     final String routeName = ModalRoute.of(context)?.settings.name as String;
     final bool currRouteState = checkRoute(routeName);
     final double screenWith = MediaQuery.of(context).size.width;
@@ -143,7 +142,7 @@ class ResultDetail extends ConsumerWidget {
                   Container(
                     padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
                     child: Text(
-                      rideType.discription,
+                      rideType.description,
                       style: const TextStyle(
                         fontSize: 20,
                       ),
