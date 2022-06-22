@@ -10,6 +10,7 @@ import 'package:sbselector/const/question.dart';
 import 'package:sbselector/const/result.dart';
 import 'package:sbselector/const/ridetype.dart';
 import 'package:sbselector/const/snowboard.dart';
+import 'package:sbselector/db/result.dart';
 import 'package:sbselector/model/answer.dart';
 import 'package:sbselector/model/page_state.dart';
 import 'package:sbselector/model/question.dart';
@@ -19,9 +20,16 @@ import 'package:sbselector/model/theme_status.dart';
 import 'package:sbselector/view_model/answer_view_model.dart';
 import 'package:sbselector/view_model/indicator_view_model.dart';
 import 'package:sbselector/view_model/question_view_model.dart';
+import 'package:sqflite/sqflite.dart';
+import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 import 'package:uuid/uuid.dart';
 
-void main() {
+Future main() async {
+  TestWidgetsFlutterBinding.ensureInitialized();
+  setUpAll(() {
+    sqfliteFfiInit();
+    databaseFactory = databaseFactoryFfi;
+  });
   group('question test', () {
     const questionData = {
       'id': 1,
@@ -508,4 +516,90 @@ void main() {
       expect(target is ThemeStatus, true);
     });
   });
+
+  group('resultDb test', () {
+    test('resultDb open  test', () async {
+      final target = ProviderContainer(
+        overrides: [resultDbProvider],
+      );
+      final db = await target.read(resultDbProvider).openDb();
+
+      expect(db.isOpen, true);
+      await db.close();
+    });
+
+    test('resultDb create test', () async {
+      final target = ProviderContainer(
+        overrides: [resultDbProvider],
+      );
+      final db = await target.read(resultDbProvider).openDb();
+      db.delete(resultTableName);
+      final resultData = Result(
+        id: const Uuid().v4(),
+        rideType: RideType.grandTrickJib,
+        createdAt: DateTime.now(),
+      );
+
+      await target.read(resultDbProvider).create(resultData);
+      final list = await db.query(resultTableName);
+      final history = List.generate(list.length, (index) {
+        return Result.fromMap(list[index]);
+      });
+
+      expect(history[0], resultData);
+
+      await db.close();
+    });
+
+    test('resultDb read test', () async {
+      final target = ProviderContainer(
+        overrides: [resultDbProvider],
+      );
+      final db = await target.read(resultDbProvider).openDb();
+      db.delete(resultTableName);
+
+      final resultData1 = Result(
+        id: const Uuid().v4(),
+        rideType: RideType.grandTrickJib,
+        createdAt: DateTime.now(),
+      );
+      final resultData2 = Result(
+        id: const Uuid().v4(),
+        rideType: RideType.grandTrickJib,
+        createdAt: DateTime.now(),
+      );
+      await target.read(resultDbProvider).create(resultData1);
+      await target.read(resultDbProvider).create(resultData2);
+
+      final history = await target.read(resultDbProvider).read();
+      expect(history.length, 2);
+
+      await db.close();
+    });
+
+    test('resultDb delete test', () async {
+      final target = ProviderContainer(
+        overrides: [resultDbProvider],
+      );
+      final db = await target.read(resultDbProvider).openDb();
+      db.delete(resultTableName);
+
+      final resultData = Result(
+        id: const Uuid().v4(),
+        rideType: RideType.grandTrickJib,
+        createdAt: DateTime.now(),
+      );
+
+      await target.read(resultDbProvider).create(resultData);
+      final history = await target.read(resultDbProvider).read();
+      expect(history.length, 1);
+
+      await target.read(resultDbProvider).delete(resultData.id);
+      final history2 = await target.read(resultDbProvider).read();
+      expect(history2.length, 0);
+      await db.close();
+    });
+  });
+
+  group('history test', () {});
 }

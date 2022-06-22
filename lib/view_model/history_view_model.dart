@@ -5,19 +5,23 @@ import 'package:sbselector/model/result.dart';
 import 'package:uuid/uuid.dart';
 
 class HistoryNotifier extends StateNotifier<List<Result>> {
-  HistoryNotifier(this._read) : super([]);
+  HistoryNotifier(this._resultDb) : super([]);
 
-  final Reader _read;
+  final ResultDb _resultDb;
 
   Future<void> load() async {
-    List<Result> myRideTypes = [];
-    await ResultDb.read().then(
-      (value) => myRideTypes
-        ..clear()
-        ..addAll(value),
-    );
-    state = myRideTypes;
-    _sortOrder();
+    List<Result> history = [];
+    try {
+      await _resultDb.read().then(
+            (value) => history
+              ..clear()
+              ..addAll(value),
+          );
+      state = history;
+      _sortOrder();
+    } catch (e) {
+      print(e);
+    }
   }
 
   void _sortOrder() {
@@ -25,18 +29,22 @@ class HistoryNotifier extends StateNotifier<List<Result>> {
   }
 
   void add(RideType rideType) async {
-    Result myRideType = Result(
-      id: const Uuid().v4(),
-      rideType: rideType,
-      createdAt: DateTime.now(),
-    );
-    await ResultDb.create(myRideType);
-    await load();
+    try {
+      Result result = Result(
+        id: const Uuid().v4(),
+        rideType: rideType,
+        createdAt: DateTime.now(),
+      );
+      await _resultDb.create(result);
+      await load();
+    } catch (e) {
+      print(e);
+    }
   }
 
   void delete(String id) async {
     try {
-      await ResultDb.delete(id);
+      await _resultDb.delete(id);
       await load();
     } catch (e) {
       print(e);
@@ -46,5 +54,5 @@ class HistoryNotifier extends StateNotifier<List<Result>> {
 
 final historyNotifierProvider =
     StateNotifierProvider.autoDispose<HistoryNotifier, List<Result>>((ref) {
-  return HistoryNotifier(ref.read);
+  return HistoryNotifier(ref.read(resultDbProvider));
 });

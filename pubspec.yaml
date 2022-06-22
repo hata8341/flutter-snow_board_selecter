@@ -78,6 +78,7 @@ dev_dependencies:
   build_runner: ^2.1.11
   flutter_launcher_icons: ^0.9.3
   json_serializable: ^6.2.0
+  sqflite_common_ffi: ^2.1.1
 
 flutter_icons:
   image_path: "images/snow_penguin_top.png"

@@ -33,14 +33,12 @@ class PageStateNotifier extends StateNotifier<PageState> {
 
   void checkResumedBgm() async {
     if (state.player != null && state.bgmState == true) {
-      print('再開する');
       await state.player?.play();
     }
   }
 
   void checkPausedBgm() async {
     if (state.bgmState == true) {
-      print('一時停止');
       await state.player?.stop();
     }
   }

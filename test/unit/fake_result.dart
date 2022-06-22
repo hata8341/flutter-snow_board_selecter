@@ -1,31 +1,21 @@
 import 'dart:io';
 
 import 'package:path/path.dart';
-import 'package:riverpod/riverpod.dart';
+import 'package:sbselector/db/result.dart';
 import 'package:sbselector/model/result.dart';
 import 'package:sqflite/sqflite.dart';
 
-abstract class ResultDb {
-  Future<Database> openDb();
+const String testResultFileName = 'test_result.db';
+const String testResultTableName = 'results';
 
-  Future<void> create(Result rideType);
-
-  Future<List<Result>> read();
-
-  Future<void> delete(String id);
-}
-
-const String resultFileName = 'ride_types.db';
-const String resultTableName = 'my_ride_types';
-
-class ResultDbImpl implements ResultDb {
+class FakeResult implements ResultDbImpl {
   @override
   Future<Database> openDb() async {
     return await openDatabase(
-      join(await getDatabasesPath(), resultFileName),
+      join(await getDatabasesPath(), testResultFileName),
       onCreate: (db, version) {
         return db.execute(
-          'CREATE TABLE $resultTableName(id TEXT PRIMARY KEY,rideType TEXT,createdAt TEXT)',
+          'CREATE TABLE $testResultTableName(id TEXT PRIMARY KEY,rideType TEXT,createdAt TEXT)',
         );
       },
       version: 1,
@@ -33,12 +23,12 @@ class ResultDbImpl implements ResultDb {
   }
 
   @override
-  Future<void> create(Result result) async {
+  Future<void> create(Result rideType) async {
     try {
       var db = await openDb();
       await db.insert(
-        resultTableName,
-        result.toMap(),
+        testResultTableName,
+        rideType.toMap(),
         conflictAlgorithm: ConflictAlgorithm.replace,
       );
     } on SocketException {
@@ -50,7 +40,7 @@ class ResultDbImpl implements ResultDb {
   Future<List<Result>> read() async {
     try {
       var db = await openDb();
-      final List<Map<String, dynamic>> maps = await db.query(resultTableName);
+      final List<Map<String, dynamic>> maps = await db.query(testResultTableName);
       return List.generate(maps.length, (index) {
         return Result.fromMap(maps[index]);
       });
@@ -64,7 +54,7 @@ class ResultDbImpl implements ResultDb {
     try {
       var db = await openDb();
       await db.delete(
-        resultTableName,
+        testResultTableName,
         where: 'id = ?',
         whereArgs: [id],
       );
@@ -73,7 +63,3 @@ class ResultDbImpl implements ResultDb {
     }
   }
 }
-
-final resultDbProvider = Provider.autoDispose<ResultDbImpl>((ref) {
-  return ResultDbImpl();
-});
