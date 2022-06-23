@@ -1,46 +1,60 @@
-
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:mockito/mockito.dart';
+import 'package:sbselector/app.dart';
+import 'package:sbselector/views/diagnose/diagnose_content.dart';
+import 'package:sbselector/views/diagnose/diagnose_result.dart';
+import 'package:sbselector/views/diagnose/diagnose_top.dart';
+import 'package:sbselector/widgets/result.dart';
+
+import 'mock.dart';
+
+class MockNavigatorObserver extends Mock implements NavigatorObserver {}
 
 void main() {
-  group('test group', () {
-    testWidgets('初めてのwidgetテスト', (WidgetTester tester) async {
-      // テストするウィジェットを探すのにキーを使うことができる
-      var sliderKey = UniqueKey();
-      var value = 0.0;
+  group('result display test', () {
+    late NavigatorObserver mockObserver;
 
-      // テスターに渡されたウィジェットツリーに基づいてUIを構築するように指示する。
+    setUp(() {
+      mockObserver = MockNavigatorObserver();
+    });
+    Future<void> _buildTopPage(WidgetTester tester) async {
+      setupFirebaseAuthMocks();
+      await Firebase.initializeApp();
       await tester.pumpWidget(
-        StatefulBuilder(
-          builder: (BuildContext context, StateSetter setstate) {
-            return MaterialApp(
-              home: Material(
-                child: Center(
-                  child: Slider(
-                    key: sliderKey,
-                    value: value,
-                    onChanged: (double newValue) {
-                      setstate(() {
-                        value = newValue;
-                      });
-                    },
-                  ),
-                ),
-              ),
-            );
-          },
+        const ProviderScope(
+          child: MyApp(),
         ),
       );
-      expect(value, equals(0.0));
+      await tester.pumpAndSettle();
+      expect(find.byType(DiagnoseTopPage), findsOneWidget);
+    }
 
-      // キーで見つかったウィジェットをタップする
-      await tester.tap(find.byKey(sliderKey));
+    Future<void> _navigateToDiagnoseContentPage(WidgetTester tester) async {
+      await tester
+          .tap(find.byKey(DiagnoseTopPage.navigateToDiagnoseContentButtonKey));
+      await tester.pumpAndSettle();
+      expect(find.byType(DiagnoseContentPage), findsOneWidget);
+    }
 
-      // キーで見つかったウィジェットをタップする
-      expect(value, equals(0.5));
-    });
+    testWidgets(
+      "result allround display test",
+      (WidgetTester tester) async {
+        await _buildTopPage(tester);
+        await _navigateToDiagnoseContentPage(tester);
+        for (var i = 0; i < 10; i++) {
+          await tester.tap(find.byKey(DiagnoseContentPage.yesButtonKey));
+          await tester.pumpAndSettle();
+        }
+        await tester.tap(find.byIcon(Icons.check_circle));
+        await tester.pumpAndSettle();
+
+        expect(find.byType(DiagnoseResultPage), findsOneWidget);
+        expect(find.byType(ResultDetail), findsOneWidget);
+        expect(find.text('オールラウンド'), findsOneWidget);
+      },
+    );
   });
-
-  // testWidgets('', callback)
-
 }

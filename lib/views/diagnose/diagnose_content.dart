@@ -13,6 +13,9 @@ class DiagnoseContentPage extends HookConsumerWidget {
   const DiagnoseContentPage({Key? key}) : super(key: key);
 
   final String title = "診断";
+
+  static const yesButtonKey = Key('yes');
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final Size screenSize = MediaQuery.of(context).size;
@@ -179,6 +182,7 @@ class DiagnoseContentPage extends HookConsumerWidget {
                           width: screenSize.width * 0.46,
                           height: screenSize.height * 0.05,
                           child: ElevatedButton(
+                            key: yesButtonKey,
                             onPressed: () {
                               diagnoseController.respond(question.category, 5);
                             },

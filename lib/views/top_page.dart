@@ -6,8 +6,11 @@ import 'package:sbselector/view_model/theme_view_mode.dart';
 class TopPage extends ConsumerWidget {
   const TopPage({Key? key}) : super(key: key);
 
+      static const historyButtonKey = Key('history');
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+
+
     final pageState = ref.watch(pageStateProvider);
     final pageController = ref.watch(pageStateProvider.notifier);
     final themeController = ref.watch(themeStateProvider.notifier);
@@ -34,6 +37,7 @@ class TopPage extends ConsumerWidget {
       ),
       body: pageState.bottomBarIndex.page,
       bottomNavigationBar: BottomNavigationBar(
+        key: historyButtonKey,
         backgroundColor: themeController.getBarColor(),
         onTap: (int index) => {
           pageController.changeIndex(index),
@@ -41,7 +45,7 @@ class TopPage extends ConsumerWidget {
         currentIndex: pageState.bottomBarIndex.value,
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
-            icon: Icon(Icons.list),
+                        icon: Icon(Icons.list),
             label: '履歴',
           ),
           BottomNavigationBarItem(

@@ -16,9 +16,8 @@ import 'package:sbselector/views/top_page.dart';
 import 'views/diagnose/diagnose_top.dart';
 
 class MyApp extends HookConsumerWidget {
-  const MyApp(this.id, {Key? key}) : super(key: key);
+  const MyApp({Key? key}) : super(key: key);
 
-  final String id;
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final themeMode = ref.watch(themeStateProvider).themeMode;

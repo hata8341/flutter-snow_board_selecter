@@ -601,5 +601,4 @@ Future main() async {
     });
   });
 
-  group('history test', () {});
 }

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:sbselector/const/ridetype.dart';
 import 'package:sbselector/view_model/diagnose_view_model.dart';
+import 'package:sbselector/view_model/history_view_model.dart';
 
 AwesomeDialog endDialog(BuildContext inputContext, WidgetRef ref) {
   final diagnoseController = ref.read(diagnoseProvider.notifier);
@@ -14,7 +15,7 @@ AwesomeDialog endDialog(BuildContext inputContext, WidgetRef ref) {
     showCloseIcon: true,
     title: 'お疲れさまでした！',
     btnOkText: "結果画面へ",
-    btnOkOnPress: () {
+    btnOkOnPress: () async {
       debugPrint('OnClcik');
       final RideType rideType = diagnoseController.computedResult();
       Navigator.pushNamed(inputContext, '/diagnoseResult', arguments: rideType);

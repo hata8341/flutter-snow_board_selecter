@@ -23,7 +23,7 @@ void main() {
 
       await initializeDateFormatting('ja');
 
-      runApp(const ProviderScope(child: MyApp('user_identify')));
+      runApp(const ProviderScope(child: MyApp()));
     },
     (error, stack) =>
         FirebaseCrashlytics.instance.recordError(error, stack, fatal: true),

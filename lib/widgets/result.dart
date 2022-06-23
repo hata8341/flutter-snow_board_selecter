@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:sbselector/const/ridetype.dart';
-import 'package:sbselector/view_model/history_view_model.dart';
 import 'package:sbselector/view_model/page_view_model.dart';
 import 'package:sbselector/widgets/board_tile.dart';
 import 'package:sbselector/widgets/delete_dialog.dart';
@@ -21,6 +20,7 @@ class ResultDetail extends ConsumerWidget {
 
   final double size = 50;
   final double opacity = 1.0;
+
 
   // ListViewのスクロールの位置を取得するためのcontorller
   final ScrollController _scrollController = ScrollController();
@@ -50,14 +50,9 @@ class ResultDetail extends ConsumerWidget {
       appBar: AppBar(
         leading: Consumer(
           builder: (context, ref, _) {
-            final histroyController =
-                ref.watch(historyNotifierProvider.notifier);
             return IconButton(
               icon: const Icon(Icons.close),
               onPressed: () {
-                if (!currRouteState) {
-                  histroyController.add(rideType);
-                }
                 Navigator.popUntil(
                   context,
                   ModalRoute.withName('/'),

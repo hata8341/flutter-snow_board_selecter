@@ -28,7 +28,7 @@ class HistoryNotifier extends StateNotifier<List<Result>> {
     state.sort((a, b) => b.createdAt.compareTo(a.createdAt));
   }
 
-  void add(RideType rideType) async {
+  Future<void> add(RideType rideType) async {
     try {
       Result result = Result(
         id: const Uuid().v4(),
