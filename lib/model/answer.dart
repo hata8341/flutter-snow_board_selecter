@@ -6,6 +6,6 @@ part 'answer.freezed.dart';
 class Answer with _$Answer {
   const factory Answer({
     required String category,
-    required double answerValue,
+    required int answerValue,
   }) = _Answer;
 }

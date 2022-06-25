@@ -6,6 +6,9 @@ import 'package:sbselector/view_model/theme_view_mode.dart';
 class TopPage extends ConsumerWidget {
   const TopPage({Key? key}) : super(key: key);
 
+  static const historyButtonKey = Key('history');
+  static const diagnoseButtonKey = Key('diagnose');
+  static const settingsButtonKey = Key('settings');
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final pageState = ref.watch(pageStateProvider);
@@ -41,15 +44,24 @@ class TopPage extends ConsumerWidget {
         currentIndex: pageState.bottomBarIndex.value,
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
-            icon: Icon(Icons.list),
+            icon: Icon(
+              key: historyButtonKey,
+              Icons.list,
+            ),
             label: '履歴',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.search),
+            icon: Icon(
+              key: diagnoseButtonKey,
+              Icons.search,
+            ),
             label: '診断',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.settings),
+            icon: Icon(
+              key: settingsButtonKey,
+              Icons.settings,
+            ),
             label: '設定',
           ),
         ],

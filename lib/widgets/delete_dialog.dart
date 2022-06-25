@@ -12,7 +12,9 @@ AwesomeDialog deleteDialog(
     animType: AnimType.TOPSLIDE,
     headerAnimationLoop: false,
     desc: '診断結果を削除してよろしいですか？',
+
     btnCancelOnPress: () {},
+    btnOkIcon: Icons.check_circle,
     btnOkOnPress: () async {
       historyController.delete(id);
       ScaffoldMessenger.of(inputContext).showSnackBar(

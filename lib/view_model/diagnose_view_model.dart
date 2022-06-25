@@ -1,10 +1,9 @@
-import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:sbselector/const/ridetype.dart';
 import 'package:sbselector/model/answer.dart';
 import 'package:sbselector/view_model/answer_view_model.dart';
+import 'package:sbselector/view_model/history_view_model.dart';
 import 'package:sbselector/view_model/indicator_view_model.dart';
-import 'package:sbselector/widgets/end_dialog.dart';
 
 class DiagnoseNotifier extends StateNotifier<void> {
   DiagnoseNotifier(this._read) : super(null);
@@ -15,8 +14,9 @@ class DiagnoseNotifier extends StateNotifier<void> {
       _read(indicatorStateNotifierProvider.notifier);
   late final AnswerListNotifier answerListController =
       _read(answerListProvider.notifier);
-
-  void respond(String category, double value) {
+  late final HistoryNotifier _historyController =
+      _read(historyNotifierProvider.notifier);
+  void respond(String category, int value) {
     indicatorController.incrementIndicatorValue();
     final answer = Answer(category: category, answerValue: value);
     answerListController.addAnswer(answer);
@@ -37,13 +37,16 @@ class DiagnoseNotifier extends StateNotifier<void> {
 
   RideType _checkRideType(double jGTotal, double fPTotal) {
     final difference = jGTotal - fPTotal;
+    final RideType rideType;
     if (difference > 9) {
-      return RideType.grandTrickJib;
+      rideType = RideType.grandTrickJib;
     } else if (difference < -9) {
-      return RideType.freerunPowder;
+      rideType = RideType.freerunPowder;
     } else {
-      return RideType.allRound;
+      rideType = RideType.allRound;
     }
+    _historyController.add(rideType);
+    return rideType;
   }
 
   RideType computedResult() {
@@ -60,5 +63,5 @@ class DiagnoseNotifier extends StateNotifier<void> {
 
 final diagnoseProvider =
     StateNotifierProvider.autoDispose<DiagnoseNotifier, void>((ref) {
-  return DiagnoseNotifier(ref.read);
+  return DiagnoseNotifier(ref.watch);
 });

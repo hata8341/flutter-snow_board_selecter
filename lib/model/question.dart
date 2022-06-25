@@ -1,4 +1,3 @@
-// 一度代入できれば良いので、定数のクラスして使う（final class)
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'question.freezed.dart';

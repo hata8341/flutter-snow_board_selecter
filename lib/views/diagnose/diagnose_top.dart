@@ -7,6 +7,8 @@ import 'package:sbselector/widgets/bubble.dart';
 class DiagnoseTopPage extends ConsumerWidget {
   const DiagnoseTopPage({Key? key}) : super(key: key);
 
+  static const navigateToDiagnoseContentButtonKey = Key('navigateToDiagnose');
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final Size screenSize = MediaQuery.of(context).size;
@@ -72,6 +74,7 @@ class DiagnoseTopPage extends ConsumerWidget {
             width: screenSize.width * 0.65,
             height: screenSize.height * 0.065,
             child: ElevatedButton(
+              key: navigateToDiagnoseContentButtonKey,
               onPressed: () {
                 Navigator.pushNamed(context, '/diagnoseContent');
               },
