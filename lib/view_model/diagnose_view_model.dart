@@ -1,5 +1,5 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:sbselector/const/ridetype.dart';
+import 'package:sbselector/const/ride_type.dart';
 import 'package:sbselector/model/answer.dart';
 import 'package:sbselector/view_model/answer_view_model.dart';
 import 'package:sbselector/view_model/history_view_model.dart';

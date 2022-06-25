@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:sbselector/const/ridetype.dart';
+import 'package:sbselector/const/ride_type.dart';
 import 'package:sbselector/widgets/result.dart';
 
 class DiagnoseResultPage extends StatelessWidget {

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:riverpod/riverpod.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:sbselector/const/theme.dart';
 import 'package:sbselector/db/theme.dart';
 import 'package:sbselector/model/theme_status.dart';

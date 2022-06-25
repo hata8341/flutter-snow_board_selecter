@@ -1,5 +1,6 @@
-import 'package:riverpod/riverpod.dart';
-import 'package:sbselector/const/ridetype.dart';
+import 'package:flutter/material.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:sbselector/const/ride_type.dart';
 import 'package:sbselector/db/result.dart';
 import 'package:sbselector/model/result.dart';
 import 'package:uuid/uuid.dart';
@@ -20,7 +21,7 @@ class HistoryNotifier extends StateNotifier<List<Result>> {
       state = history;
       _sortOrder();
     } catch (e) {
-      print(e);
+      debugPrint(e.toString());
     }
   }
 
@@ -38,7 +39,7 @@ class HistoryNotifier extends StateNotifier<List<Result>> {
       await _resultDb.create(result);
       await load();
     } catch (e) {
-      print(e);
+      debugPrint(e.toString());
     }
   }
 
@@ -47,7 +48,7 @@ class HistoryNotifier extends StateNotifier<List<Result>> {
       await _resultDb.delete(id);
       await load();
     } catch (e) {
-      print(e);
+      debugPrint(e.toString());
     }
   }
 }

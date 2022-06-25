@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:sbselector/const/ridetype.dart';
+import 'package:sbselector/const/ride_type.dart';
 import 'package:sbselector/view_model/page_view_model.dart';
 import 'package:sbselector/widgets/board_tile.dart';
 import 'package:sbselector/widgets/delete_dialog.dart';

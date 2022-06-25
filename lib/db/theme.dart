@@ -19,8 +19,8 @@ class ThemeDb {
       return _toMode(pref.getString(defalutTheme.key) ?? defalutTheme.name);
     }
 
-    final _pref = await SharedPreferences.getInstance();
-    return _toMode(_pref.getString(defalutTheme.key) ?? defalutTheme.name);
+    pref = await SharedPreferences.getInstance();
+    return _toMode(pref.getString(defalutTheme.key) ?? defalutTheme.name);
   }
 
   static Future<ThemeMode> _toMode(String str) async {

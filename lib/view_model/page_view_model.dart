@@ -1,13 +1,11 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:sbselector/const/bottom_bar_index.dart';
-import 'package:sbselector/const/ridetype.dart';
+import 'package:sbselector/const/ride_type.dart';
 import 'package:sbselector/model/page_state.dart';
 
 class PageStateNotifier extends StateNotifier<PageState> {
-  PageStateNotifier(this._read) : super(const PageState());
-
-  final Reader _read;
+  PageStateNotifier() : super(const PageState());
 
   void changeIndex(int index) {
     state = state.copyWith(bottomBarIndex: BottomBarIndex.values[index]);
@@ -63,5 +61,5 @@ class PageStateNotifier extends StateNotifier<PageState> {
 
 final pageStateProvider =
     StateNotifierProvider.autoDispose<PageStateNotifier, PageState>((ref) {
-  return PageStateNotifier((ref.read));
+  return PageStateNotifier();
 });

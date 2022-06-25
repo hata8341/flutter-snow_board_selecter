@@ -20,10 +20,9 @@ ElevatedButton shareButton(ScreenshotController screenShotController) {
     const shareText = '#スノボセレクター';
     await screenshotData.then((Uint8List? image) async {
       if (image != null) {
-        final _documentDirectoryPath = await getApplicationDocumentsDirectory();
+        final documentDirectoryPath = await getApplicationDocumentsDirectory();
         final imagePath =
-            await File('${_documentDirectoryPath.path}/screenshot.png')
-                .create();
+            await File('${documentDirectoryPath.path}/screenshot.png').create();
         await imagePath.writeAsBytes(image);
 
         await Share.shareFiles([imagePath.path], text: shareText);
@@ -40,7 +39,7 @@ ElevatedButton shareButton(ScreenshotController screenShotController) {
       try {
         _shareResult();
       } catch (e) {
-        print(e);
+        debugPrint(e.toString());
       }
     },
     label: const Text(
