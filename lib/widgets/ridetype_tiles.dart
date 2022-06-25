@@ -28,12 +28,12 @@ List<ListTile> rideTypeTitles(
               seconds: 1,
             ),
             child: AnimatedDefaultTextStyle(
-              child: Text(rideTypeName),
               style: textTheme.headline3 as TextStyle,
               duration: const Duration(
                 seconds: 1,
               ),
               onEnd: () {},
+              child: Text(rideTypeName),
             ),
           ),
         ],

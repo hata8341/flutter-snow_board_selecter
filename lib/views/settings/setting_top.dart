@@ -8,6 +8,10 @@ import 'package:sbselector/view_model/theme_view_mode.dart';
 
 class SettingList extends ConsumerWidget {
   const SettingList({Key? key}) : super(key: key);
+  static const darkModeButtonKey = Key('darkMode');
+
+  static const bgmButtonKey = Key('bgm');
+
   final bool value = false;
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -21,6 +25,7 @@ class SettingList extends ConsumerWidget {
       shrinkWrap: true,
       children: <Widget>[
         SwitchListTile(
+          key: darkModeButtonKey,
           value: themeSwitchStatus,
           onChanged: (bool status) {
             themeController.update(status);
@@ -29,6 +34,7 @@ class SettingList extends ConsumerWidget {
           title: const Text('ダークモード'),
         ),
         SwitchListTile(
+          key: bgmButtonKey,
           value: pageState.bgmState,
           onChanged: (bool newState) {
             pageController.toggleBgm();

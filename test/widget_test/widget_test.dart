@@ -2,7 +2,6 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:mockito/mockito.dart';
 import 'package:sbselector/app.dart';
 import 'package:sbselector/views/diagnose/diagnose_content.dart';
 import 'package:sbselector/views/diagnose/diagnose_result.dart';
@@ -11,15 +10,8 @@ import 'package:sbselector/widgets/result.dart';
 
 import 'mock.dart';
 
-class MockNavigatorObserver extends Mock implements NavigatorObserver {}
-
 void main() {
-  group('result display test', () {
-    late NavigatorObserver mockObserver;
-
-    setUp(() {
-      mockObserver = MockNavigatorObserver();
-    });
+  group('result display test', () async {
     Future<void> _buildTopPage(WidgetTester tester) async {
       setupFirebaseAuthMocks();
       await Firebase.initializeApp();

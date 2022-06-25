@@ -4,7 +4,7 @@ import 'package:sbselector/model/snowboard.dart';
 import 'radar_chart.dart';
 
 ExpansionTile boardTile(
-    ScrollController _scrollController, Snowboard snowboard, int recommendNum) {
+    ScrollController scrollController, Snowboard snowboard, int recommendNum) {
   final GlobalKey expansionTileKey = GlobalKey();
   void _scrollToSelectedContent({GlobalKey? expansionTileKey}) {
     final keyContent = expansionTileKey?.currentContext;
@@ -23,7 +23,7 @@ ExpansionTile boardTile(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Text(
-            'おすすめ' + recommendNum.toString(),
+            'おすすめ$recommendNum',
             style: const TextStyle(fontSize: 20.0),
           ),
           Chip(

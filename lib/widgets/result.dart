@@ -21,6 +21,9 @@ class ResultDetail extends ConsumerWidget {
   final double size = 50;
   final double opacity = 1.0;
 
+    static const navigateToTopPageButtonKey = Key('navigateToTopPage');
+
+    static const historyDeleteButtonKey = Key('historyDelete');
 
   // ListViewのスクロールの位置を取得するためのcontorller
   final ScrollController _scrollController = ScrollController();
@@ -51,6 +54,7 @@ class ResultDetail extends ConsumerWidget {
         leading: Consumer(
           builder: (context, ref, _) {
             return IconButton(
+              key: navigateToTopPageButtonKey,
               icon: const Icon(Icons.close),
               onPressed: () {
                 Navigator.popUntil(
@@ -77,6 +81,7 @@ class ResultDetail extends ConsumerWidget {
           Visibility(
             visible: currRouteState,
             child: IconButton(
+              key: historyDeleteButtonKey,
               icon: const Icon(
                 Icons.delete,
                 color: Colors.red,

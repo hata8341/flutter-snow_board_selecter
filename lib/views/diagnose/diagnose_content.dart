@@ -15,6 +15,7 @@ class DiagnoseContentPage extends HookConsumerWidget {
   final String title = "診断";
 
   static const yesButtonKey = Key('yes');
+  static const noButtonKey = Key('no');
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -204,6 +205,7 @@ class DiagnoseContentPage extends HookConsumerWidget {
                           width: screenSize.width * 0.46,
                           height: screenSize.height * 0.05,
                           child: ElevatedButton(
+                            key: noButtonKey,
                             onPressed: () {
                               diagnoseController.respond(question.category, 1);
                             },
