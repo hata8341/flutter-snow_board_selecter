@@ -1,7 +1,11 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:sbselector/const/theme.dart';
 
-class SnowRadarChart extends StatelessWidget {
+const List<double> _maxRaderChartData = [5.0, 5.0, 5.0, 5.0];
+
+class SnowRadarChart extends HookWidget {
   const SnowRadarChart({
     Key? key,
     required this.raderChartData,
@@ -53,8 +57,6 @@ class SnowRadarChart extends StatelessWidget {
                   width: 2,
                 ),
               ),
-              swapAnimationDuration: const Duration(milliseconds: 150),
-              swapAnimationCurve: Curves.linear,
             ),
           )
         ],
@@ -70,7 +72,21 @@ class SnowRadarChart extends StatelessWidget {
       entryRadius: 5.0,
       dataEntries: setEntriesData(raderChartData),
     );
+    final context = useContext();
+    final backgroundColor = Theme.of(context).scaffoldBackgroundColor;
+    final maxRadarData = RadarDataSet(
+      borderColor: backgroundColor == const Color(0xff303030)
+          ? Colors.transparent.withOpacity(0.1)
+          : materialWhite.withOpacity(0.1),
+      fillColor: backgroundColor == const Color(0xff303030)
+          ? Colors.transparent.withOpacity(0.1)
+          : materialWhite.withOpacity(0.1),
+      borderWidth: 0.0,
+      entryRadius: 0.0,
+      dataEntries: setEntriesData(_maxRaderChartData),
+    );
     list.add(radarData);
+    list.add(maxRadarData);
     return list;
   }
 
