@@ -2,9 +2,8 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:sbselector/model/answer.dart';
 
 class AnswerListNotifier extends StateNotifier<List<Answer>> {
-  AnswerListNotifier(this._read) : super([]);
+  AnswerListNotifier() : super([]);
 
-  final Reader _read;
 
   void addAnswer(Answer answer) {
     state = [...state, answer];
@@ -38,6 +37,6 @@ class AnswerListNotifier extends StateNotifier<List<Answer>> {
 final answerListProvider =
     StateNotifierProvider<AnswerListNotifier, List<Answer>>(
   (ref) {
-    return AnswerListNotifier(ref.read);
+    return AnswerListNotifier();
   },
 );

@@ -8,7 +8,7 @@ import 'package:intl/intl.dart';
 import 'package:sbselector/const/bottom_bar_index.dart';
 import 'package:sbselector/const/question.dart';
 import 'package:sbselector/const/result.dart';
-import 'package:sbselector/const/ridetype.dart';
+import 'package:sbselector/const/ride_type.dart';
 import 'package:sbselector/const/snowboard.dart';
 import 'package:sbselector/db/result.dart';
 import 'package:sbselector/model/answer.dart';
@@ -503,7 +503,9 @@ Future main() async {
         player: null,
         bgmState: false,
       );
-      expect(target is PageState, true);
+      expect(target.bottomBarIndex, BottomBarIndex.one);
+      expect(target.player, null);
+      expect(target.bgmState, false);
     });
   });
 
@@ -513,7 +515,9 @@ Future main() async {
         themeMode: ThemeMode.system,
         switchStatus: false,
       );
-      expect(target is ThemeStatus, true);
+
+      expect(target.themeMode, ThemeMode.system);
+      expect(target.switchStatus, false);
     });
   });
 
@@ -600,5 +604,4 @@ Future main() async {
       await db.close();
     });
   });
-
 }

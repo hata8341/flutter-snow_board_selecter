@@ -1,19 +1,7 @@
-import 'package:flutter/material.dart';
-import 'package:riverpod/riverpod.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:sbselector/const/question.dart';
 import 'package:sbselector/model/question.dart';
 import 'package:sbselector/view_model/indicator_view_model.dart';
-
-// class _QuestionList {
-//   static List<Question> createQestionList() {
-//     final List<Question> list;
-
-//     list = questionBox.map((question) => Question.fromJson(question)).toList();
-//     // list.shuffle();
-
-//     return list;
-//   }
-// }
 
 class QuestionListStateNotifier extends StateNotifier<List<Question>> {
   QuestionListStateNotifier(this._read) : super([]) {

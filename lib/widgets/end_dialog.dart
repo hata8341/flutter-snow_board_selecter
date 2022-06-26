@@ -1,9 +1,8 @@
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:sbselector/const/ridetype.dart';
+import 'package:sbselector/const/ride_type.dart';
 import 'package:sbselector/view_model/diagnose_view_model.dart';
-import 'package:sbselector/view_model/history_view_model.dart';
 
 AwesomeDialog endDialog(BuildContext inputContext, WidgetRef ref) {
   final diagnoseController = ref.read(diagnoseProvider.notifier);

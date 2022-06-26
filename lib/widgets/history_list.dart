@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:sbselector/const/ridetype.dart';
+import 'package:sbselector/const/ride_type.dart';
 import 'package:sbselector/model/result.dart';
 import 'package:sbselector/view_model/history_view_model.dart';
 
@@ -56,7 +56,7 @@ class HistoryList extends ConsumerWidget {
                             rideType.nameJp,
                             style: const TextStyle(fontSize: 18.0),
                           ),
-                          subtitle: Text('診断日:' + date),
+                          subtitle: Text('診断日:$date'),
                           trailing: const Icon(Icons.keyboard_arrow_right),
                         ),
                         const Divider(),

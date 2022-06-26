@@ -46,9 +46,12 @@ class DiagnoseContentPage extends HookConsumerWidget {
         iconTheme: const IconThemeData.fallback().copyWith(
           color: themeStateController.getAppBarTextIconColor(),
         ),
+        titleSpacing:
+            screenSize.width <= 414.0 ? screenSize.width * 0.28 : null,
         title: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          mainAxisSize: MainAxisSize.min,
+          mainAxisAlignment: screenSize.width <= 414.0
+              ? MainAxisAlignment.start
+              : MainAxisAlignment.center,
           children: [
             Icon(
               Icons.search,
