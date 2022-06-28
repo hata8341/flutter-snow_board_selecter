@@ -9,13 +9,18 @@ import 'package:sbselector/view_model/theme_view_mode.dart';
 import 'package:sbselector/widgets/bubble.dart';
 import 'package:sbselector/widgets/end_dialog.dart';
 
-class DiagnoseContentPage extends HookConsumerWidget {
+class DiagnoseContentPage extends ConsumerWidget {
   const DiagnoseContentPage({Key? key}) : super(key: key);
 
-  final String title = "診断";
+  final String _title = "診断";
 
   static const yesButtonKey = Key('yes');
   static const noButtonKey = Key('no');
+
+  final _buttonText = const TextStyle(
+    fontSize: 12,
+    fontWeight: FontWeight.bold,
+  );
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -46,19 +51,17 @@ class DiagnoseContentPage extends HookConsumerWidget {
         iconTheme: const IconThemeData.fallback().copyWith(
           color: themeStateController.getAppBarTextIconColor(),
         ),
-        titleSpacing:
-            screenSize.width <= 414.0 ? screenSize.width * 0.28 : null,
+        centerTitle: true,
         title: Row(
-          mainAxisAlignment: screenSize.width <= 414.0
-              ? MainAxisAlignment.start
-              : MainAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisSize: MainAxisSize.min,
           children: [
             Icon(
               Icons.search,
               color: themeStateController.getAppBarTextIconColor(),
             ),
             Text(
-              title,
+              _title,
               style: TextStyle(
                 color: themeStateController.getAppBarTextIconColor(),
               ),
@@ -139,22 +142,21 @@ class DiagnoseContentPage extends HookConsumerWidget {
                             },
                             child: SizedBox(
                               key: ValueKey(questionNum),
-                              height: screenSize.height * 0.18,
+                              height: screenSize.height * 0.25,
                               child: Column(
                                 children: [
                                   Text(
                                     '質問$questionNum',
-                                    style: const TextStyle(
-                                      fontSize: 20.0,
-                                      fontWeight: FontWeight.bold,
-                                      height: 2.0,
-                                    ),
+                                    style:
+                                        Theme.of(context).textTheme.titleLarge,
                                   ),
                                   Text(
                                     question.content,
-                                    style: const TextStyle(
-                                      fontSize: 18.0,
-                                    ),
+                                    // style: const TextStyle(
+                                    //   fontSize: 18.0,
+                                    // ),
+                                    style:
+                                        Theme.of(context).textTheme.subtitle1,
                                   ),
                                 ],
                               ),
@@ -233,7 +235,7 @@ class DiagnoseContentPage extends HookConsumerWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: <Widget>[
                         SizedBox(
-                          width: screenSize.width * 0.25,
+                          width: screenSize.width * 0.3,
                           height: screenSize.height * 0.05,
                           child: ElevatedButton(
                             onPressed: () {
@@ -245,16 +247,14 @@ class DiagnoseContentPage extends HookConsumerWidget {
                                 borderRadius: BorderRadius.circular(5),
                               ),
                             ),
-                            child: const Text(
+                            child: Text(
                               'だぶんそう',
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                              ),
+                              style: _buttonText,
                             ),
                           ),
                         ),
                         SizedBox(
-                          width: screenSize.width * 0.25,
+                          width: screenSize.width * 0.3,
                           height: screenSize.height * 0.05,
                           child: ElevatedButton(
                             onPressed: () {
@@ -266,16 +266,14 @@ class DiagnoseContentPage extends HookConsumerWidget {
                                 borderRadius: BorderRadius.circular(5),
                               ),
                             ),
-                            child: const Text(
+                            child: Text(
                               'わからない',
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                              ),
+                              style: _buttonText,
                             ),
                           ),
                         ),
                         SizedBox(
-                          width: screenSize.width * 0.25,
+                          width: screenSize.width * 0.3,
                           height: screenSize.height * 0.05,
                           child: ElevatedButton(
                             onPressed: () {
@@ -287,11 +285,9 @@ class DiagnoseContentPage extends HookConsumerWidget {
                                 borderRadius: BorderRadius.circular(5),
                               ),
                             ),
-                            child: const Text(
+                            child: Text(
                               'たぶん違う',
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                              ),
+                              style: _buttonText,
                             ),
                           ),
                         ),

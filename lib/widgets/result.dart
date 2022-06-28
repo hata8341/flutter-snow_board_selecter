@@ -16,14 +16,11 @@ class ResultDetail extends ConsumerWidget {
   final RideType rideType;
   final String? id;
 
-  final String title = "診断結果";
+  final String _title = "診断結果";
 
-  final double size = 50;
-  final double opacity = 1.0;
+  static const navigateToTopPageButtonKey = Key('navigateToTopPage');
 
-    static const navigateToTopPageButtonKey = Key('navigateToTopPage');
-
-    static const historyDeleteButtonKey = Key('historyDelete');
+  static const historyDeleteButtonKey = Key('historyDelete');
 
   // ListViewのスクロールの位置を取得するためのcontorller
   final ScrollController _scrollController = ScrollController();
@@ -42,7 +39,6 @@ class ResultDetail extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final String routeName = ModalRoute.of(context)?.settings.name as String;
     final bool currRouteState = checkRoute(routeName);
-    final double screenWith = MediaQuery.of(context).size.width;
     final PageStateNotifier pageController =
         ref.watch(pageStateProvider.notifier);
     final String rideTypeName = pageController.checkWriteInRideType(rideType);
@@ -65,34 +61,38 @@ class ResultDetail extends ConsumerWidget {
             );
           },
         ),
-        titleSpacing: screenWith <= 414.0 ? screenWith * 0.24 : null,
+        centerTitle: true,
         title: Center(
           child: Row(
-            mainAxisAlignment: screenWith <= 414.0
-                ? MainAxisAlignment.start
-                : MainAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisSize: MainAxisSize.min,
             children: <Widget>[
               const Icon(Icons.search),
-              Text(title),
+              Text(_title),
             ],
           ),
         ),
         actions: [
-          Visibility(
-            visible: currRouteState,
-            child: IconButton(
-              key: historyDeleteButtonKey,
-              icon: const Icon(
-                Icons.delete,
-                color: Colors.red,
-              ),
-              onPressed: () async {
-                await showSelfDialog(
-                  deleteDialog(context, ref, id!),
-                );
-              },
-            ),
-          ),
+          currRouteState
+              ? IconButton(
+                  key: historyDeleteButtonKey,
+                  icon: const Icon(
+                    Icons.delete,
+                    color: Colors.red,
+                  ),
+                  onPressed: () async {
+                    await showSelfDialog(
+                      deleteDialog(context, ref, id!),
+                    );
+                  },
+                )
+              : Opacity(
+                  opacity: 0,
+                  child: IconButton(
+                    onPressed: () {},
+                    icon: const Icon(Icons.snowing),
+                  ),
+                ),
         ],
       ),
       body: SafeArea(
@@ -104,8 +104,7 @@ class ResultDetail extends ConsumerWidget {
               child: Column(
                 children: [
                   const Gap(20),
-                  for (ListTile tile
-                      in rideTypeTitles(opacity, rideTypeName, size, textTheme))
+                  for (ListTile tile in rideTypeTitles(rideTypeName, textTheme))
                     tile,
                   const Gap(20),
                   ListTile(
@@ -122,7 +121,7 @@ class ResultDetail extends ConsumerWidget {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           const Icon(Icons.snowboarding),
-                          Text('スノーボード', style: textTheme.headline5),
+                          Text('スノーボード', style: textTheme.headline6),
                         ],
                       ),
                     ),
@@ -144,7 +143,7 @@ class ResultDetail extends ConsumerWidget {
                     child: Text(
                       rideType.description,
                       style: const TextStyle(
-                        fontSize: 20,
+                        fontSize: 14,
                       ),
                     ),
                   ),
@@ -155,7 +154,7 @@ class ResultDetail extends ConsumerWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                shareButton(_screenShotController),
+                shareButton(context, _screenShotController),
               ],
             ),
           ],

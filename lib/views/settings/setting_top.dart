@@ -12,7 +12,6 @@ class SettingList extends ConsumerWidget {
 
   static const bgmButtonKey = Key('bgm');
 
-  final bool value = false;
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final pageState = ref.watch(pageStateProvider);

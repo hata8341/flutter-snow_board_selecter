@@ -1,13 +1,14 @@
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/material.dart';
 
-List<ListTile> rideTypeTitles(
-    double opacity, String rideTypeName, double size, TextTheme textTheme) {
+List<ListTile> rideTypeTitles(String rideTypeName, TextTheme textTheme) {
+  const double opacity = 1.0;
+
   return [
     ListTile(
       title: Row(
         children: [
-          Text('あなたのライドスタイルは', style: textTheme.headline6),
+          Text('あなたのライドタイプは', style: textTheme.subtitle1),
           AnimatedTextKit(
             animatedTexts: pointAnimatedText(textTheme.headline6 as TextStyle),
             totalRepeatCount: 1,
@@ -28,7 +29,7 @@ List<ListTile> rideTypeTitles(
               seconds: 1,
             ),
             child: AnimatedDefaultTextStyle(
-              style: textTheme.headline3 as TextStyle,
+              style: textTheme.headline4 as TextStyle,
               duration: const Duration(
                 seconds: 1,
               ),
@@ -45,7 +46,7 @@ List<ListTile> rideTypeTitles(
         children: [
           Text(
             'タイプです！！',
-            style: textTheme.headline6 as TextStyle,
+            style: textTheme.subtitle1 as TextStyle,
           ),
         ],
       ),

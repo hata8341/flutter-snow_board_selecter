@@ -12,10 +12,11 @@ class ThemeStateNotifier extends StateNotifier<ThemeStatus> {
   }
 
   final Reader _read;
+  late final ThemeDb _themeDb = _read(themeDbProvider);
 
   void _init() async {
     final pref = await SharedPreferences.getInstance();
-    final themeMode = await ThemeDb.load(pref);
+    final themeMode = await _themeDb.load(pref);
     final switchStatus = _themeModeToBool(themeMode);
     state = state.copyWith(
       themeMode: themeMode,
@@ -25,7 +26,7 @@ class ThemeStateNotifier extends StateNotifier<ThemeStatus> {
 
   void update(bool status) async {
     final ThemeMode mode = _boolToThemeMode(status);
-    await ThemeDb.save(mode);
+    await _themeDb.save(mode);
     state = state.copyWith(
       themeMode: mode,
       switchStatus: status,

@@ -47,16 +47,19 @@ class HistoryList extends ConsumerWidget {
                                 style: const TextStyle(
                                   fontWeight: FontWeight.w400,
                                   color: Colors.white,
-                                  fontSize: 22,
+                                  fontSize: 22.0,
                                 ),
                               ),
                             ),
                           ),
                           title: Text(
                             rideType.nameJp,
-                            style: const TextStyle(fontSize: 18.0),
+                            style: Theme.of(context).textTheme.titleSmall,
                           ),
-                          subtitle: Text('診断日:$date'),
+                          subtitle: Text(
+                            '診断日:$date',
+                            style: Theme.of(context).textTheme.bodySmall,
+                          ),
                           trailing: const Icon(Icons.keyboard_arrow_right),
                         ),
                         const Divider(),

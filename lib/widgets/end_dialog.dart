@@ -13,13 +13,13 @@ AwesomeDialog endDialog(BuildContext inputContext, WidgetRef ref) {
     dialogType: DialogType.SUCCES,
     showCloseIcon: true,
     title: 'お疲れさまでした！',
-    btnOkText: "結果画面へ",
+    btnOkText: "結果画面",
     btnOkOnPress: () async {
       debugPrint('OnClcik');
       final RideType rideType = diagnoseController.computedResult();
       Navigator.pushNamed(inputContext, '/diagnoseResult', arguments: rideType);
     },
-    btnOkIcon: Icons.check_circle,
+    btnCancelText: '戻る',
     btnCancelOnPress: () {
       diagnoseController.missTake();
     },
