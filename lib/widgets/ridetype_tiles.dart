@@ -1,8 +1,9 @@
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/material.dart';
 
-List<ListTile> rideTypeTitles(
-    double opacity, String rideTypeName, double size, TextTheme textTheme) {
+List<ListTile> rideTypeTitles(String rideTypeName, TextTheme textTheme) {
+  const double opacity = 1.0;
+
   return [
     ListTile(
       title: Row(

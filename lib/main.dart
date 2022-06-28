@@ -9,6 +9,9 @@ import 'package:sbselector/firebase_options.dart';
 
 import 'app.dart';
 
+// ここまでの振り返り
+// 診断タイトルの修正
+// プライベートメソッド・変数の追加見直し
 void main() {
   runZonedGuarded<Future<void>>(
     () async {

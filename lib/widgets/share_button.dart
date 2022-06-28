@@ -8,14 +8,14 @@ import 'package:share_plus/share_plus.dart';
 
 ElevatedButton shareButton(
     BuildContext context, ScreenshotController screenShotController) {
-  Future<Uint8List?> capture() async {
+  Future<Uint8List?> _capture() async {
     await Future.delayed(const Duration(milliseconds: 200));
     return await screenShotController.capture(
       delay: const Duration(milliseconds: 10),
     );
   }
 
-  final Future<Uint8List?> screenshotData = capture();
+  final Future<Uint8List?> screenshotData = _capture();
 
   void _shareResult() async {
     const shareText =

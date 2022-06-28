@@ -1,5 +1,4 @@
 import 'package:firebase_core/firebase_core.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:sbselector/app.dart';
@@ -11,7 +10,7 @@ import 'package:sbselector/widgets/result.dart';
 import 'mock.dart';
 
 void main() {
-  group('result display test', () async {
+  group('result display test', () {
     Future<void> _buildTopPage(WidgetTester tester) async {
       setupFirebaseAuthMocks();
       await Firebase.initializeApp();
@@ -40,7 +39,7 @@ void main() {
           await tester.tap(find.byKey(DiagnoseContentPage.yesButtonKey));
           await tester.pumpAndSettle();
         }
-        await tester.tap(find.byIcon(Icons.check_circle));
+        await tester.tap(find.text('結果画面'));
         await tester.pumpAndSettle();
 
         expect(find.byType(DiagnoseResultPage), findsOneWidget);

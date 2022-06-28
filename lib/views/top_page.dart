@@ -20,6 +20,7 @@ class TopPage extends ConsumerWidget {
       backgroundColor: themeController.getScaffoldBackgroundColor(),
       appBar: AppBar(
         backgroundColor: themeController.getBarColor(),
+        centerTitle: true,
         title: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [

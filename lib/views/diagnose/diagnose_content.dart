@@ -9,10 +9,10 @@ import 'package:sbselector/view_model/theme_view_mode.dart';
 import 'package:sbselector/widgets/bubble.dart';
 import 'package:sbselector/widgets/end_dialog.dart';
 
-class DiagnoseContentPage extends HookConsumerWidget {
+class DiagnoseContentPage extends ConsumerWidget {
   const DiagnoseContentPage({Key? key}) : super(key: key);
 
-  final String title = "診断";
+  final String _title = "診断";
 
   static const yesButtonKey = Key('yes');
   static const noButtonKey = Key('no');
@@ -51,19 +51,17 @@ class DiagnoseContentPage extends HookConsumerWidget {
         iconTheme: const IconThemeData.fallback().copyWith(
           color: themeStateController.getAppBarTextIconColor(),
         ),
-        titleSpacing:
-            screenSize.width <= 414.0 ? screenSize.width * 0.22 : null,
+        centerTitle: true,
         title: Row(
-          mainAxisAlignment: screenSize.width <= 414.0
-              ? MainAxisAlignment.start
-              : MainAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisSize: MainAxisSize.min,
           children: [
             Icon(
               Icons.search,
               color: themeStateController.getAppBarTextIconColor(),
             ),
             Text(
-              title,
+              _title,
               style: TextStyle(
                 color: themeStateController.getAppBarTextIconColor(),
               ),
