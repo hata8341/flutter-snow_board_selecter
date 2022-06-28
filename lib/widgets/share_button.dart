@@ -6,7 +6,8 @@ import 'package:path_provider/path_provider.dart';
 import 'package:screenshot/screenshot.dart';
 import 'package:share_plus/share_plus.dart';
 
-ElevatedButton shareButton(ScreenshotController screenShotController) {
+ElevatedButton shareButton(
+    BuildContext context, ScreenshotController screenShotController) {
   Future<Uint8List?> capture() async {
     await Future.delayed(const Duration(milliseconds: 200));
     return await screenShotController.capture(
@@ -17,16 +18,21 @@ ElevatedButton shareButton(ScreenshotController screenShotController) {
   final Future<Uint8List?> screenshotData = capture();
 
   void _shareResult() async {
-    const shareText = '#スノボセレクター';
+    const shareText =
+        '#スノボセレクター\n #スノーボード #snowboard\nhttps://twitter.com/snow_board_app/';
+    final box = context.findRenderObject() as RenderBox?;
     await screenshotData.then((Uint8List? image) async {
       if (image != null) {
         final documentDirectoryPath = await getApplicationDocumentsDirectory();
         final imagePath =
             await File('${documentDirectoryPath.path}/screenshot.png').create();
         await imagePath.writeAsBytes(image);
-
-        await Share.shareFiles([imagePath.path], text: shareText);
-        await imagePath.delete();
+        await Share.shareFiles(
+          [imagePath.path],
+          subject: '共有',
+          text: shareText,
+          sharePositionOrigin: box!.localToGlobal(Offset.zero) & box.size,
+        );
       }
     });
   }
@@ -44,7 +50,10 @@ ElevatedButton shareButton(ScreenshotController screenShotController) {
     },
     label: const Text(
       '共有',
-      style: TextStyle(fontSize: 24),
+      style: TextStyle(
+        fontSize: 12,
+        fontWeight: FontWeight.bold,
+      ),
     ),
     style: ElevatedButton.styleFrom(
       padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 15),

@@ -40,9 +40,8 @@ class SnowRadarChart extends HookWidget {
                       return const RadarChartTitle(text: '');
                   }
                 },
-                titleTextStyle: const TextStyle(
-                  fontSize: 16.0,
-                ),
+                titleTextStyle:
+                    Theme.of(context).textTheme.labelMedium,
                 // レーダーチャートからのタイトルの位置
                 titlePositionPercentageOffset: 0.42,
                 // ティックの数

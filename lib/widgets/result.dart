@@ -21,9 +21,9 @@ class ResultDetail extends ConsumerWidget {
   final double size = 50;
   final double opacity = 1.0;
 
-    static const navigateToTopPageButtonKey = Key('navigateToTopPage');
+  static const navigateToTopPageButtonKey = Key('navigateToTopPage');
 
-    static const historyDeleteButtonKey = Key('historyDelete');
+  static const historyDeleteButtonKey = Key('historyDelete');
 
   // ListViewのスクロールの位置を取得するためのcontorller
   final ScrollController _scrollController = ScrollController();
@@ -65,7 +65,7 @@ class ResultDetail extends ConsumerWidget {
             );
           },
         ),
-        titleSpacing: screenWith <= 414.0 ? screenWith * 0.24 : null,
+        titleSpacing: screenWith <= 414.0 ? screenWith * 0.18 : null,
         title: Center(
           child: Row(
             mainAxisAlignment: screenWith <= 414.0
@@ -122,7 +122,7 @@ class ResultDetail extends ConsumerWidget {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           const Icon(Icons.snowboarding),
-                          Text('スノーボード', style: textTheme.headline5),
+                          Text('スノーボード', style: textTheme.headline6),
                         ],
                       ),
                     ),
@@ -144,7 +144,7 @@ class ResultDetail extends ConsumerWidget {
                     child: Text(
                       rideType.description,
                       style: const TextStyle(
-                        fontSize: 20,
+                        fontSize: 14,
                       ),
                     ),
                   ),
@@ -155,7 +155,7 @@ class ResultDetail extends ConsumerWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                shareButton(_screenShotController),
+                shareButton(context, _screenShotController),
               ],
             ),
           ],

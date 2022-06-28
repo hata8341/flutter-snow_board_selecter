@@ -24,14 +24,15 @@ ExpansionTile boardTile(
         children: [
           Text(
             'おすすめ$recommendNum',
-            style: const TextStyle(fontSize: 20.0),
+            style: const TextStyle(fontSize: 16.0),
           ),
           Chip(
             elevation: 2.0,
             label: Text(
               snowboard.name,
               style: const TextStyle(
-                fontSize: 16.0,
+                fontSize: 10.0,
+                fontWeight: FontWeight.bold,
               ),
             ),
           ),
@@ -58,7 +59,7 @@ ExpansionTile boardTile(
         child: Text(
           snowboard.descprition,
           style: const TextStyle(
-            fontSize: 20.0,
+            fontSize: 14.0,
           ),
         ),
       ),

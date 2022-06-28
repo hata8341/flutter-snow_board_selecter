@@ -9,6 +9,7 @@ class TopPage extends ConsumerWidget {
   static const historyButtonKey = Key('history');
   static const diagnoseButtonKey = Key('diagnose');
   static const settingsButtonKey = Key('settings');
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final pageState = ref.watch(pageStateProvider);

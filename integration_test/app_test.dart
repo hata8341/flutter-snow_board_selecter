@@ -25,8 +25,8 @@ void main() {
     }
 
     Future<void> _dignoseContentToResultPage(WidgetTester tester) async {
-      expect(find.byIcon(Icons.check_circle), findsOneWidget);
-      await tester.tap(find.byIcon(Icons.check_circle));
+      expect(find.text('結果画面'), findsOneWidget);
+      await tester.tap(find.text('結果画面'));
       await tester.pumpAndSettle();
     }
 

@@ -35,7 +35,7 @@ class DiagnoseTopPage extends ConsumerWidget {
               ),
               const Gap(10),
               Container(
-                height: screenSize.height * 0.2,
+                width: screenSize.width * 0.8,
                 padding: const EdgeInsets.all(16),
                 decoration: ShapeDecoration(
                   color: themeStateController.getBubbleColor(),
@@ -49,20 +49,11 @@ class DiagnoseTopPage extends ConsumerWidget {
                 ),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
-                  children: const <Widget>[
+                  children: <Widget>[
                     Text(
-                      '自分の思うスノーボードを',
-                      style: TextStyle(
-                        fontSize: 20.0,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    Text(
-                      'イメージしてね!!',
-                      style: TextStyle(
-                        fontSize: 20.0,
-                        fontWeight: FontWeight.bold,
-                      ),
+                      '自分の思う\nスノーボードを\nイメージしてね!!',
+                      style: Theme.of(context).textTheme.headline6,
+                      textAlign: TextAlign.center,
                     ),
                   ],
                 ),

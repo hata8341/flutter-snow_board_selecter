@@ -17,6 +17,11 @@ class DiagnoseContentPage extends HookConsumerWidget {
   static const yesButtonKey = Key('yes');
   static const noButtonKey = Key('no');
 
+  final _buttonText = const TextStyle(
+    fontSize: 12,
+    fontWeight: FontWeight.bold,
+  );
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final Size screenSize = MediaQuery.of(context).size;
@@ -47,7 +52,7 @@ class DiagnoseContentPage extends HookConsumerWidget {
           color: themeStateController.getAppBarTextIconColor(),
         ),
         titleSpacing:
-            screenSize.width <= 414.0 ? screenSize.width * 0.28 : null,
+            screenSize.width <= 414.0 ? screenSize.width * 0.22 : null,
         title: Row(
           mainAxisAlignment: screenSize.width <= 414.0
               ? MainAxisAlignment.start
@@ -139,22 +144,21 @@ class DiagnoseContentPage extends HookConsumerWidget {
                             },
                             child: SizedBox(
                               key: ValueKey(questionNum),
-                              height: screenSize.height * 0.18,
+                              height: screenSize.height * 0.25,
                               child: Column(
                                 children: [
                                   Text(
                                     '質問$questionNum',
-                                    style: const TextStyle(
-                                      fontSize: 20.0,
-                                      fontWeight: FontWeight.bold,
-                                      height: 2.0,
-                                    ),
+                                    style:
+                                        Theme.of(context).textTheme.titleLarge,
                                   ),
                                   Text(
                                     question.content,
-                                    style: const TextStyle(
-                                      fontSize: 18.0,
-                                    ),
+                                    // style: const TextStyle(
+                                    //   fontSize: 18.0,
+                                    // ),
+                                    style:
+                                        Theme.of(context).textTheme.subtitle1,
                                   ),
                                 ],
                               ),
@@ -233,7 +237,7 @@ class DiagnoseContentPage extends HookConsumerWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: <Widget>[
                         SizedBox(
-                          width: screenSize.width * 0.25,
+                          width: screenSize.width * 0.3,
                           height: screenSize.height * 0.05,
                           child: ElevatedButton(
                             onPressed: () {
@@ -245,16 +249,14 @@ class DiagnoseContentPage extends HookConsumerWidget {
                                 borderRadius: BorderRadius.circular(5),
                               ),
                             ),
-                            child: const Text(
+                            child: Text(
                               'だぶんそう',
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                              ),
+                              style: _buttonText,
                             ),
                           ),
                         ),
                         SizedBox(
-                          width: screenSize.width * 0.25,
+                          width: screenSize.width * 0.3,
                           height: screenSize.height * 0.05,
                           child: ElevatedButton(
                             onPressed: () {
@@ -266,16 +268,14 @@ class DiagnoseContentPage extends HookConsumerWidget {
                                 borderRadius: BorderRadius.circular(5),
                               ),
                             ),
-                            child: const Text(
+                            child: Text(
                               'わからない',
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                              ),
+                              style: _buttonText,
                             ),
                           ),
                         ),
                         SizedBox(
-                          width: screenSize.width * 0.25,
+                          width: screenSize.width * 0.3,
                           height: screenSize.height * 0.05,
                           child: ElevatedButton(
                             onPressed: () {
@@ -287,11 +287,9 @@ class DiagnoseContentPage extends HookConsumerWidget {
                                 borderRadius: BorderRadius.circular(5),
                               ),
                             ),
-                            child: const Text(
+                            child: Text(
                               'たぶん違う',
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                              ),
+                              style: _buttonText,
                             ),
                           ),
                         ),
