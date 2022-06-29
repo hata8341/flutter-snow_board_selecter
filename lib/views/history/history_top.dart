@@ -1,42 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:sbselector/view_model/history_view_model.dart';
+import 'package:sbselector/widgets/history_list.dart';
 
-class HistoryTopPage extends HookConsumerWidget {
-  HistoryTopPage({Key? key}) : super(key: key);
-  final items = List.generate(5, (index) => 'スタイル$index');
+class HistoryTopPage extends ConsumerWidget {
+  const HistoryTopPage({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return ListView.builder(
-      padding: const EdgeInsets.symmetric(
-        horizontal: 10,
-        vertical: 10,
-      ),
-      scrollDirection: Axis.vertical,
-      shrinkWrap: true,
-      itemCount: items.length,
-      itemBuilder: (context, index) {
-        final item = items[index];
-        return GestureDetector(
-          onTap: () {
-            Navigator.pushNamed(
-              context,
-              '/historyDetail',
-              arguments: index.toString(),
-            );
+    final historiesController = ref.watch(historyNotifierProvider.notifier);
+    return Column(
+      children: [
+        FutureBuilder(
+          future: historiesController.load(),
+          builder: (BuildContext context, AsyncSnapshot snapshot) {
+            if (snapshot.connectionState == ConnectionState.done) {
+              return const HistoryList();
+            } else {
+              return const CircularProgressIndicator();
+            }
           },
-          child: Column(
-            children: [
-              ListTile(
-                leading: const Text('テスト'),
-                title: Text(item),
-                subtitle: Text('日付:$index'),
-                trailing: const Icon(Icons.keyboard_arrow_right),
-              ),
-              const Divider(),
-            ],
-          ),
-        );
-      },
+        ),
+      ],
     );
   }
 }

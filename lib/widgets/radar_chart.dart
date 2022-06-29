@@ -1,11 +1,19 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
-import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:sbselector/const/theme.dart';
 
-class SnowRadarChart extends HookConsumerWidget {
-  const SnowRadarChart({Key? key}) : super(key: key);
+const List<double> _maxRaderChartData = [5.0, 5.0, 5.0, 5.0];
+
+class SnowRadarChart extends HookWidget {
+  final List<double> raderChartData;
+
+  const SnowRadarChart({
+    Key? key,
+    required this.raderChartData,
+  }) : super(key: key);
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(16.0),
       child: Column(
@@ -16,49 +24,38 @@ class SnowRadarChart extends HookConsumerWidget {
             aspectRatio: 1.6,
             child: RadarChart(
               RadarChartData(
-                // 仮に1つ定義
                 borderData: FlBorderData(show: false),
-                dataSets: showingSnowDataSets(),
-                radarBackgroundColor: Colors.transparent,
-                radarBorderData:
-                    const BorderSide(color: Colors.black, width: 2),
+                dataSets: _showingSnowDataSets(),
                 // レーダーチャートの外側のタイトル
-                getTitle: (index) {
+                getTitle: (index, angle) {
                   switch (index) {
                     case 0:
-                      return 'ジブ・グラトリ';
+                      return const RadarChartTitle(text: 'グラトリ');
                     case 1:
-                      return 'オールラウンド';
+                      return const RadarChartTitle(text: 'カービング');
                     case 2:
-                      return 'フリーラン・パウダー';
+                      return const RadarChartTitle(text: 'パウダー');
+                    case 3:
+                      return const RadarChartTitle(text: 'ジブ・パーク');
                     default:
-                      return '';
+                      return const RadarChartTitle(text: '');
                   }
                 },
-                titleTextStyle: const TextStyle(
-                  color: Colors.black,
-                  fontSize: 12,
-                ),
+                titleTextStyle: Theme.of(context).textTheme.labelMedium,
                 // レーダーチャートからのタイトルの位置
-                titlePositionPercentageOffset: 0.2,
+                titlePositionPercentageOffset: 0.42,
                 // ティックの数
-                tickCount: 5,
+                tickCount: 4,
                 ticksTextStyle: const TextStyle(
-                  color: null,
                   fontSize: 0,
                 ),
                 tickBorderData: const BorderSide(
-                  color: Colors.black,
                   width: 2,
                 ),
                 gridBorderData: const BorderSide(
-                  color: Colors.black,
                   width: 2,
                 ),
-                // radarTouchData: RadarTouchData(),
               ),
-              swapAnimationDuration: const Duration(milliseconds: 150),
-              swapAnimationCurve: Curves.linear,
             ),
           )
         ],
@@ -66,46 +63,36 @@ class SnowRadarChart extends HookConsumerWidget {
     );
   }
 
-  List<RadarDataSet> showingSnowDataSets() {
-    return snowDataSets().asMap().entries.map((entry) {
-      var index = entry.key;
-      var snowData = entry.value;
+  List<RadarDataSet> _showingSnowDataSets() {
+    List<RadarDataSet> list = [];
 
-      return RadarDataSet(
-        fillColor: Colors.yellow.withOpacity(0.4),
-        borderColor: Colors.blueAccent,
-        borderWidth: 2.0,
-        entryRadius: 5.0,
-        dataEntries:
-            snowData.pointList.map((e) => RadarEntry(value: e)).toList(),
-      );
-    }).toList();
+    final radarData = RadarDataSet(
+      borderWidth: 2.0,
+      entryRadius: 5.0,
+      dataEntries: _setEntriesData(raderChartData),
+    );
+    final context = useContext();
+    final backgroundColor = Theme.of(context).scaffoldBackgroundColor;
+    final maxRadarData = RadarDataSet(
+      borderColor: backgroundColor == const Color(0xff303030)
+          ? Colors.transparent.withOpacity(0.1)
+          : materialWhite.withOpacity(0.1),
+      fillColor: backgroundColor == const Color(0xff303030)
+          ? Colors.transparent.withOpacity(0.1)
+          : materialWhite.withOpacity(0.1),
+      borderWidth: 0.0,
+      entryRadius: 0.0,
+      dataEntries: _setEntriesData(_maxRaderChartData),
+    );
+    list.add(radarData);
+    list.add(maxRadarData);
+    return list;
   }
 
-  List<SnowData> snowDataSets() {
-    return [
-      SnowData(
-        title: 'フリーラン・パウダー',
-        pointList: [2.0, 2.0, 6.0],
-      ),
-      // SnowData(
-      //   title: 'ジブ・グラトリ',
-      //   pointList: [6.0, 2.0, 2.0],
-      // ),
-      // SnowData(
-      //   title: 'オールラウンド',
-      //   pointList: [2.0, 6.0, 2.0],
-      // ),
-    ];
+  List<RadarEntry>? _setEntriesData(List<double> data) {
+    List<RadarEntry>? raderEntries =
+        data.map((value) => RadarEntry(value: value)).toList();
+
+    return raderEntries;
   }
-}
-
-class SnowData {
-  final String title;
-  final List<double> pointList;
-
-  SnowData({
-    required this.title,
-    required this.pointList,
-  });
 }

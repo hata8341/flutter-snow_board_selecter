@@ -1,330 +1,303 @@
-import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_weather_bg_null_safety/flutter_weather_bg.dart';
 import 'package:gap/gap.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:sbselector/model/question.dart';
+import 'package:sbselector/view_model/diagnose_view_model.dart';
+import 'package:sbselector/view_model/indicator_view_model.dart';
+import 'package:sbselector/view_model/question_view_model.dart';
+import 'package:sbselector/view_model/theme_view_mode.dart';
 import 'package:sbselector/widgets/bubble.dart';
+import 'package:sbselector/widgets/end_dialog.dart';
 
-final indicatorProvider = StateProvider<double>((ref) {
-  return 0;
-});
-
-class DiagnoseContentPage extends HookConsumerWidget {
+class DiagnoseContentPage extends ConsumerWidget {
   const DiagnoseContentPage({Key? key}) : super(key: key);
 
-  final String title = "診断";
-  final WeatherType sunny = WeatherType.sunny;
+  final String _title = "診断";
+
+  static const yesButtonKey = Key('yes');
+  static const noButtonKey = Key('no');
+
+  final _buttonText = const TextStyle(
+    fontSize: 12,
+    fontWeight: FontWeight.bold,
+  );
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final Size screenSize = MediaQuery.of(context).size;
-    final StateController<double> indicatorController =
-        ref.read(indicatorProvider.state);
-    final double indicatorValue = ref.watch(indicatorProvider);
-    ref.listen(indicatorProvider, (preValue, newValue) {
-      print('もとの値$preValue');
-      print('新しい値$newValue');
-      if (newValue == 1.0) {
-        print('5です');
-        AwesomeDialog(
-          context: context,
-          animType: AnimType.SCALE,
-          headerAnimationLoop: false,
-          dialogType: DialogType.SUCCES,
-          showCloseIcon: true,
-          // dismissOnTouchOutside: false,
-          title: 'お疲れさまでした！',
-          // desc:
-          //     'Dialog description here..................................................',
-          btnOkText: "結果画面へ",
-          btnOkOnPress: () {
-            debugPrint('OnClcik');
-            Navigator.pushNamed(context, '/diagnoseResult');
-          },
-          btnOkIcon: Icons.check_circle,
-          onDissmissCallback: (type) {
-            debugPrint('Dialog Dissmiss from callback $type');
-          },
-        ).show();
+
+    final indicatorValue = ref.watch(indicatorStateNotifierProvider);
+    final indicatorValueController =
+        ref.watch(indicatorStateNotifierProvider.notifier);
+    final questionsController = ref.watch(questionListProvider.notifier);
+    final diagnoseController = ref.watch(diagnoseProvider.notifier);
+    final themeStateController = ref.watch(themeStateProvider.notifier);
+
+    final String questionNum = questionsController.getQuestionNum();
+    final Question question = questionsController.getCurrQuestion();
+    final String imageUrl = questionsController.getImageUrl();
+    final bool missIconState = indicatorValueController.getMissIconState();
+
+    ref.listen(indicatorStateNotifierProvider, (previous, next) {
+      if (next == 1.0) {
+        showSelfDialog(endDialog(context, ref));
       }
     });
+
     return Scaffold(
-      backgroundColor: Colors.blue,
+      backgroundColor: themeStateController.getScaffoldBackgroundColor(),
       appBar: AppBar(
-        titleSpacing: screenSize.width * 0.26,
+        backgroundColor: themeStateController.getBarColor(),
+        iconTheme: const IconThemeData.fallback().copyWith(
+          color: themeStateController.getAppBarTextIconColor(),
+        ),
+        centerTitle: true,
         title: Row(
-          children: <Widget>[
-            const Icon(Icons.search),
-            Text(title),
+          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Icon(
+              Icons.search,
+              color: themeStateController.getAppBarTextIconColor(),
+            ),
+            Text(
+              _title,
+              style: TextStyle(
+                color: themeStateController.getAppBarTextIconColor(),
+              ),
+            ),
           ],
         ),
       ),
       body: SafeArea(
-        child: Stack(
-          children: [
-            WeatherBg(
-              weatherType: sunny,
-              width: screenSize.width,
-              height: screenSize.height,
-            ),
-            Column(
-              children: [
-                Expanded(
-                  flex: 1,
-                  child: Container(
-                    constraints: BoxConstraints.expand(
-                      height: screenSize.height * 0.17,
-                    ),
-                    decoration: BoxDecoration(
-                      border: Border.all(
-                        color: Colors.green,
-                        width: 2,
-                      ),
-                    ),
+        child: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              SizedBox(
+                width: screenSize.width * 0.65,
+                height: screenSize.height * 0.32,
+                child: AnimatedSwitcher(
+                  duration: const Duration(milliseconds: 300),
+                  transitionBuilder: (child, animation) {
+                    return FadeTransition(
+                      opacity: animation,
+                      child: child,
+                    );
+                  },
+                  child: Image.asset(
+                    imageUrl,
+                    fit: BoxFit.fitHeight,
+                    key: ValueKey<String>(imageUrl),
                   ),
                 ),
-                Expanded(
-                  flex: 4,
-                  child: Container(
-                    constraints:
-                        BoxConstraints.expand(height: screenSize.height * 0.7),
-                    decoration: BoxDecoration(
-                      border: Border.all(
-                        color: Colors.red,
-                        width: 2,
+              ),
+              Container(
+                width: screenSize.width * 0.9,
+                padding: const EdgeInsets.all(16),
+                decoration: ShapeDecoration(
+                  color: themeStateController.getBubbleColor(),
+                  shadows: const [
+                    BoxShadow(
+                      offset: Offset(0, 2),
+                      blurRadius: 2,
+                    ),
+                  ],
+                  shape: const BubbleBorder(),
+                ),
+                child: Stack(
+                  children: [
+                    AnimatedOpacity(
+                      opacity: missIconState ? 1.0 : 0.0,
+                      duration: const Duration(milliseconds: 200),
+                      child: Visibility(
+                        visible: missIconState,
+                        child: IconButton(
+                          icon: const Icon(
+                            Icons.arrow_back,
+                          ),
+                          onPressed: () {
+                            diagnoseController.missTake();
+                          },
+                        ),
                       ),
                     ),
-                    child: Center(
+                    Center(
                       child: Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        mainAxisAlignment: MainAxisAlignment.start,
                         children: <Widget>[
-                          SizedBox(
-                            width: screenSize.width * 0.6,
-                            height: screenSize.height * 0.32,
-                            child: Image.asset(
-                              'images/cut_snow_penguin.png',
-                              fit: BoxFit.cover,
-                            ),
+                          const Icon(
+                            Icons.live_help,
                           ),
-                          Container(
-                            width: screenSize.width * 0.9,
-                            height: screenSize.height * 0.2,
-                            padding: const EdgeInsets.all(16),
-                            decoration: const ShapeDecoration(
-                              color: Colors.white,
-                              shadows: [
-                                BoxShadow(
-                                  color: Color(0x80000000),
-                                  offset: Offset(0, 2),
-                                  blurRadius: 2,
-                                ),
-                              ],
-                              shape: BubbleBorder(),
+                          AnimatedSwitcher(
+                            duration: const Duration(
+                              seconds: 1,
                             ),
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: const <Widget>[
-                                Icon(
-                                  Icons.live_help,
-                                  color: Colors.grey,
-                                ),
-                                Text(
-                                  '質問１',
-                                  style: TextStyle(
-                                    fontSize: 20.0,
-                                    fontWeight: FontWeight.bold,
-                                    height: 2.0,
+                            transitionBuilder: (child, animation) {
+                              return FadeTransition(
+                                opacity: animation.drive(
+                                    CurveTween(curve: const Interval(0.6, 1))),
+                                child: child,
+                              );
+                            },
+                            child: SizedBox(
+                              key: ValueKey(questionNum),
+                              height: screenSize.height * 0.25,
+                              child: Column(
+                                children: [
+                                  Text(
+                                    '質問$questionNum',
+                                    style:
+                                        Theme.of(context).textTheme.titleLarge,
                                   ),
-                                ),
-                                Text(
-                                  'スノーボードを滑りながら、回ったり、\nジャンプしたりしたいですか？',
-                                  style: TextStyle(
-                                    fontSize: 18.0,
+                                  Text(
+                                    question.content,
+                                    // style: const TextStyle(
+                                    //   fontSize: 18.0,
+                                    // ),
+                                    style:
+                                        Theme.of(context).textTheme.subtitle1,
                                   ),
-                                ),
-                              ],
-                            ),
-                          ),
-                          // インジケーターを実装する
-                          // valueを動的に表示させみる
-                          LinearProgressIndicator(
-                            backgroundColor: Colors.grey,
-                            minHeight: 10,
-                            value: indicatorValue,
-                            valueColor:
-                                const AlwaysStoppedAnimation<Color>(Colors.red),
-                          ),
-
-                          Container(
-                            width: screenSize.width,
-                            padding: const EdgeInsets.symmetric(
-                              // vertical: 10,
-                              horizontal: 10,
-                            ),
-                            child: Column(
-                              children: <Widget>[
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: <Widget>[
-                                    SizedBox(
-                                      width: screenSize.width * 0.46,
-                                      height: screenSize.height * 0.05,
-                                      child: ElevatedButton(
-                                        onPressed: () {
-                                          // print(5);
-                                          print('はい');
-                                          var progressValue =
-                                              indicatorValue + 0.1;
-
-                                          progressValue = (progressValue * 10)
-                                                  .roundToDouble() /
-                                              10;
-                                          indicatorController
-                                              .update((state) => progressValue);
-                                          print(indicatorController.state);
-                                        },
-                                        style: ElevatedButton.styleFrom(
-                                          primary: Colors.yellow[700],
-                                          onPrimary: Colors.black,
-                                          shape: RoundedRectangleBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(5),
-                                          ),
-                                        ),
-                                        child: const Text(
-                                          'はい',
-                                          style: TextStyle(
-                                            fontWeight: FontWeight.bold,
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                    SizedBox(
-                                      width: screenSize.width * 0.46,
-                                      height: screenSize.height * 0.05,
-                                      child: ElevatedButton(
-                                        onPressed: () {
-                                          print(1);
-                                          print('いいえ');
-                                          var progressValue =
-                                              indicatorValue - 0.1;
-
-                                          progressValue = (progressValue * 10)
-                                                  .roundToDouble() /
-                                              10;
-                                          indicatorController
-                                              .update((state) => progressValue);
-                                          print(indicatorController.state);
-                                        },
-                                        style: ElevatedButton.styleFrom(
-                                          primary: Colors.yellow[700],
-                                          onPrimary: Colors.black,
-                                          shape: RoundedRectangleBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(5),
-                                          ),
-                                        ),
-                                        child: const Text(
-                                          'いいえ',
-                                          style: TextStyle(
-                                            fontWeight: FontWeight.bold,
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                                const Gap.expand(10),
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: <Widget>[
-                                    SizedBox(
-                                      width: screenSize.width * 0.25,
-                                      height: screenSize.height * 0.05,
-                                      child: ElevatedButton(
-                                        onPressed: () {
-                                          print(4);
-                                          print('たぶんそう');
-                                        },
-                                        style: ElevatedButton.styleFrom(
-                                          primary: Colors.yellow[700],
-                                          onPrimary: Colors.black,
-                                          shape: RoundedRectangleBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(5),
-                                          ),
-                                        ),
-                                        child: const Text(
-                                          'だぶんそう',
-                                          style: TextStyle(
-                                            fontWeight: FontWeight.bold,
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                    SizedBox(
-                                      width: screenSize.width * 0.25,
-                                      height: screenSize.height * 0.05,
-                                      child: ElevatedButton(
-                                        onPressed: () {
-                                          print(3);
-                                          print('わからない');
-                                        },
-                                        style: ElevatedButton.styleFrom(
-                                          primary: Colors.yellow[700],
-                                          onPrimary: Colors.black,
-                                          shape: RoundedRectangleBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(5),
-                                          ),
-                                        ),
-                                        child: const Text(
-                                          'わからない',
-                                          style: TextStyle(
-                                            fontWeight: FontWeight.bold,
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                    SizedBox(
-                                      width: screenSize.width * 0.25,
-                                      height: screenSize.height * 0.05,
-                                      child: ElevatedButton(
-                                        onPressed: () {
-                                          print(2);
-                                          print('たぶん違う');
-                                        },
-                                        style: ElevatedButton.styleFrom(
-                                          primary: Colors.yellow[700],
-                                          onPrimary: Colors.black,
-                                          shape: RoundedRectangleBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(5),
-                                          ),
-                                        ),
-                                        child: const Text(
-                                          'たぶん違う',
-                                          style: TextStyle(
-                                            fontWeight: FontWeight.bold,
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ],
+                                ],
+                              ),
                             ),
                           ),
                         ],
                       ),
                     ),
-                  ),
+                  ],
                 ),
-              ],
-            ),
-          ],
+              ),
+              LinearProgressIndicator(
+                backgroundColor: Colors.grey.shade300,
+                color: themeStateController.getBarColor(),
+                minHeight: 10,
+                value: indicatorValue,
+              ),
+              Container(
+                width: screenSize.width,
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 10,
+                ),
+                child: Column(
+                  children: <Widget>[
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: <Widget>[
+                        SizedBox(
+                          width: screenSize.width * 0.46,
+                          height: screenSize.height * 0.05,
+                          child: ElevatedButton(
+                            key: yesButtonKey,
+                            onPressed: () {
+                              diagnoseController.respond(question.category, 5);
+                            },
+                            style: ElevatedButton.styleFrom(
+                              primary: themeStateController.getBarColor(),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(5),
+                              ),
+                            ),
+                            child: const Text(
+                              'はい',
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ),
+                        ),
+                        SizedBox(
+                          width: screenSize.width * 0.46,
+                          height: screenSize.height * 0.05,
+                          child: ElevatedButton(
+                            key: noButtonKey,
+                            onPressed: () {
+                              diagnoseController.respond(question.category, 1);
+                            },
+                            style: ElevatedButton.styleFrom(
+                              primary: themeStateController.getBarColor(),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(5),
+                              ),
+                            ),
+                            child: const Text(
+                              'いいえ',
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    const Gap.expand(10),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: <Widget>[
+                        SizedBox(
+                          width: screenSize.width * 0.3,
+                          height: screenSize.height * 0.05,
+                          child: ElevatedButton(
+                            onPressed: () {
+                              diagnoseController.respond(question.category, 4);
+                            },
+                            style: ElevatedButton.styleFrom(
+                              primary: themeStateController.getBarColor(),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(5),
+                              ),
+                            ),
+                            child: Text(
+                              'だぶんそう',
+                              style: _buttonText,
+                            ),
+                          ),
+                        ),
+                        SizedBox(
+                          width: screenSize.width * 0.3,
+                          height: screenSize.height * 0.05,
+                          child: ElevatedButton(
+                            onPressed: () {
+                              diagnoseController.respond(question.category, 3);
+                            },
+                            style: ElevatedButton.styleFrom(
+                              primary: themeStateController.getBarColor(),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(5),
+                              ),
+                            ),
+                            child: Text(
+                              'わからない',
+                              style: _buttonText,
+                            ),
+                          ),
+                        ),
+                        SizedBox(
+                          width: screenSize.width * 0.3,
+                          height: screenSize.height * 0.05,
+                          child: ElevatedButton(
+                            onPressed: () {
+                              diagnoseController.respond(question.category, 2);
+                            },
+                            style: ElevatedButton.styleFrom(
+                              primary: themeStateController.getBarColor(),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(5),
+                              ),
+                            ),
+                            child: Text(
+                              'たぶん違う',
+                              style: _buttonText,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );

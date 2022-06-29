@@ -20,7 +20,7 @@ class CrashReporter implements ImplCrashReporter {
   static ImplCrashReporter get instance {
     _instance ??= CrashReporter._(FirebaseCrashlytics.instance);
 
-    return _instance!;
+    return _instance as ImplCrashReporter;
   }
 
   @override
