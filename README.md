@@ -6,6 +6,7 @@
 - flutter
 - dart
 - firebase
+
 このアプリの使い方と詳細な説明
 
 Zenn: https://zenn.dev/hata8341/articles/647db1f90a7401
