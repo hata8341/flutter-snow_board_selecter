@@ -1,11 +1,15 @@
 # スノボセレクター
+flutterでios・andoridアプリとしてリリースしました。
 ## Demo
 ![readme_snow_app](https://user-images.githubusercontent.com/83937097/180915045-607998c0-d12a-4eba-b306-3db14bf630fb.gif)
 ## Description
-自分に合ったスノーボードを知ることができる簡易的なスノーボード診断アプリです
+自分に合ったスノーボードを知ることができる簡易的なスノーボード診断アプリです。まず10問の質問に答えます。その結果から自分に適したライドスタイルとスノーボードについて知ることが出来ます。診断結果は履歴として保存され、SNSなどに共有することも出来ます。おまけ機能としてダークモードへの切り替えとBGMを流すことが出来ます。制作期間は2ヶ月です。
+
+### Tool
 - flutter
 - dart
-- firebase
+- firebase Analytics
+- firebase Crashlytics
 
 このアプリの使い方と詳細な説明
 
